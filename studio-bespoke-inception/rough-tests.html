@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Studio Bespoke — Concept Territory Rough Tests</title>
+    <style>
+      :root { --ink:#1e1e1b; --paper:#f3f0e9; --line:rgba(30,30,27,.18); }
+      * { box-sizing:border-box; } body { margin:0; background:#ddd8ce; color:var(--ink); font:15px/1.5 Arial,Helvetica,sans-serif; }
+      .notice,.territory { max-width:1100px; margin:28px auto; background:var(--paper); box-shadow:0 18px 50px #0002; }
+      .notice { padding:16px 20px; font-size:13px; }
+      .label { display:flex; justify-content:space-between; gap:20px; padding:18px 28px; border-bottom:1px solid var(--line); font-size:12px; letter-spacing:.12em; text-transform:uppercase; }
+      .hero { min-height:440px; display:grid; align-items:end; padding:38px; color:#fff; position:relative; background:#777 center/cover no-repeat; }
+      .hero:before { content:""; position:absolute; inset:0; background:linear-gradient(90deg,#0009,#0001 68%); } .hero>* { position:relative; max-width:650px; }
+      .eyebrow { margin:0 0 12px; font-size:12px; letter-spacing:.16em; text-transform:uppercase; } h1,h2,p { margin:0; }
+      h1,h2 { font-family:Georgia,'Times New Roman',serif; font-weight:400; } h1 { font-size:clamp(38px,5vw,72px); line-height:.98; } h2 { font-size:30px; line-height:1.08; }
+      .sub { margin-top:18px; font-size:18px; line-height:1.35; } .grid { display:grid; grid-template-columns:repeat(12,1fr); gap:18px; padding:48px 38px; }
+      .claim { grid-column:span 5; font:34px/1.08 Georgia,'Times New Roman',serif; } .proof { grid-column:span 7; border-left:1px solid var(--ink); padding-left:24px; }
+      .photo { min-height:310px; background:#8a8175 center/cover no-repeat; } .photo.wide { grid-column:span 8; } .note { grid-column:span 4; align-self:center; }
+      .note h2 { margin-bottom:14px; } .caption { margin-top:16px; color:#5e5c55; font-size:12px; letter-spacing:.06em; text-transform:uppercase; }
+      .steps { grid-column:1/-1; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+      .step { min-height:150px; padding:26px; background:var(--paper); } .step b { display:block; margin-bottom:12px; font:26px Georgia,'Times New Roman',serif; }
+      .transform { display:grid; grid-template-columns:1fr 1fr; min-height:430px; } .tension { padding:52px 38px; display:flex; flex-direction:column; justify-content:end; background:#383b36; color:#fff; }
+      .result { display:flex; align-items:end; padding:28px; color:#fff; background:#888 center/cover no-repeat; } .result span { padding:10px 12px; background:#0009; font-size:13px; }
+      .quiet { padding:64px 38px 0; text-align:center; } .quiet h1 { max-width:760px; margin:auto; color:var(--ink); } .quiet p { max-width:560px; margin:20px auto 34px; }
+      .quiet-image { min-height:430px; background:#888 center/cover no-repeat; } .proof-strip { display:grid; grid-template-columns:1.2fr 1fr 1fr; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+      .proof-strip div { padding:28px; border-right:1px solid var(--line); } .proof-strip div:last-child { border:0; }
+      @media(max-width:720px){.notice,.territory{margin-left:12px;margin-right:12px}.grid{grid-template-columns:1fr;padding:28px 20px}.claim,.proof,.photo.wide,.note{grid-column:1}.steps,.transform,.proof-strip{grid-template-columns:1fr}.hero{min-height:380px;padding:28px 20px}.label{padding:14px 20px}}
+    </style>
+  </head>
+  <body>
+    <p class="notice"><strong>Purpose:</strong> low-fidelity concept tests, not final interface proposals. They use public Studio Bespoke project imagery remotely to test hierarchy, proof timing, and asset burden. They must not be published as final work.</p>
+
+    <section class="territory">
+      <div class="label"><strong>A — The Ritual Plan</strong><span>Project-led / ritual-led</span></div>
+      <div class="hero" style="background-image:url('https://studiobespoke.design/wp-content/uploads/2026/01/SBD_Mira_K13-scaled.jpg')"><div><p class="eyebrow">Studio Bespoke / Mira, Dubai</p><h1>A home becomes personal when its plan recognises the life inside it.</h1><p class="sub">A full renovation organised around baking, gathering, and keeping the heart of the home open.</p></div></div>
+      <div class="grid"><p class="claim">Not decoration. A new choreography for how the day moves.</p><p class="proof"><strong>The intervention:</strong> internal walls removed; kitchen, living and dining opened to light and connection; a concealed coffee nook and deeply integrated storage made daily routines easy rather than visible.</p><div class="photo wide" style="background-image:url('https://studiobespoke.design/wp-content/uploads/2026/01/Studio-bespoke_mira_32-scaled.jpg')"></div><div class="note"><h2>Ritual becomes architecture.</h2><p>The test: can a visitor understand why material choices matter because they first understand how the household lives?</p><p class="caption">Needs plans, before imagery, or annotations to avoid becoming pure poetry.</p></div><div class="steps"><div class="step"><b>01 / Gather</b>Kitchen as social and emotional centre.</div><div class="step"><b>02 / Keep</b>Storage and appliances absorbed into joinery.</div><div class="step"><b>03 / Retreat</b>Private pauses, guest comfort, material calm.</div></div></div>
+    </section>
+
+    <section class="territory">
+      <div class="label"><strong>B — The House Relearns You</strong><span>Transformation-led</span></div>
+      <div class="transform"><div class="tension"><p class="eyebrow">The inherited problem</p><h1>Closed rooms. Borrowed habits. No room for the life that has changed.</h1><p class="sub">A renovation begins by finding the one constraint that holds everything else back.</p></div><div class="result" style="background-image:url('https://studiobespoke.design/wp-content/uploads/2026/01/SBD_Mira_K13-scaled.jpg')"><span>The result: a light-filled open plan around the kitchen.</span></div></div>
+      <div class="grid"><p class="claim">Find the cut that changes the whole house.</p><p class="proof"><strong>Mira:</strong> instead of styling an inward-looking villa, the project changed the ground-floor plan. The sequence follows the effects on light, flow, storage and connection.</p><div class="photo wide" style="background-image:url('https://studiobespoke.design/wp-content/uploads/2026/01/Al-barari-2-500x500.jpg')"></div><div class="note"><h2>Small rooms, same discipline.</h2><p>Desert Leaf becomes a guest studio through light, joinery and spatial efficiency—not a mini décor project.</p><p class="caption">This cannot advance without authentic before/process assets.</p></div><div class="steps"><div class="step"><b>Constraint</b>What is dark, closed, crowded, or no longer fit for purpose?</div><div class="step"><b>Decision</b>What intervention unlocks the home?</div><div class="step"><b>Consequence</b>How do light, movement, storage and feeling change?</div></div></div>
+    </section>
+
+    <section class="territory">
+      <div class="label"><strong>C — A Quiet Case for Change</strong><span>Proof-first / still-led</span></div>
+      <div class="quiet"><p class="eyebrow">Studio Bespoke / Dubai</p><h1>The best changes are the ones you feel every day, without having to look for them.</h1><p>One real home, one named renovation, and a clear standard for what care looks like.</p></div>
+      <div class="quiet-image" style="background-image:url('https://studiobespoke.design/wp-content/uploads/2026/01/Lakes_16-scaled.jpg')"></div>
+      <div class="proof-strip"><div><strong>Editorial proof</strong><br>Marie Claire Maison, 2026: a Mira renovation defined by light, rhythm and everyday rituals.</div><div><strong>Spatial decision</strong><br>Walls removed; rooms linked by arches; storage, appliances and a coffee nook made discreet.</div><div><strong>Material proof</strong><br>Calacatta marble, timber, microcement and joinery have jobs beyond visual effect.</div></div>
+      <div class="grid"><p class="claim">A carefully edited body of work, not a long gallery of equal rooms.</p><p class="proof"><strong>The test:</strong> can precision, captions, publication proof and visual silence create desire without theatrical motion?</p><div class="photo wide" style="background-image:url('https://studiobespoke.design/wp-content/uploads/2026/01/Studio-bespoke_mira_32-scaled.jpg')"></div><div class="note"><h2>Quiet is credible only when it is exact.</h2><p>Every image requires a purpose, project identity and annotation that tells the visitor what changed.</p><p class="caption">Low motion risk; high typography and crop discipline required.</p></div></div>
+    </section>
+  </body>
+</html>
