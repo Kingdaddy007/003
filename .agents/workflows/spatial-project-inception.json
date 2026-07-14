@@ -1,0 +1,33 @@
+{
+  "workflow_id": "spatial-project-inception",
+  "task_id": "d161bb13-3be6-4067-9092-1fc76be47607",
+  "mode": "architect",
+  "status": "paused",
+  "current_state": "concept-selection",
+  "completed_states": [
+    "evidence-intake",
+    "brand-diagnosis",
+    "creative-brief",
+    "concept-territories",
+    "rough-externalization"
+  ],
+  "next_action": "Address the user's design questions in the next chat window: 1) How the 'family rituals' statement affects photography and human presence (human placement vs raw architectural views), 2) Visual concepts for the Hero section and opening sequence, 3) How these principles govern motion, typography, and sections, and 4) Begin the Phase 9 Risk Prototype.",
+  "timestamps": {
+    "created": "2026-07-14T10:35:00Z",
+    "updated": "2026-07-14T13:46:00Z"
+  },
+  "artifacts": [
+    "studio-bespoke-inception/evidence-dossier.md",
+    "studio-bespoke-inception/creative-brief.md",
+    "studio-bespoke-inception/concept-directions.md",
+    "studio-bespoke-inception/experience-blueprint.md",
+    "studio-bespoke-inception/production-plan.md",
+    "studio-bespoke-inception/rough-tests.html",
+    "studio-bespoke-inception/scroll-storyboard.md",
+    "studio-bespoke-inception/cinematic-prompt-pack.md"
+  ],
+  "approvals": [
+    "Version 3 OS installation completed",
+    "Clean workspace committed to branch codex/chatgptibeliveyou"
+  ]
+}
