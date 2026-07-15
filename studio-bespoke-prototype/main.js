@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,6 +10,17 @@ function initPage() {
   const preloader = document.getElementById("preloader");
   const enterBtn = document.getElementById("enter-button");
   const body = document.body;
+
+  // Initialize Lenis Smooth Scroll
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+  });
+
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
 
   // Check for prefers-reduced-motion preference
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -68,12 +80,13 @@ function initPage() {
       }
     }, { once: true });
 
-    // Local file fail-safe: If after 300ms the video hasn't loaded (e.g. 404 or slow load), fall back to SVG sweep
+    // Local file fail-safe: If after 2500ms the video hasn't loaded (e.g. 404 or slow load), fall back to SVG sweep
     setTimeout(() => {
       if (!useVideo) {
+        console.log("Video load timed out after 2500ms, falling back to SVG vector sweep.");
         initArrivalTimeline(svgElement, false);
       }
-    }, 300);
+    }, 2500);
   } else {
     initArrivalTimeline(svgElement, false);
   }
@@ -83,7 +96,13 @@ function initPage() {
     if (window.arrivalTimelineInitialized) return;
     window.arrivalTimelineInitialized = true;
 
-    const arrivalTl = gsap.timeline();
+    const arrivalTl = gsap.timeline({
+      onComplete: () => {
+        enableScroll();
+        initCrystallizationScrub();
+        initScrollAnimations();
+      }
+    });
 
     arrivalTl
       // Animate Corporate Logo Badge in the corner
@@ -125,6 +144,7 @@ function initPage() {
         0.4
       )
       // Quiet & Elegant Typography Reveal: Staggered word fade-ins with soft blur focusing
+      // Delayed until 3.2s so the blueprint line drawing completes its sweep in clean silence
       .to(".preloader-mantra .word", {
         opacity: 1,
         y: 0,
@@ -132,99 +152,93 @@ function initPage() {
         duration: 1.8,
         stagger: 0.24,
         ease: "power2.out"
-      }, 1.8)
+      }, 3.2)
       .to(".mantra-subtext", {
         opacity: 0.95, /* higher contrast visibility */
         y: 0,
         duration: 1.2,
         ease: "power2.out"
-      }, 2.8)
+      }, 4.2)
       // Show Scroll Cue
       .to(enterBtn, {
         opacity: 1,
         duration: 1.2
-      }, 3.2);
+      }, 4.5);
   }
 
-  // 3. Theatrical Dissolve Handshake
-  // Trigger on click OR on scroll/wheel interaction
-  let isDissolving = false;
-  
-  enterBtn.addEventListener("click", () => {
-    if (!isDissolving) triggerPreloaderDissolve();
-  });
-
-  window.addEventListener("wheel", (e) => {
-    if (!isDissolving && Math.abs(e.deltaY) > 5) {
-      triggerPreloaderDissolve();
-    }
-  }, { passive: true });
-
-  window.addEventListener("touchmove", () => {
-    if (!isDissolving) {
-      triggerPreloaderDissolve();
-    }
-  }, { passive: true });
-
-  function triggerPreloaderDissolve() {
-    isDissolving = true;
+  // 3. Scroll-Scrubbed Crystallization Handshake (GSAP ScrollTrigger)
+  function initCrystallizationScrub() {
+    // Unhide hero elements initially in preparation for the scrub
+    gsap.set(".hero-bg", { opacity: 0 });
+    gsap.set([".hero-title", ".hero-subtitle"], { opacity: 0, y: 30 });
     
-    const dissolveTl = gsap.timeline({
-      onComplete: () => {
-        preloader.style.display = "none";
-        enableScroll();
-        initScrollAnimations(); // Initialize ScrollTrigger after preloader is unmounted
+    const scrubTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "+=120%", /* Scroll distance for full crystallization */
+        pin: true,
+        pinSpacing: true,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        onLeave: () => {
+          // Hide preloader pointer events entirely once user is past the fold
+          gsap.set("#preloader", { display: "none", pointerEvents: "none" });
+        },
+        onEnterBack: () => {
+          // Restore preloader when scrolling back up
+          gsap.set("#preloader", { display: "block", pointerEvents: "auto" });
+        }
       }
     });
 
-    dissolveTl
-      // A. Fade out foreground typography & scroll cue
-      .to([enterBtn, ".preloader-mantra", ".mantra-subtext"], {
+    scrubTl
+      // A. Fade out preloader typography and cue rapidly
+      .to([".mantra-text-wrapper", "#enter-button"], {
         opacity: 0,
-        y: -30,
-        duration: 0.8,
-        ease: "power2.in",
-        stagger: 0.08
-      })
-      // B. The Portal Zoom Transition: Dive camera directly through the blueprint lines
-      .to(".blueprint-img", {
-        scale: 1.4, /* Scales full-screen cover image up, expanding lines past screen */
+        y: -40,
+        duration: 0.35,
+        ease: "power1.inOut"
+      }, 0)
+      // B. Cross-fade blueprint lines/preloader background to hero
+      .to(["#blueprint-video", "#blueprint-svg", ".preloader-bg"], {
         opacity: 0,
-        duration: 2.0,
-        ease: "power2.in"
-      }, 0.2)
-      // C. Fade out preloader background
-      .to(".preloader-bg", {
-        opacity: 0,
-        duration: 1.8,
-        ease: "power2.inOut"
-      }, 0.4)
-      // D. Animate the static logo badge filter to invert matching hero
-      .to(".preloader-logo-badge", {
-        filter: "brightness(0) invert(1)",
-        duration: 1.2
-      }, 0.5)
-      // E. Handshake Reveal: Fade in and scale down finished villa photo
-      .to(".hero-bg", {
-        opacity: 1,
-        scale: 1,
-        duration: 2.5,
-        ease: "power2.inOut"
-      }, 0.4)
-      // F. Cascade in Hero Typography
+        duration: 0.75,
+        ease: "power1.inOut"
+      }, 0.1)
+      // C. Fade in finished room photograph on top of the same layout coordinates
+      .fromTo(".hero-bg",
+        { opacity: 0, scale: 1.08 },
+        { opacity: 1, scale: 1, duration: 1.0, ease: "power1.inOut" },
+        0
+      )
+      // D. Cascade in Hero Typography
       .to(".hero-title", {
         opacity: 1,
         y: 0,
-        duration: 1.6,
-        ease: "power3.out"
-      }, 1.4)
+        duration: 0.55,
+        ease: "power2.out"
+      }, 0.45)
       .to(".hero-subtitle", {
         opacity: 1,
         y: 0,
-        duration: 1.2,
-        ease: "power3.out"
-      }, 1.7);
+        duration: 0.45,
+        ease: "power2.out"
+      }, 0.6)
+      // Safety gate to hide preloader container overlay at end of scrub
+      .to("#preloader", {
+        opacity: 0,
+        duration: 0.8
+      }, 0.1);
   }
+
+  // Handle click on scroll cue to trigger smooth scroll transition
+  enterBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: window.innerHeight * 1.2,
+      behavior: "smooth"
+    });
+  });
 
   // Helper scroll-lock functions
   function disableScroll() {
@@ -241,7 +255,29 @@ function initPage() {
      4. SCROLL-BOUND ANIMATIONS (GSAP SCROLLTRIGGER)
      ======================================================== */
   function initScrollAnimations() {
+    
+    // --- Hero Sticky Reveal Parallax ---
+    // The hero is position: sticky. As you scroll, the image scales up until the next section slides over it.
+    const heroTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        pin: true,
+        pinSpacing: false
+      }
+    });
+
+    // Scale the background image slightly to "bring the user into the room"
+    heroTl.to(".hero-bg", {
+      scale: 1.15,
+      ease: "none"
+    }, 0);
+
+    // --- Tension Section ---
     const pinTrigger = document.querySelector(".pinned-section");
+    if (!pinTrigger) return;
     
     // Create master pin scroll trigger
     ScrollTrigger.create({
@@ -282,6 +318,20 @@ function initPage() {
     });
   }
 
+  // Set timeline callbacks to chain activation
+  window.addEventListener("load", () => {
+    // If arrival timeline is initialized, set its onComplete callback
+    const checkTlInterval = setInterval(() => {
+      if (window.arrivalTimelineInitialized) {
+        clearInterval(checkTlInterval);
+      }
+    }, 100);
+  });
+  
+  // Directly attach the initialization callback to the primary timeline
+  window.addEventListener("DOMContentLoaded", () => {
+    // We already setup the arrivalTl inside initArrivalTimeline, so we'll configure its onComplete directly there.
+  });
 }
 
 initPage();

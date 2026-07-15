@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Layout Concepts</title>
+<!-- Fontshare & Google Fonts -->
+<link href="https://api.fontshare.com/v2/css?f[]=melodrama@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<style>
+  body { 
+    margin: 0; padding: 60px 40px; background: #EAE8E4; 
+    display: flex; flex-direction: column; gap: 80px; align-items: center; 
+    font-family: 'Satoshi', sans-serif;
+  }
+  h1 { 
+    text-align: center; color: #1C1C1A; font-weight: 500; 
+    margin-top: 0; margin-bottom: 20px; font-size: 28px;
+  }
+  .layout-board { 
+    width: 100%; max-width: 1200px; display: flex; flex-direction: column; 
+    background-color: #F9F8F6; /* Travertine Neutral */
+    color: #1C1C1A; /* Ironwood Text */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .caption { 
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; 
+    font-weight: 700; color: #1C1C1A; background: #fff; padding: 15px 30px;
+    position: absolute; top: 0; left: 0; z-index: 100; border-bottom-right-radius: 8px;
+  }
+
+  /* Shared Typography */
+  .title { font-family: 'Melodrama', serif; font-size: 64px; line-height: 1.05; margin: 0; font-weight: 500; }
+  .title i { font-style: italic; font-weight: 400; }
+  .subtitle { font-size: 16px; color: #948E85; max-width: 400px; line-height: 1.5; margin-top: 20px; }
+  .img-box { background-image: url('https://studiobespoke.design/wp-content/uploads/2026/01/SBD_Mira_K14-scaled.jpg'); background-size: cover; background-position: center; }
+
+  /* 1. Asymmetric Gallery Portal */
+  .opt-1 { height: 700px; display: flex; align-items: center; position: relative; }
+  .opt-1 .img-box { width: 55%; height: 80%; position: absolute; right: 5%; top: 10%; }
+  .opt-1 .text-box { width: 50%; padding-left: 80px; position: relative; z-index: 2; margin-top: -100px; }
+  .opt-1 .title { font-size: 72px; mix-blend-mode: difference; color: #F9F8F6; } /* Cuts into the image */
+
+  /* 2. Plaster Archway */
+  .opt-2 { height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; text-align: center; }
+  .opt-2 .img-box { position: absolute; inset: 0; clip-path: ellipse(65% 100% at 50% 100%); z-index: 1; opacity: 0.8; }
+  .opt-2 .text-box { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; align-items: center; background: linear-gradient(to top, #F9F8F6 30%, transparent); padding-top: 200px; }
+  .opt-2 .subtitle { text-align: center; margin: 20px auto 0; }
+
+  /* 3. Editorial Sheet */
+  .opt-3 { height: auto; display: flex; flex-direction: column; padding: 60px; }
+  .opt-3 .img-box { width: 100%; height: 500px; margin-bottom: 40px; }
+  .opt-3 .text-box { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; border-top: 1px solid #1C1C1A; padding-top: 40px; }
+  .opt-3 .title { font-size: 56px; }
+
+</style>
+</head>
+<body>
+  <h1>Hero Structural Layout Concepts</h1>
+
+  <!-- Option 1: Asymmetric -->
+  <div class="layout-board opt-1">
+    <div class="caption">Concept 1: Asymmetric Gallery Portal</div>
+    <div class="img-box"></div>
+    <div class="text-box">
+      <h2 class="title">A home learns the<br><i>rhythm</i> of its people.</h2>
+      <p class="subtitle">A full renovation organized around baking, gathering, and keeping the heart of the home open.</p>
+    </div>
+  </div>
+
+  <!-- Option 2: Archway -->
+  <div class="layout-board opt-2">
+    <div class="caption">Concept 2: Plaster Archway</div>
+    <div class="img-box"></div>
+    <div class="text-box">
+      <h2 class="title">A home learns the <i>rhythm</i><br>of its people.</h2>
+      <p class="subtitle">A full renovation organized around baking, gathering, and keeping the heart of the home open.</p>
+    </div>
+  </div>
+
+  <!-- Option 3: Editorial -->
+  <div class="layout-board opt-3">
+    <div class="caption">Concept 3: Editorial Sheet</div>
+    <div class="img-box"></div>
+    <div class="text-box">
+      <h2 class="title">A home learns the<br><i>rhythm</i> of its people.</h2>
+      <p class="subtitle">A full renovation organized around baking, gathering, and keeping the heart of the home open. The aesthetic is heavily grounded in print layout.</p>
+    </div>
+  </div>
+
+</body>
+</html>

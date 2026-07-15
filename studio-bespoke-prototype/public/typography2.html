@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typography Previews V2 (Fontshare & Bricolage)</title>
+<!-- Fontshare & Google Fonts -->
+<link href="https://api.fontshare.com/v2/css?f[]=melodrama@400,500,600,700&f[]=clash-display@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  body { 
+    margin: 0; padding: 60px 40px; background: #EAE8E4; 
+    display: flex; flex-direction: column; gap: 60px; align-items: center; 
+    font-family: 'Inter', sans-serif;
+  }
+  h1 { 
+    font-family: 'Inter', sans-serif; text-align: center; color: #1C1C1A; 
+    margin-top: 0; margin-bottom: 20px; font-weight: 400; letter-spacing: -0.02em; 
+  }
+  .type-board { 
+    width: 100%; max-width: 900px; display: flex; flex-direction: column; 
+    border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
+    background-color: #F9F8F6; /* Travertine Neutral */
+    color: #1C1C1A; /* Ironwood Text */
+  }
+  .preview-section { padding: 60px; display: flex; flex-direction: column; gap: 20px; }
+  .caption { 
+    font-family: 'Inter', sans-serif; font-size: 11px; text-transform: uppercase; 
+    letter-spacing: 0.1em; margin-bottom: 10px; font-weight: 500; color: #948E85;
+    border-bottom: 1px solid #948E85; padding-bottom: 10px;
+  }
+  
+  .preview-desc { font-family: 'Inter', sans-serif; font-size: 16px; max-width: 500px; line-height: 1.6; margin: 0; opacity: 0.85; }
+  .cta-btn { 
+    display: inline-block; padding: 14px 32px; font-family: 'Inter', sans-serif; 
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; border: none; 
+    cursor: pointer; align-self: flex-start; margin-top: 20px; border-radius: 2px; 
+    background-color: #4E3F35; color: #fff;
+  }
+
+  /* Option D: Melodrama */
+  .opt-d .hero-title { font-family: 'Melodrama', serif; font-size: 64px; margin: 0; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; }
+  .opt-d .hero-title i { font-style: italic; font-weight: 400; }
+
+  /* Option E: Clash Display */
+  .opt-e .hero-title { font-family: 'Clash Display', sans-serif; font-size: 58px; margin: 0; font-weight: 500; letter-spacing: 0.02em; line-height: 1.05; text-transform: uppercase; }
+
+  /* Option F: Bricolage Grotesque */
+  .opt-f .hero-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 56px; margin: 0; font-weight: 600; letter-spacing: -0.04em; line-height: 1.05; }
+
+</style>
+</head>
+<body>
+  <h1>Typography Concepts V2 (Exotic & Fontshare)</h1>
+
+  <!-- Option D -->
+  <div class="type-board opt-d">
+    <div class="preview-section">
+      <div class="caption">Option D: Melodrama (The Rare Luxury Serif)</div>
+      <h2 class="hero-title">A home learns the <i>rhythm</i><br>of its people.</h2>
+      <p class="preview-desc">A full renovation organized around baking, gathering, and keeping the heart of the home open. High-fashion but entirely unique and uncommon.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+  </div>
+
+  <!-- Option E -->
+  <div class="type-board opt-e">
+    <div class="preview-section">
+      <div class="caption">Option E: Clash Display (The Editorial Architect)</div>
+      <h2 class="hero-title">A home learns the rhythm of its people.</h2>
+      <p class="preview-desc">A full renovation organized around baking, gathering, and keeping the heart of the home open. High-contrast strokes, extremely premium and authoritative.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+  </div>
+
+  <!-- Option F -->
+  <div class="type-board opt-f">
+    <div class="preview-section">
+      <div class="caption">Option F: Bricolage Grotesque (The Edgy Brutalist)</div>
+      <h2 class="hero-title">A home learns the rhythm of its people.</h2>
+      <p class="preview-desc">A full renovation organized around baking, gathering, and keeping the heart of the home open. Structural, characterful, very bold.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+  </div>
+
+</body>
+</html>

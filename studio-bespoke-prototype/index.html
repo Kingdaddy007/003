@@ -18,9 +18,11 @@
     <!-- Sunbeam Sweep Light Element -->
     <div class="sunbeam-sweep"></div>
     
-    <!-- Top Left Corporate Logo - Remains static in position during transition -->
-    <div class="preloader-header">
-      <img src="https://studiobespoke.design/wp-content/uploads/2021/02/Studio-Bspoke_Icon-03.png" alt="Studio Bespoke Logo" class="preloader-logo-badge">
+    <!-- Top Left Corporate Logo - Aligned to grid container -->
+    <div class="container header-container">
+      <div class="preloader-header">
+        <img src="https://studiobespoke.design/wp-content/uploads/2021/02/Studio-Bspoke_Icon-03.png" alt="Studio Bespoke Logo" class="preloader-logo-badge">
+      </div>
     </div>
 
     <!-- Center Theatrical Sequence Container -->
@@ -33,28 +35,31 @@
 
 </svg>
       
-      <!-- Foreground Mantra Typography -->
-      <div class="mantra-text-wrapper">
-        <h2 class="preloader-mantra">A great home is built around your family's daily routine.</h2>
-        <div class="mantra-subtext">Renovation Architecture / Studio Bespoke</div>
+      <!-- Foreground Mantra Typography - Left-aligned to container grid -->
+      <div class="container preloader-mantra-container">
+        <div class="mantra-text-wrapper">
+          <h2 class="preloader-mantra">A great home is built around your family's daily routine.</h2>
+          <div class="mantra-subtext">Renovation Architecture / Studio Bespoke</div>
+        </div>
+        
+        <!-- Bottom Scroll Cue / Enter Anchor -->
+        <div class="scroll-cue" id="enter-button">
+          <span>Scroll or Click to Enter</span>
+          <div class="scroll-cue-line"></div>
+        </div>
       </div>
-    </div>
-
-    <!-- Bottom Scroll Cue / Enter Anchor -->
-    <div class="scroll-cue" id="enter-button">
-      <span>Scroll or Click to Enter</span>
-      <div class="scroll-cue-line"></div>
     </div>
   </div>
 
   <!-- Main Website Container -->
   <div id="app">
     
-    <!-- 2. Section 1: The Threshold (Hero View) -->
+    <!-- 2. Section 1: The Hero (Sticky Reveal Parallax) -->
     <section id="hero" class="panel">
       <div class="hero-bg"></div>
-      <div class="container hero-container">
-        <!-- Persistent Header Navigation -->
+      
+      <!-- Persistent Header Navigation - Aligned to grid container -->
+      <div class="container header-container">
         <header class="site-header">
           <!-- Logo aligns exactly with the preloader logo badge position -->
           <img src="https://studiobespoke.design/wp-content/uploads/2021/02/Studio-Bspoke_Icon-03.png" alt="Studio Bespoke" class="nav-logo">
@@ -65,10 +70,13 @@
             <a href="#" class="nav-link">Enquire</a>
           </nav>
         </header>
+      </div>
 
+      <!-- Hero Typography (Z-Index overlaying the arch) -->
+      <div class="container hero-container">
         <div class="hero-content">
           <p class="eyebrow">Studio Bespoke / Mira, Dubai</p>
-          <h1 class="hero-title">A home learns the rhythm of its people.</h1>
+          <h1 class="hero-title">A home learns the <i>rhythm</i><br>of its people.</h1>
           <p class="hero-subtitle">A full renovation organized around baking, gathering, and keeping the heart of the home open.</p>
         </div>
       </div>

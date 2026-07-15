@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typography Previews</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  body { 
+    margin: 0; padding: 60px 40px; background: #EAE8E4; 
+    display: flex; flex-direction: column; gap: 60px; align-items: center; 
+    font-family: sans-serif;
+  }
+  h1 { 
+    font-family: 'Inter', sans-serif; text-align: center; color: #1C1C1A; 
+    margin-top: 0; margin-bottom: 20px; font-weight: 400; letter-spacing: -0.02em; 
+  }
+  .type-board { 
+    width: 100%; max-width: 900px; display: flex; flex-direction: column; 
+    border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
+    background-color: #F9F8F6; /* Travertine Neutral */
+    color: #1C1C1A; /* Ironwood Text */
+  }
+  .preview-section { padding: 60px; display: flex; flex-direction: column; gap: 20px; }
+  .caption { 
+    font-family: 'Inter', sans-serif; font-size: 11px; text-transform: uppercase; 
+    letter-spacing: 0.1em; margin-bottom: 10px; font-weight: 500; color: #948E85;
+    border-bottom: 1px solid #948E85; padding-bottom: 10px;
+  }
+  
+  .preview-desc { font-family: 'Inter', sans-serif; font-size: 16px; max-width: 500px; line-height: 1.6; margin: 0; opacity: 0.85; }
+  .cta-btn { 
+    display: inline-block; padding: 14px 32px; font-family: 'Inter', sans-serif; 
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; border: none; 
+    cursor: pointer; align-self: flex-start; margin-top: 20px; border-radius: 2px; 
+    background-color: #4E3F35; color: #fff;
+  }
+
+  /* Option A: Cormorant Garamond */
+  .opt-a .hero-title { font-family: 'Cormorant Garamond', serif; font-size: 64px; margin: 0; font-weight: 400; letter-spacing: -0.01em; line-height: 1.05; }
+  .opt-a .hero-title i { font-style: italic; font-weight: 300; }
+
+  /* Option B: Syne */
+  .opt-b .hero-title { font-family: 'Syne', sans-serif; font-size: 52px; margin: 0; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+
+  /* Option C: Plus Jakarta Sans */
+  .opt-c .hero-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 52px; margin: 0; font-weight: 400; letter-spacing: -0.04em; line-height: 1.1; }
+
+</style>
+</head>
+<body>
+  <h1>Typography Concepts (On Travertine Theme)</h1>
+
+  <!-- Option A -->
+  <div class="type-board opt-a">
+    <div class="preview-section">
+      <div class="caption">Option A: Cormorant Garamond (High-Fashion Editorial)</div>
+      <h2 class="hero-title">A home learns the <i>rhythm</i><br>of its people.</h2>
+      <p class="preview-desc">A full renovation organized around baking, gathering, and keeping the heart of the home open. Classic, unapologetic luxury.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="type-board opt-b">
+    <div class="preview-section">
+      <div class="caption">Option B: Syne (Avant-Garde Architectural)</div>
+      <h2 class="hero-title">A HOME LEARNS THE RHYTHM OF ITS PEOPLE.</h2>
+      <p class="preview-desc">A full renovation organized around baking, gathering, and keeping the heart of the home open. Modern, confident, boundary-pushing.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="type-board opt-c">
+    <div class="preview-section">
+      <div class="caption">Option C: Plus Jakarta Sans (Refined Minimalist)</div>
+      <h2 class="hero-title">A home learns the rhythm of its people.</h2>
+      <p class="preview-desc">A full renovation organized around baking, gathering, and keeping the heart of the home open. Quiet luxury, tech-forward, highly structured.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+  </div>
+
+</body>
+</html>

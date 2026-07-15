@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Palette Previews</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; padding: 60px 40px; font-family: 'Inter', sans-serif; background: #e2e1df; display: flex; flex-direction: column; gap: 60px; align-items: center; }
+  h1 { font-family: 'Outfit', sans-serif; text-align: center; color: #222; margin-top: 0; margin-bottom: 20px; font-weight: 400; letter-spacing: -0.02em; }
+  .palette-board { width: 100%; max-width: 900px; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+  .preview-section { padding: 80px 60px; display: flex; flex-direction: column; gap: 20px; }
+  .preview-title { font-family: 'Outfit', sans-serif; font-size: 42px; margin: 0; font-weight: 400; letter-spacing: -0.02em; line-height: 1.1; }
+  .preview-desc { font-size: 16px; max-width: 500px; line-height: 1.6; margin: 0; opacity: 0.85; }
+  .swatch-row { display: flex; height: 140px; }
+  .swatch { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+  .swatch span { opacity: 0.6; font-size: 11px; margin-top: 6px; }
+  .cta-btn { display: inline-block; padding: 14px 32px; font-family: 'Inter', sans-serif; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; border: none; cursor: pointer; align-self: flex-start; margin-top: 20px; border-radius: 2px; }
+  .caption { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 10px; font-weight: 500; }
+  
+  /* Option 1 */
+  .opt1 .preview-section { background-color: #F4F1EA; color: #1E1E1C; }
+  .opt1 .cta-btn { background-color: #D4A373; color: #fff; }
+  .opt1 .caption { color: #8C867A; border-left: 2px solid #8C867A; padding-left: 12px; }
+  
+  /* Option 2 */
+  .opt2 .preview-section { background-color: #F7F5F2; color: #222220; }
+  .opt2 .cta-btn { background-color: #C28F72; color: #fff; }
+  .opt2 .caption { color: #7D8477; border-left: 2px solid #7D8477; padding-left: 12px; }
+
+  /* Option 3 */
+  .opt3 .preview-section { background-color: #F9F8F6; color: #1C1C1A; }
+  .opt3 .cta-btn { background-color: #4E3F35; color: #fff; }
+  .opt3 .caption { color: #948E85; border-left: 2px solid #948E85; padding-left: 12px; }
+</style>
+</head>
+<body>
+  <h1>Color Theme Concepts</h1>
+
+  <!-- Option 1 -->
+  <div class="palette-board opt1">
+    <div class="preview-section">
+      <div class="caption">Option 1: Mineral Dune & Ochre</div>
+      <h2 class="preview-title">A great home is built around your family's daily routine.</h2>
+      <p class="preview-desc">Warm, organic, highly textured. Inspired by the high-contrast warm paper tones of Dubai's upscale gallery spaces and sunlit clay.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+    <div class="swatch-row">
+      <div class="swatch" style="background: #F4F1EA; color: #1E1E1C;">Neutral<span>#F4F1EA</span></div>
+      <div class="swatch" style="background: #1E1E1C; color: #F4F1EA;">Communicator<span>#1E1E1C</span></div>
+      <div class="swatch" style="background: #8C867A; color: #FFF;">Anchor<span>#8C867A</span></div>
+      <div class="swatch" style="background: #EAE5DB; color: #1E1E1C;">Support<span>#EAE5DB</span></div>
+      <div class="swatch" style="background: #D4A373; color: #FFF;">Action<span>#D4A373</span></div>
+    </div>
+  </div>
+
+  <!-- Option 2 -->
+  <div class="palette-board opt2">
+    <div class="preview-section">
+      <div class="caption">Option 2: Olive-Stone & Clay</div>
+      <h2 class="preview-title">A great home is built around your family's daily routine.</h2>
+      <p class="preview-desc">Architectural, grounded, sophisticated. Inspired by natural linen, olive wood, and travertine textures from flagship renovations.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+    <div class="swatch-row">
+      <div class="swatch" style="background: #F7F5F2; color: #222220;">Neutral<span>#F7F5F2</span></div>
+      <div class="swatch" style="background: #222220; color: #F7F5F2;">Communicator<span>#222220</span></div>
+      <div class="swatch" style="background: #7D8477; color: #FFF;">Anchor<span>#7D8477</span></div>
+      <div class="swatch" style="background: #EDEBDF; color: #222220;">Support<span>#EDEBDF</span></div>
+      <div class="swatch" style="background: #C28F72; color: #FFF;">Action<span>#C28F72</span></div>
+    </div>
+  </div>
+
+  <!-- Option 3 -->
+  <div class="palette-board opt3">
+    <div class="preview-section">
+      <div class="caption">Option 3: Travertine & Ironwood</div>
+      <h2 class="preview-title">A great home is built around your family's daily routine.</h2>
+      <p class="preview-desc">Ultra-premium, stark contrast. A high-contrast editorial look with a very deep accent reflecting structural oak joinery.</p>
+      <button class="cta-btn">View Project</button>
+    </div>
+    <div class="swatch-row">
+      <div class="swatch" style="background: #F9F8F6; color: #1C1C1A;">Neutral<span>#F9F8F6</span></div>
+      <div class="swatch" style="background: #1C1C1A; color: #F9F8F6;">Communicator<span>#1C1C1A</span></div>
+      <div class="swatch" style="background: #948E85; color: #FFF;">Anchor<span>#948E85</span></div>
+      <div class="swatch" style="background: #F1EFEA; color: #1C1C1A;">Support<span>#F1EFEA</span></div>
+      <div class="swatch" style="background: #4E3F35; color: #FFF;">Action<span>#4E3F35</span></div>
+    </div>
+  </div>
+
+</body>
+</html>
