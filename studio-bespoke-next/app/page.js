@@ -27,13 +27,13 @@ export default function Home() {
     <>
       <SiteHeader isVisible={isNavVisible} />
 
-      {/* 1. Architectural preloader — crystallizes into hero on scroll */}
+      {/* 1. Architectural opening — the preloader and hero are one experience */}
       <Preloader onNavVisibilityChange={handleNavVisibilityChange} />
 
-      {/* 2. Hero (always in DOM — GSAP needs it as a pin target) */}
+      {/* 2. Hero spacer — anchors the opening while its foreground clears */}
       <HeroSection />
 
-      {/* 3–6. Content that slides over the pinned hero */}
+      {/* 3–6. Story chapters: problem, intervention, detail, and enquiry */}
       <main className="content-overlay">
         <TensionSection />
         <ProofPinSection />

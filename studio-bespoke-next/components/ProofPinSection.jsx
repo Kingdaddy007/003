@@ -6,12 +6,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CLOSED_APERTURE = 'inset(14% 24% 12% 24% round 320px 320px 28px 28px)';
-const OPEN_APERTURE = 'inset(0% 0% 0% 0% round 0px)';
+const INITIAL_APERTURE_SCALE = 0.72;
 
 export default function ProofPinSection() {
   const pinRef = useRef(null);
   const apertureRef = useRef(null);
+  const imageShellRef = useRef(null);
+  const imageRef = useRef(null);
   const overlayRef = useRef(null);
   const firstStepRef = useRef(null);
   const secondStepRef = useRef(null);
@@ -21,18 +22,39 @@ export default function ProofPinSection() {
   useEffect(() => {
     const pin = pinRef.current;
     const aperture = apertureRef.current;
+    const imageShell = imageShellRef.current;
+    const image = imageRef.current;
     const overlay = overlayRef.current;
     const firstStep = firstStepRef.current;
     const secondStep = secondStepRef.current;
     const wallsAnnotation = wallsAnnotationRef.current;
     const islandAnnotation = islandAnnotationRef.current;
 
-    if (!pin || !aperture || !overlay || !firstStep || !secondStep) return undefined;
+    if (!pin || !aperture || !imageShell || !image || !overlay || !firstStep || !secondStep) return undefined;
 
     const media = gsap.matchMedia();
 
     media.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
-      gsap.set(aperture, { clipPath: CLOSED_APERTURE, webkitClipPath: CLOSED_APERTURE });
+      const getCoverScale = () => Math.max(
+        (window.innerWidth * 1.12) / aperture.offsetWidth,
+        (window.innerHeight * 1.12) / aperture.offsetHeight
+      );
+
+      gsap.set(aperture, {
+        autoAlpha: 1,
+        xPercent: -50,
+        yPercent: -50,
+        y: '12vh',
+        scale: INITIAL_APERTURE_SCALE,
+        transformOrigin: '50% 50%',
+      });
+      gsap.set(imageShell, {
+        xPercent: -50,
+        yPercent: -50,
+        scale: 1 / INITIAL_APERTURE_SCALE,
+        transformOrigin: '50% 50%',
+      });
+      gsap.set(image, { scale: 1.08, xPercent: -2.5, yPercent: 1.5 });
       gsap.set(overlay, { autoAlpha: 0 });
       gsap.set([firstStep, secondStep], { autoAlpha: 0, y: 18 });
       gsap.set([wallsAnnotation, islandAnnotation], { autoAlpha: 0, scale: 0.82 });
@@ -41,28 +63,41 @@ export default function ProofPinSection() {
         scrollTrigger: {
           trigger: pin,
           start: 'top top',
-          end: '+=180%',
+          end: '+=140%',
           pin: true,
-          scrub: 0.75,
+          scrub: 0.55,
+          anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
       timeline
         .to(aperture, {
-          clipPath: OPEN_APERTURE,
-          webkitClipPath: OPEN_APERTURE,
-          duration: 0.34,
+          y: 0,
+          scale: getCoverScale,
+          duration: 0.42,
           ease: 'power2.inOut',
         }, 0)
-        .to(overlay, { autoAlpha: 1, duration: 0.1, ease: 'none' }, 0.28)
-        .to(firstStep, { autoAlpha: 1, y: 0, duration: 0.1, ease: 'power2.out' }, 0.36)
-        .to(wallsAnnotation, { autoAlpha: 1, scale: 1, duration: 0.1, ease: 'power2.out' }, 0.36)
-        .to(firstStep, { autoAlpha: 0, y: -16, duration: 0.08, ease: 'power2.in' }, 0.58)
-        .to(wallsAnnotation, { autoAlpha: 0, scale: 0.9, duration: 0.08 }, 0.58)
-        .to(secondStep, { autoAlpha: 1, y: 0, duration: 0.1, ease: 'power2.out' }, 0.66)
-        .to(islandAnnotation, { autoAlpha: 1, scale: 1, duration: 0.1, ease: 'power2.out' }, 0.66)
-        .to({}, { duration: 0.24 });
+        .to(imageShell, {
+          scale: () => 1 / getCoverScale(),
+          duration: 0.42,
+          ease: 'power2.inOut',
+        }, 0)
+        .to(image, {
+          scale: 1,
+          xPercent: 0,
+          yPercent: -1,
+          duration: 0.46,
+          ease: 'power2.inOut',
+        }, 0)
+        .to(overlay, { autoAlpha: 1, duration: 0.1, ease: 'none' }, 0.4)
+        .to(firstStep, { autoAlpha: 1, y: 0, duration: 0.1, ease: 'power2.out' }, 0.5)
+        .to(wallsAnnotation, { autoAlpha: 1, scale: 1, duration: 0.1, ease: 'power2.out' }, 0.5)
+        .to(firstStep, { autoAlpha: 0, y: -16, duration: 0.08, ease: 'power2.in' }, 0.7)
+        .to(wallsAnnotation, { autoAlpha: 0, scale: 0.9, duration: 0.08 }, 0.7)
+        .to(secondStep, { autoAlpha: 1, y: 0, duration: 0.1, ease: 'power2.out' }, 0.78)
+        .to(islandAnnotation, { autoAlpha: 1, scale: 1, duration: 0.1, ease: 'power2.out' }, 0.78)
+        .to({}, { duration: 0.12 });
 
       return () => timeline.revert();
     });
@@ -74,11 +109,14 @@ export default function ProofPinSection() {
     <section id="proof" className="pinned-section" aria-labelledby="proof-title">
       <div className="pin-trigger" ref={pinRef}>
         <div className="proof-room-aperture" ref={apertureRef}>
-          <div
-            className="pin-bg-image"
-            role="img"
-            aria-label="Completed Mira Villa kitchen connected to the surrounding living spaces"
-          />
+          <div className="proof-room-image-shell" ref={imageShellRef}>
+            <div
+              className="pin-bg-image"
+              ref={imageRef}
+              role="img"
+              aria-label="Completed Mira Villa kitchen connected to the surrounding living spaces"
+            />
+          </div>
         </div>
         <div className="pin-overlay" ref={overlayRef} />
 

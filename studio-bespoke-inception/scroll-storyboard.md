@@ -15,9 +15,9 @@
 
 | Beat | Label | Scroll depth | Controlling idea | What the visitor sees | Feeling | Register | Continuity | Copy mode | Transition out |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Opening belief | 0–14%; one-time arrival, then ordinary scroll | Design begins with the life inside the plan | Technical blueprint video, controlling line and delayed navigation | Recognition and technical trust | MINERAL LIGHT | Blueprint lines | DECLARATIVE | CURTAIN RISE |
-| 2 | The inherited plan | 14–30%; normal | An enclosed plan can resist light, movement and gathering | Dark editorial panel rises over the opening; quiet blueprint field supports dedicated copy | Tension and understanding | SHADED PLAN | Blueprint linework and type alignment | EDITORIAL | PORTAL |
-| 3 | The decisive cut | 30–52%; one desktop pin | One structural decision changed light, flow and family connection | A restrained arch opens into the completed Mira room; wall-removal evidence, island decision and Marie Claire confirmation follow | Relief and trust | OPEN PLAN | Arch/opening geometry | DECLARATIVE | LIGHT WASH |
+| 1 | Opening belief | 0–14%; one-time arrival, then scroll-linked handoff | Design begins with the life inside the plan | Technical blueprint video, controlling line and delayed navigation; the visual plane remains anchored as the copy leaves | Recognition and technical trust | MINERAL LIGHT | Blueprint plane | DECLARATIVE | ANCHOR HOLD |
+| 2 | The inherited plan | 14–28%; normal foreground scroll over the anchor hold | An enclosed plan can resist light, movement and gathering | Dedicated copy and quiet linework move through the viewport while the shared blueprint plane darkens without a panel edge | Tension and understanding | SHADED PLAN | Blueprint plane and type alignment | EDITORIAL | APERTURE RISE |
+| 3 | The decisive cut | 28–48%; one 140vh desktop pin | One structural decision changed light, flow and family connection | One constant-shape arch rises and expands into the completed Mira room; a subtle internal crop shift settles before wall-removal evidence, island decision and Marie Claire confirmation | Relief and trust | OPEN PLAN | Arch/opening geometry | DECLARATIVE | LIGHT WASH |
 | 4 | Rituals made spatial | 52–68%; controlled procession | Ease is designed through small exact decisions | Kitchen, joinery, storage and coffee-nook details; one item at a time | Appreciation | MINERAL LIGHT | Caption rhythm | EDITORIAL | DRIFT |
 | 5 | The method travels | 68–80%; normal | The same intelligence works at different scales | Zulal and Desert Leaf as two concise cases | Confidence | MINERAL LIGHT | Split image/caption grid | EDITORIAL | HARD CUT |
 | 6 | The hand behind ease | 80–90%; normal | Careful execution is part of the design | Three-stage process, material/process evidence, selected capacity | Assurance | MINERAL LIGHT | Vertical rule / annotation type | EDITORIAL | DISSOLVE |
@@ -34,7 +34,7 @@
 
 ## Beat 3 media instruction
 
-The current risk prototype uses a real Mira still inside an expanding architectural aperture. If a rights-cleared source image and approved reverse-safe film are later supplied, the still may become a scroll-mapped frame sequence. The accompanying annotation remains the evidence: it names the removed internal walls and the kitchen-centred plan, then cites the Marie Claire coverage. The media never reconstructs or implies a documentary before state.
+The current risk prototype uses a real Mira still inside one constant-geometry architectural aperture. The arch translates upward and scales uniformly until its edge overscans the viewport; it must not morph through capsule, oval and rounded-rectangle states. The still shifts only enough to transfer attention from the threshold toward the island. If a rights-cleared source image and approved reverse-safe film are later supplied, the still may become a scroll-mapped frame sequence. The accompanying annotation remains the evidence: it names the removed internal walls and the kitchen-centred plan, then cites the Marie Claire coverage. The media never reconstructs or implies a documentary before state and does not cycle through unrelated rooms.
 
 ## Responsive and reduced-motion translation
 

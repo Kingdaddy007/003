@@ -1,6 +1,15 @@
-function BlueprintField() {
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+function BlueprintField({ fieldRef }) {
   return (
     <svg
+      ref={fieldRef}
       className="tension-blueprint-field"
       viewBox="0 0 1200 900"
       aria-hidden="true"
@@ -23,11 +32,47 @@ function BlueprintField() {
 }
 
 export default function TensionSection() {
+  const sectionRef = useRef(null);
+  const copyRef = useRef(null);
+  const fieldRef = useRef(null);
+  const noteRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const copy = copyRef.current;
+    const field = fieldRef.current;
+    const note = noteRef.current;
+    if (!section || !copy || !field || !note) return undefined;
+
+    const media = gsap.matchMedia();
+
+    media.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
+      const exitTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'bottom 82%',
+          end: 'bottom 18%',
+          scrub: 0.45,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      exitTimeline
+        .to(copy, { autoAlpha: 0, y: -72, duration: 1, ease: 'none' }, 0)
+        .to(note, { autoAlpha: 0, y: -34, duration: 0.72, ease: 'none' }, 0)
+        .to(field, { autoAlpha: 0.18, yPercent: -5, duration: 1, ease: 'none' }, 0);
+
+      return () => exitTimeline.revert();
+    });
+
+    return () => media.revert();
+  }, []);
+
   return (
-    <section id="tension" aria-labelledby="tension-title">
-      <BlueprintField />
+    <section id="tension" ref={sectionRef} aria-labelledby="tension-title">
+      <BlueprintField fieldRef={fieldRef} />
       <div className="sb-container tension-container">
-        <div className="tension-copy">
+        <div className="tension-copy" ref={copyRef}>
           <span className="eyebrow tension-eyebrow">The Inherited Plan</span>
           <h2 id="tension-title" className="section-title tension-title">
             Closed rooms.<br />Borrowed habits.
@@ -38,7 +83,7 @@ export default function TensionSection() {
             question was not how to decorate it, but what the plan needed to release.
           </p>
         </div>
-        <p className="tension-note">01 / Constraint before intervention</p>
+        <p className="tension-note" ref={noteRef}>01 / Constraint before intervention</p>
       </div>
     </section>
   );

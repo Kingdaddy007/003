@@ -1,8 +1,8 @@
 # Studio Bespoke Design — Production Plan
 
-**Status:** Pre-prototype production contract; video-led proof approved  
+**Status:** Active risk-prototype production contract; still-led aperture proof in testing
 **Concept:** The Ritual Plan  
-**Implementation authority:** Not yet granted. This plan defines what must be proven before a build expands.
+**Implementation authority:** Granted for the opening, inherited-plan bridge, and decisive-intervention risk prototype. Later chapters remain outside this prototype slice.
 
 ## 1. Asset contract
 
@@ -23,9 +23,9 @@
 
 | Section | Journey stage | Media type | Scroll behaviour | Text zone | Motion track | Fallback |
 | --- | --- | --- | --- | --- | --- | --- |
-| Threshold | Atmosphere / argument | Real Mira still, optional source-image-to-video later | One-time arrival; ordinary scroll after | Quiet wall/negative-space zone | Arrival | Static hero image and immediate headline |
-| Inherited plan | Tension | Still + editorial copy | Normal document flow | Dedicated side column | None | Same |
-| Decisive intervention | Proof | Mira source-image-to-video room film, paired with an exact editorial annotation | One controlled desktop pin; scroll drives the film playhead forward and backward | Fixed annotation rail | Scroll-bound | Poster image plus caption/source link |
+| Threshold | Atmosphere / argument | Technical blueprint video with inline SVG fallback | One-time arrival, then an anchored background handoff controlled by scroll | Lower-left statement zone | Arrival + scroll-bound handoff | Static blueprint field and immediate headline |
+| Inherited plan | Tension | Shared blueprint field + editorial copy | Foreground copy follows ordinary scroll while the background plane stays anchored and changes register | Dedicated left column | Scroll-bound handoff | Ordinary dark editorial section |
+| Decisive intervention | Proof | Real Mira still inside a constant-geometry architectural aperture, paired with exact annotations | One 140vh desktop pin; the arch rises, expands, and settles before proof copy appears | Fixed left annotation rail after expansion | Scroll-bound | Full room still plus stacked captions |
 | Rituals made spatial | Proof / material | Selected detail photos | Gallery procession; no mandatory pin | Edge labels, never over key room content | Scroll-bound / interaction | Stacked image/caption sequence |
 | Supporting work | Proof | Zulal and Desert Leaf stills | Ordinary scroll with deliberate pauses | Captions below/alongside images | None or subtle interaction | Same |
 | Method | Trust | Material/process imagery and editorial notes | Normal scroll | Clear reading column | None | Same |
@@ -34,8 +34,8 @@
 ## 3. Motion and engineering contract
 
 - Use **GSAP + ScrollTrigger** only for approved authored chapters: hero arrival, Mira proof hold, selected gallery transfer.
-- Do not add Lenis until native scroll has been tested and shown insufficient for the intended choreography.
-- No WebGL or autonomous background video in the initial prototype. The approved exception is one **Mira proof film**, tested as a short canvas frame sequence only because precise forward/back scroll control is its communication job. It must be source-image-locked and have a static poster/caption fallback.
+- Keep Lenis as the single scroll infrastructure layer and synchronize it with the GSAP ticker and ScrollTrigger. Anchor navigation, touch scrolling, reverse travel and reduced-motion fallbacks must remain reliable.
+- No WebGL or autonomous room video in the initial prototype. The opening technical blueprint video performs the arrival job and has an SVG fallback. The decisive-intervention proof remains a real still unless an approved reverse-safe Mira film proves the intervention more clearly.
 - Separate arrival, ambient, scroll-bound and interaction timelines. They may not overwrite each other.
 - Use scene-native transitions: arch/threshold reveal, light wash, material edge or a deliberate hard cut. No generic diagonal wipes.
 - Keep navigation and enquiry reachable during any pin.
@@ -68,7 +68,7 @@ Build only this sequence before broader production:
 
 1. Threshold: technical CAD sketch of kitchen with bread on cutting board, drawing lines, dissolving into real photo.
 2. The inherited plan: a short editorial tension statement.
-3. Decisive intervention: one real wide shot or source-image-locked proof film, a labelled decision, and Marie Claire proof. On desktop, scroll must be able to play the film both forward and backward without uncanny reversal.
+3. Decisive intervention: one real wide shot inside a constant-geometry expanding arch, a labelled decision, and Marie Claire proof. On desktop, every state must reverse cleanly without copy collision or shape deformation.
 4. Ritual detail: one kitchen/coffee/storage illustration or image, with a precise caption.
 5. Mobile and reduced-motion variants of all four moments.
 
@@ -96,19 +96,19 @@ Build only this sequence before broader production:
 
 ## 8. Video-led proof choreography
 
-### Approved section: Mira - The decisive intervention
+### Active prototype section: Mira - The decisive intervention
 
 | Field | Contract |
 | --- | --- |
 | Journey stage | Proof: the point where the visitor must understand what changed, not merely admire the finished room. |
 | Belief/proof job | A plan can be opened around a family's actual movement, gathering and cooking rituals. |
-| Media type | Source-image-to-video film, extracted to a canvas frame sequence for desktop scroll control. |
-| Scroll behaviour | Pinned and scrubbed across one purposeful reading interval. Scroll forward advances; reverse scroll returns through the same camera path. |
+| Media type | Real Mira still inside a constant-geometry DOM aperture. A source-image-to-video frame sequence remains a later conditional option. |
+| Scroll behaviour | Pinned and scrubbed across 140vh. Scroll raises and uniformly scales the arch; reverse scroll closes the same path. |
 | Enter / leave | Enter after the inherited-plan editorial statement; leave once the walls-removed annotation and press source have both been readable. Final pixel ranges are prototype-derived, not invented now. |
 | Text zone | Left or right quiet edge of the source composition; never over the kitchen work surface, opening, or movement path. |
-| Reveal rhythm | Project label -> "Walls removed to connect kitchen, living and dining" -> short explanation -> Marie Claire proof link. |
+| Reveal rhythm | Arch rise -> room settles -> "Walls removed to connect kitchen, living and dining" -> island decision -> Marie Claire proof link. |
 | Motion track | Scroll-bound. Arrival and ambient motion remain separate. |
-| Prompt requirement | `cinematic-prompt-pack.md` plus a rights-cleared Mira source still, a composition lock and an end-frame definition. |
+| Prompt requirement | None for the current still prototype. A future film requires `cinematic-prompt-pack.md`, a rights-cleared Mira source still, a composition lock and an end-frame definition. |
 | Fallback | Poster still, complete annotation, source link and ordinary document flow on mobile/reduced motion or failed JavaScript. |
 
 ### Reverse-safe film rules

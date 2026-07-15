@@ -2,6 +2,9 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Preloader({ onNavVisibilityChange }) {
   const preloaderRef = useRef(null);
@@ -10,7 +13,9 @@ export default function Preloader({ onNavVisibilityChange }) {
   const sunbeamRef = useRef(null);
   const mantraSubRef = useRef(null);
   const enterBtnRef = useRef(null);
+  const storyShadeRef = useRef(null);
   const arrivalTimelineRef = useRef(null);
+  const handoffTimelineRef = useRef(null);
   const onNavVisibilityChangeRef = useRef(onNavVisibilityChange);
 
   useEffect(() => {
@@ -48,6 +53,49 @@ export default function Preloader({ onNavVisibilityChange }) {
     let videoFallbackTimeout;
     let cancelled = false;
 
+    function initScrollHandoff() {
+      if (!window.matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)').matches) {
+        ScrollTrigger.refresh();
+        return;
+      }
+
+      const copyStage = preloaderRef.current?.querySelector('.preloader-copy-stage');
+      const storyShade = storyShadeRef.current;
+      const enterButton = enterBtnRef.current;
+      if (!copyStage || !storyShade || !enterButton) return;
+
+      const handoffTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.45,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      handoffTimeline
+        .to([copyStage, enterButton], {
+          autoAlpha: 0,
+          y: -88,
+          duration: 0.34,
+          ease: 'none',
+        }, 0)
+        .to(storyShade, {
+          opacity: 0.94,
+          duration: 0.55,
+          ease: 'none',
+        }, 0.25)
+        .to([videoElement, svgElement], {
+          opacity: 0.09,
+          duration: 0.45,
+          ease: 'none',
+        }, 0.35);
+
+      handoffTimelineRef.current = handoffTimeline;
+      window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    }
+
     function initArrivalTimeline(targetElement, isVideo) {
       if (arrivalInitialized) return;
       arrivalInitialized = true;
@@ -56,6 +104,7 @@ export default function Preloader({ onNavVisibilityChange }) {
         onComplete: () => {
           document.body.classList.remove('scroll-locked');
           onNavVisibilityChangeRef.current?.(true);
+          initScrollHandoff();
         },
       });
       arrivalTimelineRef.current = arrivalTl;
@@ -158,6 +207,8 @@ export default function Preloader({ onNavVisibilityChange }) {
 
       arrivalTimelineRef.current?.revert();
       arrivalTimelineRef.current = null;
+      handoffTimelineRef.current?.revert();
+      handoffTimelineRef.current = null;
       document.body.classList.remove('scroll-locked');
     };
   }, []);
@@ -228,11 +279,13 @@ export default function Preloader({ onNavVisibilityChange }) {
         </div>
       </div>
 
+      <div className="preloader-story-shade" ref={storyShadeRef} />
+
       {/* Scroll cue */}
-      <div id="enter-button" className="scroll-cue" ref={enterBtnRef}>
+      <button id="enter-button" className="scroll-cue" ref={enterBtnRef} type="button" aria-label="Begin exploring the Studio Bespoke story">
         <div className="scroll-cue-line" />
         <span>Enter</span>
-      </div>
+      </button>
     </div>
   );
 }

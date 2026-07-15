@@ -50,4 +50,5 @@ To align layout elements cleanly across viewports, the site uses a strict respon
 
 * **Hover Transitions:** `300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)` (Weighted ease-out)
 * **Focus Indicator:** Custom 2px solid active action accent color with `4px` offset
-* **Threshold transition:** On desktop, the completed Mira room holds still while the inherited-plan chapter rises over it as a curtain. Do not use Z-axis zooms, crossfades, or decorative parallax for this handoff. On mobile and for reduced motion, use ordinary sequential scroll.
+* **Opening-to-problem transition:** On desktop, the blueprint/video plane remains visually anchored while the opening copy leaves and the inherited-plan copy travels through normal scroll. The background changes register without a panel edge or Z-axis movement. On mobile and for reduced motion, use ordinary sequential sections.
+* **Problem-to-proof transition:** A single constant-geometry arch rises and expands until it overscans the viewport. The Mira still may shift subtly inside the aperture to move attention from threshold to island, but it may not cycle through unrelated rooms.

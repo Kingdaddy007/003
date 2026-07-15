@@ -14,9 +14,9 @@ This map explains **what each section must communicate**. It does not lock the f
 
 | Section | Stable job | Evidence available now | Must not become | Current visual prototype |
 | --- | --- | --- | --- | --- |
-| Opening / belief | Establish that design begins with the life inside the plan | Mira ritual and renovation evidence | A generic luxury reel or finished-room portfolio reveal | Blueprint arrival, controlling line, then persistent navigation |
-| The inherited plan / problem | Explain how the existing arrangement resisted light, movement and gathering | Editorially documented Mira constraint; no authentic before image or plan supplied | A fabricated before/after claim | Dark editorial field with quiet blueprint linework and dedicated copy |
-| The decisive intervention / proof | Show the structural decision and why it mattered | Internal wall removal, kitchen-centred re-plan, Marie Claire confirmation | An unexplained cinematic effect | An arch opens into the completed room; evidence appears only after the room is legible |
+| Opening / belief | Establish that design begins with the life inside the plan | Mira ritual and renovation evidence | A generic luxury reel or finished-room portfolio reveal | Blueprint arrival and controlling line on an anchored visual plane |
+| The inherited plan / problem | Explain how the existing arrangement resisted light, movement and gathering | Editorially documented Mira constraint; no authentic before image or plan supplied | A fabricated before/after claim | Foreground copy scrolls across the same anchored blueprint plane as its register darkens; no panel edge |
+| The decisive intervention / proof | Show the structural decision and why it mattered | Internal wall removal, kitchen-centred re-plan, Marie Claire confirmation | An unexplained cinematic effect | One constant-shape arch rises and expands into the completed room; evidence appears only after the room is legible |
 | Rituals made spatial / consequences | Connect the new plan to baking, storage, coffee and gathering | Mira detail imagery and project descriptions | A decorative detail gallery | Precise image-and-caption sequence; still under development |
 | The method travels / range | Prove the same judgment works at different scales | Zulal and Desert Leaf | An equal-weight card grid | Two concise supporting cases; still under development |
 | The hand behind the ease / trust | Make delivery judgment and responsibility visible | Founder, process, partner and testimony material pending confirmation | A biography before proof | Editorial process chapter; still under development |
@@ -41,7 +41,7 @@ This is a **project-led, ritual/threshold narrative**, not a conventional market
 
 | Chapter | Job | Visitor should believe | Primary proof | Copy–image relationship |
 | --- | --- | --- | --- | --- |
-| 1. Threshold — “A home learns you” | Establish world and first-known priority | Design begins with life, not decoration | Wide Mira space with legible depth | One atmospheric sentence; image leads |
+| 1. Threshold — “A home becomes personal” | Establish world and first-known priority | Design begins with life, not decoration | Technical blueprint arrival with the approved lower-left statement | One declarative sentence; the architectural field leads |
 | 2. The inherited plan | Name the tension without inventing a false before | Existing homes can resist the way people live | Editorial description of inward-looking Mira and its re-planning | Declarative copy beside restrained architectural crop |
 | 3. The decisive intervention | Prove Brittany’s judgment | One structural decision can change light, movement and connection | Removed internal walls; kitchen as heart; Marie Claire source | Exact captions; press proof is subordinate but visible |
 | 4. Rituals made spatial | Turn abstract positioning into tangible decisions | Storage, coffee, gathering and retreat can be designed, not improvised | Integrated storage, concealed coffee nook, arches, material choices | Short labels attached to image details |
@@ -98,14 +98,14 @@ Every final token must pass contrast, grayscale, mobile, and colour-vision check
 
 | Track | Role | Approved behaviour | Excluded behaviour |
 | --- | --- | --- | --- |
-| Arrival | Open the first threshold | One-time light/curtain-like reveal into Mira; headline remains stable | Long loading theatre, logo animation, autoplay film |
+| Arrival | Open the first threshold | One-time blueprint/video draw and light sweep; headline remains stable until the visitor scrolls | Long loading theatre, logo animation, autoplay room film |
 | Ambient | Give a room subtle life | Optional low-amplitude light/shadow movement only when a real asset supports it | Constant floating objects, particles, decorative parallax |
 | Scroll-bound | Bind argument to proof | One pinned Mira proof sequence driven by a short room film/frame sequence; slow gallery procession for selected decisions | Pinning every section, scroll-jacking, repeated fade-ups |
 | Interaction | Give agency where it improves understanding | Tap/click an annotation to reveal a decision; clear form focus states | Hover-only critical content, novelty cursor effects |
 
 ### GSAP decision
 
-**GSAP + ScrollTrigger is approved** for the arrival sequence, one scrubbed/pinned flagship proof chapter, and a measured gallery procession. The flagship proof may use a short, reverse-safe Mira room film rendered as a canvas frame sequence, so scroll position precisely controls its playhead. It is not approved for every transition. Lenis is not assumed; native scroll remains the default until a prototype demonstrates that a smooth-scroll layer is needed and remains accessible.
+**GSAP + ScrollTrigger is approved** for the arrival sequence, the anchored opening-to-problem handoff, one scrubbed/pinned flagship proof chapter, and a measured gallery procession. The current proof prototype uses a real Mira still inside a constant-geometry aperture; a reverse-safe room film remains a later asset-dependent option. Lenis is approved as the shared scroll infrastructure because the prototype requires damped, reversible control, provided anchors, mobile touch, reduced motion, and navigation remain reliable.
 
 ## 6. Responsive intent
 
