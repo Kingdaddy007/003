@@ -1,0 +1,686 @@
+/* CSS Design System for Studio Bespoke Design — Risk Prototype */
+
+:root {
+  --color-neutral: #F7F5F2; /* Mineral Paper */
+  --color-communicator: #1C1C1A; /* Near Charcoal */
+  --color-anchor: #8A8175; /* Mineral Gray-Brown */
+  --color-support: #E7E3DC; /* Soft Plaster */
+  --color-action: #A89078; /* Soft Mineral Accent */
+  
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-neutral);
+  color: var(--color-communicator);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+/* Common Layout Elements */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-anchor);
+  margin-bottom: 15px;
+  display: block;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.body-text {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-communicator);
+}
+
+.text-white { color: var(--color-neutral); }
+.text-light { color: var(--color-support); }
+.text-muted { color: var(--color-anchor); }
+
+/* ========================================================
+   1. THEATRICAL FULLSCREEN PRELOADER
+   ======================================================== */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--color-neutral);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.sunbeam-sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 250px;
+  background: linear-gradient(90deg, 
+    rgba(247, 245, 242, 0) 0%, 
+    rgba(168, 144, 120, 0.25) 50%, 
+    rgba(247, 245, 242, 0) 100%
+  );
+  filter: blur(25px);
+  z-index: 3; /* above image trace, below text wrapper overlay context */
+  pointer-events: none;
+  transform: skewX(-22deg) translateX(-300px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.preloader-bg {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-neutral);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Top Left Logo Badge Container */
+.preloader-header {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 10;
+}
+
+.preloader-logo-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+/* Center Content Area */
+.preloader-center-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Fullscreen Blueprint Trace */
+.blueprint-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* contain shows 100% of the blueprint without zoom crop */
+  mix-blend-mode: multiply; /* Multiplies lines directly on Limestone Paper */
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%); /* Initial clip-path for sweep reveal */
+  will-change: clip-path, opacity, transform;
+}
+
+/* Foreground Typography */
+.mantra-text-wrapper {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 780px;
+  padding: 0 20px;
+}
+
+.preloader-mantra {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 4.5vw, 52px);
+  font-weight: 300;
+  line-height: 1.22;
+  color: var(--color-communicator);
+  margin-bottom: 24px;
+}
+
+.preloader-mantra .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(8px); /* soft, high-end light focus bleed */
+  margin-right: 0.24em; /* space between words */
+  will-change: transform, opacity, filter;
+}
+
+.mantra-subtext {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-communicator); /* darker charcoal for absolute visibility */
+  opacity: 0;
+  transform: translateY(10px);
+  font-weight: 600;
+  will-change: transform, opacity;
+}
+
+/* Bottom Scroll Cue */
+.scroll-cue {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.scroll-cue span {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-communicator);
+  font-weight: bold;
+}
+
+.scroll-cue-line {
+  width: 1px;
+  height: 50px;
+  background: var(--color-communicator);
+  transform-origin: top;
+  animation: scrollCueAnimate 2.2s infinite ease-in-out;
+}
+
+@keyframes scrollCueAnimate {
+  0% { transform: scaleY(0); }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ========================================================
+   2. HERO VIEW & PERSISTENT HEADER
+   ======================================================= */
+#hero {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-communicator);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://studiobespoke.design/wp-content/uploads/2026/01/SBD_Mira_K14-scaled.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.15); /* Start zoomed in for reveal handshake */
+  will-change: transform, opacity;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.6) 100%);
+  z-index: 1;
+}
+
+/* Header Navigation overlaying Hero */
+.site-header {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.nav-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.nav-menu {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-link {
+  color: var(--color-neutral);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-action);
+}
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+  color: var(--color-neutral);
+  max-width: 750px;
+  margin-top: 60px;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(38px, 6vw, 68px);
+  font-weight: 300;
+  line-height: 1.05;
+  margin-bottom: 25px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-support);
+  max-width: 580px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ========================================================
+   3. THE INHERITED PLAN (TENSION)
+   ======================================================== */
+#tension {
+  background-color: #232522; /* Shaded dark green-charcoal */
+  padding: 100px 0;
+}
+
+.tension-container .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.tension-image-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.tension-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(0.2) contrast(1.1);
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(35, 37, 34, 0.4);
+  mix-blend-mode: multiply;
+}
+
+/* ========================================================
+   4. THE DECISIVE CUT (PINNED PROOF SECTION)
+   ======================================================== */
+.pinned-section {
+  position: relative;
+  background-color: var(--color-communicator);
+}
+
+.pin-trigger {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.pin-bg-image {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://studiobespoke.design/wp-content/uploads/2026/01/SBD_Mira_K12-scaled.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.pin-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(28,28,26,0.85) 0%, rgba(28,28,26,0.3) 60%, rgba(28,28,26,0.7) 100%);
+  z-index: 2;
+}
+
+.pin-content-container {
+  position: relative;
+  height: 100%;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  align-items: center;
+}
+
+.pin-narrative {
+  color: var(--color-neutral);
+  position: relative;
+  height: 250px;
+}
+
+.narrative-step {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.narrative-step.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.narrative-title {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 15px;
+}
+
+.narrative-desc {
+  font-size: 16px;
+  color: var(--color-support);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.proof-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-action);
+  border-bottom: 1px solid var(--color-action);
+  padding-bottom: 3px;
+}
+
+/* Interactive Blueprint Annotations */
+.annotation-system {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.annotation {
+  position: absolute;
+  pointer-events: auto;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.5s ease;
+}
+
+.annotation.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.anno-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-neutral);
+  border: 2px solid var(--color-communicator);
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+.anno-dot::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+  animation: pulseDot 2s infinite;
+}
+
+.anno-card {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(28,28,26,0.9);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 12px 16px;
+  border-radius: 3px;
+  width: 220px;
+  color: var(--color-neutral);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  transition: all 0.3s ease;
+}
+
+.annotation:hover .anno-card {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.anno-card h3 {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-action);
+  margin-bottom: 5px;
+}
+
+.anno-card p {
+  font-size: 11px;
+  color: var(--color-support);
+  line-height: 1.4;
+}
+
+/* ========================================================
+   5. RITUALS MADE SPATIAL (DETAILS GRID)
+   ======================================================== */
+#details {
+  background-color: var(--color-neutral);
+  padding: 120px 0;
+}
+
+#details .section-title {
+  margin-bottom: 60px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+}
+
+.detail-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-img-wrapper {
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+}
+
+.detail-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.detail-img:hover {
+  transform: scale(1.03);
+}
+
+.detail-blueprint-label {
+  border-left: 2px solid var(--color-anchor);
+  padding-left: 15px;
+}
+
+.detail-label-coord {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-anchor);
+  margin-bottom: 5px;
+  display: block;
+}
+
+.detail-label-desc {
+  font-size: 14px;
+  color: var(--color-communicator);
+}
+
+/* ========================================================
+   6. FOOTER / INVITATION
+   ======================================================== */
+#footer {
+  background-color: var(--color-support);
+  padding: 120px 0 60px;
+  color: var(--color-communicator);
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-note {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-anchor);
+  margin-bottom: 30px;
+}
+
+.footer-prompt {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.25;
+  max-width: 700px;
+  margin-bottom: 50px;
+}
+
+.footer-links .footer-link {
+  display: inline-block;
+  background-color: var(--color-communicator);
+  color: var(--color-neutral);
+  text-decoration: none;
+  padding: 15px 40px;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.footer-links .footer-link:hover {
+  transform: translateY(-3px);
+  background-color: var(--color-action);
+  color: var(--color-communicator);
+}
+
+/* ========================================================
+   7. MOBILE RESPONSIVE FALLBACKS
+   ======================================================== */
+@media (max-width: 900px) {
+  .preloader-header {
+    top: 24px;
+    left: 24px;
+  }
+  
+  .preloader-logo-badge {
+    width: 48px;
+    height: 48px;
+  }
+
+  .preloader-center-content {
+    height: 65vh;
+  }
+
+  .blueprint-canvas-wrapper {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .blueprint-img {
+    max-width: 95%;
+  }
+
+  .container {
+    padding: 0 24px;
+  }
+  
+  .tension-container .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .pin-content-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .annotation-system {
+    display: none; /* Hide interactive pins on mobile */
+  }
+  
+  .details-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

@@ -15,3 +15,8 @@
 - **Workflow Standard:** Adopted the 5-artifact model (`evidence-dossier.md`, `creative-brief.md`, `concept-directions.md`, `experience-blueprint.md`, `production-plan.md`) defined in the `BEVAMPED_DESIGN_WORKFLOW_AUDIT.md` refactor.
 - **Artifact Location:** Consolidated all active Version 3 inception files inside the restored `studio-bespoke-inception/` folder, removing duplicate contexts under `.agents/` to keep the workspace clean.
 - **Outreach Risk Protocol:** Documented the spelling mismatch (`studiobspoke` on contact body vs `studiobespoke` on footer/domain) to ensure any future cold emails are routed safely.
+
+## 3. Transition to Vite & Preloader Handshake
+- **Stack Migration:** Upgraded the flat HTML/CSS/JS prototype folder into a Vite development environment to resolve local browser CORS constraints on videos and custom fonts.
+- **Preloader Reveal Mechanic:** Replaced individual path stroke rendering (which caused double-stroke blurriness on traced SVG shapes) with a container-level horizontal `clip-path` sweep and a hybrid check that autoplays `blueprint_draft.mp4` when dropped in.
+- **Section Roadmap:** Created `ROADMAP.md` inside `studio-bespoke-prototype/` to document the preloader-to-hero transition handshake and beats 2-8 website roadmap.

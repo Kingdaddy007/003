@@ -15,7 +15,7 @@
 
 | Beat | Label | Scroll depth | Controlling idea | What the visitor sees | Feeling | Register | Continuity | Copy mode | Transition out |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Arrival threshold | 0–10%; one-time | A home can learn the rhythm of its people | Wide Mira interior; subtle light/curtain threshold | Calm curiosity | MINERAL LIGHT | Framed opening | ATMOSPHERIC | DRIFT |
+| 1 | Arrival threshold | 0–10%; one-time | A home can learn the rhythm of its people | Technical CAD sketch of Mira kitchen; dissolves to photo | Technical trust | SHADED PLAN | Blueprint lines | TECHNICAL | DISINTEGRATE |
 | 2 | The life inside | 10–20%; normal | Design begins with a routine, not an object | One line about baking, gathering and daily use | Recognition | MINERAL LIGHT | Type alignment | DECLARATIVE | ANCHOR HOLD |
 | 3 | The inherited plan | 20–32%; normal | An inward-looking plan can resist the way a family lives | Restrained crop/text describing the prior condition; no fabricated before image | Tension | SHADED PLAN | Same image edge/caption rail | EDITORIAL | PORTAL |
 | 4 | The decisive cut | 32–52%; desktop pin | One intervention changed light, flow and connection | Mira wide shot; plan/site artifact if supplied; “walls removed” annotation; Marie Claire source | Relief and trust | OPEN PLAN | Arch/opening geometry | DECLARATIVE | LIGHT WASH |
@@ -28,7 +28,7 @@
 
 | Track | Owner | Behaviour | Stop / fallback |
 | --- | --- | --- | --- |
-| Arrival | GSAP timeline | Runs once at first load; under 1.4 seconds; threshold/light reveal only | Static hero under reduced motion or failed JS |
+| Arrival | GSAP timeline | Technical CAD sketch draws lines on paper, fades in layout statement, dissolves to finished photo | Static hero photo under reduced motion or failed JS |
 | Ambient | Optional CSS or GSAP | Real light/shadow shift only if an asset supports it; pause offscreen | Omit on mobile and reduced motion |
 | Scroll-bound | GSAP ScrollTrigger + canvas frame renderer | Beat 4 maps scroll progress to a reverse-safe Mira film frame; Beat 5 is a restrained transfer; neither autoplay | Poster/static sequential images/captions |
 | Interaction | Native/CSS first | Annotation reveal and enquiry focus | All information visible without interaction |

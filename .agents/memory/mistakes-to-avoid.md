@@ -14,6 +14,12 @@
 - **Outdated Global Templates:**
   - *Mistake:* Blindly executing the global `/workflow-spatial-project-inception` templates before cross-referencing local workspace design audits. This led to creating old Version 1 files (`project-context.md`, `brand-diagnostics.md`) that conflicted with the user's refactored 5-artifact model.
   - *Avoidance:* Always check for a local `BEVAMPED_DESIGN_WORKFLOW_AUDIT.md` or similar refactoring doctrine first, and update the global OS payload to align them before writing contexts.
-- **Duplicate Context Clutter:**
-  - *Mistake:* Writing contexts directly to `.agents/contexts/` without checking if the user already had them in another branch folder like `studio-bespoke-inception/`.
   - *Avoidance:* Eagerly run a git status check on startup to check for untracked folders or files written by previous runs, and ask the user for confirmation before initializing new files.
+
+## 3. SVG & CSS Interpolation Mistakes
+- **Clip-Path Unit Mismatches in CSS/GSAP:**
+  - *Mistake:* Trying to interpolate polygon paths where some coordinates are unitless (like `0`) and others have percentages (like `100%`). This causes browsers to fail to transition the clip-path.
+  - *Avoidance:* Always use matching percentage units for all points (`0%` and `100%`) when animating CSS clip-paths.
+- **GSAP Stroke Outlines on Traced SVG Geometries:**
+  - *Mistake:* Forcing a JS stroke and dash-array onto vector paths created by Figma's Image Tracer. Image Tracer creates shapes representing lines (polygons), so adding a stroke draws borders on both sides of the line, doubling its thickness and creating fuzzy, blurred edges.
+  - *Avoidance:* Preserve native vector path fills without strokes. Use container-level masks or clip-paths for sketching reveals to keep original vector sharpness.

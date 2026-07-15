@@ -66,7 +66,7 @@ The visitor understands the Mira intervention—and feels the promised cinematic
 
 Build only this sequence before broader production:
 
-1. Threshold: real Mira image, one-time low-motion arrival, concise statement.
+1. Threshold: technical CAD sketch of kitchen with bread on cutting board, drawing lines, dissolving into real photo.
 2. The inherited plan: a short editorial tension statement.
 3. Decisive intervention: one real wide shot or source-image-locked proof film, a labelled decision, and Marie Claire proof. On desktop, scroll must be able to play the film both forward and backward without uncanny reversal.
 4. Ritual detail: one kitchen/coffee/storage illustration or image, with a precise caption.
