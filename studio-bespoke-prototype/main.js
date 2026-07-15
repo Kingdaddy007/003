@@ -40,13 +40,21 @@ function initPage() {
   
   // Set up dynamic video loader
   let useVideo = false;
+  let attempts = 0;
   if (videoElement) {
-    videoElement.src = "blueprint_draft.mp4"; // relative path in the same folder
+    // Attempt loading the user's specific generated video from the assets folder first
+    videoElement.src = "../assets/Kitchen_blueprint_drawing_animation_1080p_202607150143.mp4";
     
-    // If video fails to load (e.g. 404), immediately fall back to the vector SVG
+    // Multi-stage fallback loop
     videoElement.addEventListener("error", () => {
-      console.log("Preloader video source not found, falling back to SVG vector sweep.");
-      initArrivalTimeline(svgElement, false);
+      if (attempts === 0) {
+        attempts++;
+        console.log("Assets video not found, falling back to local folder video...");
+        videoElement.src = "blueprint_draft.mp4"; // local folder fallback
+      } else {
+        console.log("Preloader video source not found, falling back to SVG vector sweep.");
+        initArrivalTimeline(svgElement, false);
+      }
     });
 
     // If video is ready to play, hide the SVG and play the video
