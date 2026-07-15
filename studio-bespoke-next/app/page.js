@@ -31,7 +31,7 @@ export default function Home() {
       <Preloader onNavVisibilityChange={handleNavVisibilityChange} />
 
       {/* 2. Hero (always in DOM — GSAP needs it as a pin target) */}
-      <HeroSection isArrivalComplete={isNavVisible} />
+      <HeroSection />
 
       {/* 3–6. Content that slides over the pinned hero */}
       <main className="content-overlay">

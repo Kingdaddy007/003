@@ -18,14 +18,20 @@ export default function Preloader({ onNavVisibilityChange }) {
   }, [onNavVisibilityChange]);
 
   useEffect(() => {
-    const preloader = preloaderRef.current;
     const svgElement = svgRef.current;
     const videoElement = videoRef.current;
 
     // Prefers-reduced-motion gate
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
-      if (preloader) preloader.style.display = 'none';
+      gsap.set(svgElement, {
+        display: 'block',
+        opacity: 0.35,
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+      });
+      gsap.set('.preloader-mantra .word', { opacity: 1, y: 0, filter: 'blur(0px)' });
+      gsap.set(mantraSubRef.current, { opacity: 0.95, y: 0 });
+      gsap.set(enterBtnRef.current, { opacity: 1 });
       document.body.classList.remove('scroll-locked');
       onNavVisibilityChangeRef.current?.(true);
 
@@ -41,7 +47,6 @@ export default function Preloader({ onNavVisibilityChange }) {
     let arrivalInitialized = false;
     let videoFallbackTimeout;
     let cancelled = false;
-    let mobileDismissHandler;
 
     function initArrivalTimeline(targetElement, isVideo) {
       if (arrivalInitialized) return;
@@ -51,23 +56,6 @@ export default function Preloader({ onNavVisibilityChange }) {
         onComplete: () => {
           document.body.classList.remove('scroll-locked');
           onNavVisibilityChangeRef.current?.(true);
-
-          if (window.matchMedia('(max-width: 900px)').matches) {
-            mobileDismissHandler = () => {
-              if (window.scrollY < 8 || !preloader) return;
-
-              window.removeEventListener('scroll', mobileDismissHandler);
-              gsap.to(preloader, {
-                autoAlpha: 0,
-                duration: 0.35,
-                ease: 'power2.out',
-                onComplete: () => {
-                  preloader.style.pointerEvents = 'none';
-                },
-              });
-            };
-            window.addEventListener('scroll', mobileDismissHandler, { passive: true });
-          }
         },
       });
       arrivalTimelineRef.current = arrivalTl;
@@ -159,7 +147,6 @@ export default function Preloader({ onNavVisibilityChange }) {
     return () => {
       cancelled = true;
       window.clearTimeout(videoFallbackTimeout);
-      if (mobileDismissHandler) window.removeEventListener('scroll', mobileDismissHandler);
       if (enterBtn) enterBtn.removeEventListener('click', handleEnterClick);
       if (videoElement) {
         videoElement.removeEventListener('error', handleVideoError);

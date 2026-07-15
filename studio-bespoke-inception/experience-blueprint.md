@@ -4,6 +4,24 @@
 **Selected territory:** The Ritual Plan  
 **Controlling argument:** A home becomes personal when its plan begins to recognise the life inside it.
 
+## Working section map — source of truth
+
+This map explains **what each section must communicate**. It does not lock the final layout or motion.
+
+- **Sourced fact:** verified project or independent evidence; change only when better evidence appears.
+- **Working story decision:** approved direction that may be revised deliberately.
+- **Visual prototype:** a temporary layout or motion test; replace freely when it does not serve the section job.
+
+| Section | Stable job | Evidence available now | Must not become | Current visual prototype |
+| --- | --- | --- | --- | --- |
+| Opening / belief | Establish that design begins with the life inside the plan | Mira ritual and renovation evidence | A generic luxury reel or finished-room portfolio reveal | Blueprint arrival, controlling line, then persistent navigation |
+| The inherited plan / problem | Explain how the existing arrangement resisted light, movement and gathering | Editorially documented Mira constraint; no authentic before image or plan supplied | A fabricated before/after claim | Dark editorial field with quiet blueprint linework and dedicated copy |
+| The decisive intervention / proof | Show the structural decision and why it mattered | Internal wall removal, kitchen-centred re-plan, Marie Claire confirmation | An unexplained cinematic effect | An arch opens into the completed room; evidence appears only after the room is legible |
+| Rituals made spatial / consequences | Connect the new plan to baking, storage, coffee and gathering | Mira detail imagery and project descriptions | A decorative detail gallery | Precise image-and-caption sequence; still under development |
+| The method travels / range | Prove the same judgment works at different scales | Zulal and Desert Leaf | An equal-weight card grid | Two concise supporting cases; still under development |
+| The hand behind the ease / trust | Make delivery judgment and responsibility visible | Founder, process, partner and testimony material pending confirmation | A biography before proof | Editorial process chapter; still under development |
+| Invitation / next step | Help the visitor name the friction in their own home | Inquiry posture is a working strategic decision | A premature generic CTA | Quiet fit-led inquiry; still under development |
+
 ## 1. Brand-to-scene translation
 
 | Strategic input | Experience translation |

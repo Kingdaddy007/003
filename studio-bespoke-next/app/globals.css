@@ -248,69 +248,9 @@ body.scroll-locked {
   position: relative;
   background-color: transparent;
   z-index: 1;
-  overflow: hidden;
 }
 
 #hero::before { display: none; }
-
-.room-reveal-panel {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: #e8e1d6;
-  will-change: transform;
-}
-
-.room-aperture {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  will-change: clip-path;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url('https://studiobespoke.design/wp-content/uploads/2026/01/SBD_Mira_K14-scaled.jpg');
-  background-size: cover;
-  background-position: center;
-  opacity: 1;
-}
-
-.room-caption {
-  position: absolute;
-  right: 40px;
-  bottom: 38px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
-  padding: 10px 12px;
-  color: var(--color-communicator);
-  background: rgba(249, 248, 246, 0.76);
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  visibility: hidden;
-}
-
-.room-caption-project,
-.room-caption-note {
-  font-family: var(--font-sans);
-  text-transform: uppercase;
-}
-
-.room-caption-project {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-}
-
-.room-caption-note {
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: #5e5a53;
-}
 
 .site-header-shell {
   position: fixed;
@@ -321,19 +261,7 @@ body.scroll-locked {
   pointer-events: none;
   opacity: 0;
   transform: translateY(-12px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.site-header-shell::before {
-  content: '';
-  position: absolute;
-  top: -32px;
-  left: 0;
-  width: 100%;
-  height: 112px;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(249, 248, 246, 0.82) 0%, rgba(249, 248, 246, 0.38) 58%, rgba(249, 248, 246, 0) 100%);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s ease;
 }
 
 .site-header-shell.is-visible {
@@ -355,6 +283,7 @@ body.scroll-locked {
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: filter 0.35s ease, box-shadow 0.35s ease;
 }
 
 .nav-menu {
@@ -364,23 +293,33 @@ body.scroll-locked {
 }
 
 .nav-link {
-  color: var(--color-communicator);
+  color: inherit;
   text-decoration: none;
   font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
   font-weight: 500;
 }
 .nav-link:hover { color: var(--color-action); }
 
-@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-  #hero { z-index: 60; }
-  .room-reveal-panel { visibility: hidden; }
-  .room-aperture {
-    clip-path: inset(18% 27% 14% 27% round 320px 320px 28px 28px);
-    -webkit-clip-path: inset(18% 27% 14% 27% round 320px 320px 28px 28px);
-  }
+.site-header-shell.theme-opening {
+  color: var(--color-communicator);
+}
+
+.site-header-shell.theme-tension,
+.site-header-shell.theme-proof {
+  color: var(--color-neutral);
+}
+
+.site-header-shell.theme-tension .nav-logo,
+.site-header-shell.theme-proof .nav-logo {
+  filter: invert(1) grayscale(1);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+}
+
+.site-header-shell.theme-proof .nav-link {
+  text-shadow: 0 1px 8px rgba(0,0,0,0.72);
 }
 
 /* ============================================================
@@ -388,39 +327,71 @@ body.scroll-locked {
    ============================================================ */
 #tension {
   background-color: #232522;
-  padding: 100px 0;
   position: relative;
-  z-index: 10;
+  z-index: 60;
   overflow: hidden;
+  min-height: 100vh;
+  min-height: 100svh;
+  border-top: 1px solid rgba(241, 239, 234, 0.14);
 }
 
-.tension-grid {
+.tension-container {
+  min-height: 100vh;
+  min-height: 100svh;
+  position: relative;
+  z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: minmax(0, 7fr) minmax(260px, 5fr);
+  gap: 72px;
   align-items: center;
+  padding-top: clamp(128px, 18vh, 190px);
+  padding-bottom: clamp(84px, 12vh, 128px);
 }
 
-.tension-image-wrapper {
-  position: relative;
-  width: 100%;
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+.tension-copy {
+  max-width: 610px;
+  align-self: center;
 }
 
-.tension-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: grayscale(0.2) contrast(1.1);
+.tension-eyebrow {
+  color: #b2aba0;
 }
 
-.image-overlay {
+.tension-title {
+  color: var(--color-neutral);
+  font-size: clamp(46px, 6vw, 76px);
+  max-width: 720px;
+  margin-bottom: 30px;
+}
+
+.tension-body {
+  max-width: 560px;
+  color: rgba(241, 239, 234, 0.84);
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.65;
+}
+
+.tension-note {
+  align-self: end;
+  justify-self: end;
+  color: rgba(241, 239, 234, 0.48);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.tension-blueprint-field {
   position: absolute;
-  inset: 0;
-  background: rgba(35, 37, 34, 0.4);
-  mix-blend-mode: multiply;
+  top: 3%;
+  right: -11%;
+  width: min(82vw, 1120px);
+  height: 94%;
+  z-index: 1;
+  stroke: rgba(241, 239, 234, 0.13);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
 }
 
 /* ============================================================
@@ -428,7 +399,8 @@ body.scroll-locked {
    ============================================================ */
 .pinned-section {
   position: relative;
-  background-color: var(--color-communicator);
+  z-index: 60;
+  background-color: #232522;
 }
 
 .pin-trigger {
@@ -436,12 +408,20 @@ body.scroll-locked {
   height: 100vh;
   position: relative;
   overflow: hidden;
+  background: #232522;
+}
+
+.proof-room-aperture {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  will-change: clip-path;
 }
 
 .pin-bg-image {
   position: absolute;
   inset: 0;
-  background-image: url('https://studiobespoke.design/wp-content/uploads/2026/01/SBD_Mira_K12-scaled.jpg');
+  background-image: url('https://studiobespoke.design/wp-content/uploads/2026/01/SBD_Mira_K14-scaled.jpg');
   background-size: cover;
   background-position: center;
   z-index: 1;
@@ -450,7 +430,7 @@ body.scroll-locked {
 .pin-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(28,28,26,0.85) 0%, rgba(28,28,26,0.3) 60%, rgba(28,28,26,0.7) 100%);
+  background: linear-gradient(90deg, rgba(28,28,26,0.9) 0%, rgba(28,28,26,0.54) 38%, rgba(28,28,26,0.12) 72%, rgba(28,28,26,0.34) 100%);
   z-index: 2;
 }
 
@@ -474,14 +454,11 @@ body.scroll-locked {
   inset: 0;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px);
-  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.narrative-step.active {
+.narrative-step:first-child {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
 }
 
 .narrative-title {
@@ -504,8 +481,8 @@ body.scroll-locked {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-action);
-  border-bottom: 1px solid var(--color-action);
+  color: rgba(249, 248, 246, 0.68);
+  border-bottom: 1px solid currentColor;
   padding-bottom: 3px;
 }
 
@@ -521,10 +498,7 @@ body.scroll-locked {
   pointer-events: auto;
   opacity: 0;
   transform: scale(0.8);
-  transition: all 0.5s ease;
 }
-
-.annotation.visible { opacity: 1; transform: scale(1); }
 
 .anno-dot {
   width: 14px;
@@ -703,7 +677,7 @@ body.scroll-locked {
    ============================================================ */
 .content-overlay {
   position: relative;
-  z-index: 10;
+  z-index: 60;
 }
 
 /* ============================================================
@@ -712,12 +686,64 @@ body.scroll-locked {
 @media (max-width: 900px) {
   .site-header-shell { top: 24px; }
   .nav-logo { width: 48px; height: 48px; }
-  .nav-menu { gap: 16px; }
-  .room-caption { right: 24px; bottom: 24px; }
+  .nav-menu { gap: 12px; }
+  .nav-link { font-size: 9px; letter-spacing: 0.11em; }
   .preloader-copy-stage { padding-bottom: 96px; }
   .scroll-cue { right: 24px; bottom: 32px; }
-  .tension-grid { grid-template-columns: 1fr; gap: 40px; }
-  .pin-content-container { grid-template-columns: 1fr; }
+  #tension { min-height: auto; }
+  .tension-container {
+    min-height: 86svh;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-top: 132px;
+    padding-bottom: 76px;
+  }
+  .tension-title { font-size: clamp(42px, 12vw, 62px); }
+  .tension-note { writing-mode: horizontal-tb; justify-self: start; }
+  .tension-blueprint-field { right: -42%; width: 145vw; opacity: 0.75; }
+  .pin-trigger { height: auto; min-height: 0; overflow: visible; }
+  .proof-room-aperture { position: relative; height: 66svh; clip-path: none !important; }
+  .pin-overlay { display: none; }
+  .pin-content-container {
+    height: auto;
+    display: block;
+    padding-top: 72px;
+    padding-bottom: 88px;
+    background: #232522;
+  }
+  .pin-narrative { height: auto; display: grid; gap: 48px; }
+  .narrative-step,
+  .narrative-step:first-child {
+    position: static;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
   .annotation-system { display: none; }
   .details-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue-line,
+  .anno-dot::before { animation: none; }
+
+  .pin-trigger { height: auto; min-height: 0; overflow: visible; }
+  .proof-room-aperture { position: relative; height: 72svh; clip-path: none !important; }
+  .pin-overlay { display: none; }
+  .pin-content-container {
+    height: auto;
+    display: block;
+    padding-top: 80px;
+    padding-bottom: 96px;
+    background: #232522;
+  }
+  .pin-narrative { height: auto; display: grid; gap: 48px; }
+  .narrative-step,
+  .narrative-step:first-child {
+    position: static;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  .annotation-system { display: none; }
 }
