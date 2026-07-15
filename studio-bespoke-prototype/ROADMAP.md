@@ -27,22 +27,27 @@ When a user clicks the scroll cue, scrolls, or wheels down on the page:
 ## 3. Website Sections Roadmap (Beats 2–8)
 
 The website is planned as an editorial, scroll-choreographed story. Here is what is mapped for the subsequent sections:
-
 | Beat | Section Name | Focus & Concept | Visuals & Media | Interaction & Motion |
 | :--- | :--- | :--- | :--- | :--- |
-| **Beat 2** | **The Life Inside** | Design begins with routine, not object. | Typographic declarative statement. | Quiet, staggered word fade-ins. |
-| **Beat 3** | **The Inherited Plan** | The structural tension of a traditional, closed plan. | Restrained crop of prior architectural layout. | Vertical parallax drift on image. |
-| **Beat 4** | **The Decisive Cut** | One structural change altered light, flow, and daily life. | Wide shot of Mira kitchen, walls removed annotations. | Pinned desktop slide. Scrubbing scroll maps to annotations. |
-| **Beat 5** | **Rituals Made Spatial** | Highlight hidden, small details (joinery, coffee-nook). | Close-ups of material textures and layout details. | Controlled horizontal gallery procession. |
-| **Beat 6** | **The Method Travels** | Showing the studio's spatial method at different scales. | Case studies (Zulal, Desert Leaf) in a split grid. | Smooth fade reveals. |
-| **Beat 7** | **The Hand Behind Ease** | Production capability and detailed execution. | Restrained detail sheets, material specifications. | Vertical rule drawing, structured text. |
-| **Beat 8** | **Invitation** | Qualify and capture high-intent inquiries. | Clean layout and fit-focused inquiry form. | Smooth focus states. |
+| **Beat 1** | **Arrival (Preloader)** | Technical sketch draw-in and opening sequence. | Dynamic video blend (`Kitchen_blueprint_...mp4`) or fallback SVG. | Auto-plays and transitions on scroll/click. |
+| **Beat 2** | **The Life Inside (Hero)** | **Flexible Discussion Zone** — Layout and transition options to be decided. | Typographic narrative, editorial framing. | Custom scroll/reveal to be discussed. |
+| **Beat 3** | **The Inherited Plan** | **Flexible Discussion Zone** — Structural tension of closed layouts. | Restrained prior architectural floor plan crop. | Parallax or reveal transition options. |
+| **Beat 4** | **The Decisive Cut** | **Flexible Discussion Zone** — Pinned showcase of the Mira project. | Finished room layout, annotations, Marie Claire proof. | Scroll-bound desktop pinning to scrub annotations. |
+| **Beat 5** | **Rituals Made Spatial** | **Flexible Discussion Zone** — Close-ups of design elements. | Material textures, coffee-nook, joinery details. | Controlled horizontal gallery sequence. |
+| **Beats 6-8** | **Method & Invitation** | **Flexible Discussion Zone** — Sizing and fit-focused inquiry paths. | Case study grid (Zulal, Desert Leaf), minimal contact forms. | Clean reveals and focus state highlights. |
 
 ---
 
-## 4. Active Sprint & Next Actions
+## 4. Alignment with Visual Storyboard & Inception Files
 
-1. **AI Video Generation:** The user is currently generating a 4–6 second drawing animation (`blueprint_draft.mp4`) using Google video models (Veo / Gemini Omni) from the source kitchen image.
-2. **Deploy Video:** Once generated, drop `blueprint_draft.mp4` directly into the `studio-bespoke-prototype/` folder.
-3. **Verification:** Refresh the localhost server to confirm the video plays and blends seamlessly with the Limestone paper.
-4. **Hero Build:** Begin styling the full Hero section content and coding the scroll triggers for Beat 2 and Beat 3.
+* **The Guide, Not a Cage:** The local `scroll-storyboard.md` and visual boards represent our strategic thinking on the *emotional narrative* (moving the visitor from preloader technical sketch -> hero -> tension -> proof -> detail -> invitation).
+* **Dynamic Design Cycle:** While the **Opening Sequence (Beat 1)** is now fully coded and validated, all subsequent sections (Beats 2–8) are placeholder templates. The layout, typography, copy, and specific visual assets of the **Hero Section** and later chapters will be discussed, designed, and updated piece-by-piece in collaboration with you to match the high-end standard of the opening video.
+
+---
+
+## 5. Active Sprint & Next Actions
+
+1. **AI Video Deployed & Linked:** The generated drawing video (`Kitchen_blueprint_drawing_animation_1080p_202607150143.mp4`) has been placed in the `/assets/` directory and linked in the codebase.
+2. **Dynamic Playback Live:** The local Vite dev server at **[http://localhost:5174/](http://localhost:5174/)** is running. It dynamically loads your video, applies the Limestone paper multiply blend, and runs the preloader text stagger.
+3. **Next Sprint Goal:** Review the live animation on localhost, and begin the creative conversation/exploration for the **Hero Section** layout and styling.
+
