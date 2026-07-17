@@ -16,6 +16,9 @@ export default function ThresholdScrollMedia({ poster, src }) {
     const secondaryMessage = stage?.querySelector('[data-threshold-message="secondary"]');
     const secondaryLines = secondaryMessage?.querySelectorAll('[data-threshold-secondary-line]');
     const secondarySupport = secondaryMessage?.querySelector('[data-threshold-secondary-support]');
+    const tertiaryMessage = stage?.querySelector('[data-threshold-message="tertiary"]');
+    const tertiaryLines = tertiaryMessage?.querySelectorAll('[data-threshold-tertiary-line]');
+    const tertiarySupport = tertiaryMessage?.querySelector('[data-threshold-tertiary-support]');
     const cue = stage?.querySelector('[data-threshold-cue]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const compactViewport = window.matchMedia('(max-width: 720px)').matches;
@@ -28,6 +31,9 @@ export default function ThresholdScrollMedia({ poster, src }) {
       || !secondaryMessage
       || !secondaryLines
       || !secondarySupport
+      || !tertiaryMessage
+      || !tertiaryLines
+      || !tertiarySupport
       || !cue
       || reducedMotion
       || compactViewport
@@ -40,8 +46,9 @@ export default function ThresholdScrollMedia({ poster, src }) {
     let motionContext;
     let scrubFrameRequest;
     let targetVideoTime = 0;
-    const minimumSeekDistance = 0.01;
-    const seekInterpolation = 0.12;
+    const minimumSeekDistance = 1 / 30;
+    const minimumSeekInterpolation = 0.24;
+    const maximumSeekInterpolation = 0.72;
 
     const cancelScrubFrame = () => {
       if (scrubFrameRequest === undefined) {
@@ -55,6 +62,14 @@ export default function ThresholdScrollMedia({ poster, src }) {
     const updateScrubbedVideo = () => {
       scrubFrameRequest = undefined;
 
+      if (
+        !Number.isFinite(video.duration)
+        || video.duration <= 0
+        || !Number.isFinite(video.currentTime)
+      ) {
+        return;
+      }
+
       const remainingTime = targetVideoTime - video.currentTime;
 
       if (Math.abs(remainingTime) <= minimumSeekDistance) {
@@ -62,6 +77,11 @@ export default function ThresholdScrollMedia({ poster, src }) {
       }
 
       if (!video.seeking) {
+        const seekInterpolation = gsap.utils.clamp(
+          minimumSeekInterpolation,
+          maximumSeekInterpolation,
+          minimumSeekInterpolation + (Math.abs(remainingTime) * 0.28),
+        );
         const nextTime = video.currentTime + (remainingTime * seekInterpolation);
         video.currentTime = Math.max(0, Math.min(nextTime, video.duration));
       }
@@ -95,13 +115,16 @@ export default function ThresholdScrollMedia({ poster, src }) {
         gsap.set(secondaryMessage, { autoAlpha: 0 });
         gsap.set(secondaryLines, { yPercent: 112, rotate: 1.25 });
         gsap.set(secondarySupport, { autoAlpha: 0, y: 18 });
+        gsap.set(tertiaryMessage, { autoAlpha: 0 });
+        gsap.set(tertiaryLines, { yPercent: 112, rotate: -1.25 });
+        gsap.set(tertiarySupport, { autoAlpha: 0, y: 18 });
 
         const scrollTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: story,
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 0.35,
+            scrub: 0.12,
             invalidateOnRefresh: true,
           },
         });
@@ -112,7 +135,11 @@ export default function ThresholdScrollMedia({ poster, src }) {
             duration: 1,
             ease: 'none',
             onUpdate: () => {
-              targetVideoTime = scrubProgress.value * Math.max(video.duration - 0.08, 0);
+              const playableDuration = Number.isFinite(video.duration)
+                ? Math.max(video.duration - 0.08, 0)
+                : 0;
+
+              targetVideoTime = scrubProgress.value * playableDuration;
               queueScrubFrame();
             },
           }, 0)
@@ -125,24 +152,45 @@ export default function ThresholdScrollMedia({ poster, src }) {
           .to(primaryMessage, {
             autoAlpha: 0,
             yPercent: -14,
-            duration: 0.24,
+            duration: 0.18,
             ease: 'none',
-          }, 0.12)
-          .set(primaryMessage, { pointerEvents: 'none' }, 0.36)
-          .set(secondaryMessage, { autoAlpha: 1 }, 0.38)
+          }, 0.1)
+          .set(primaryMessage, { pointerEvents: 'none' }, 0.28)
+          .set(secondaryMessage, { autoAlpha: 1 }, 0.3)
           .to(secondaryLines, {
             yPercent: 0,
             rotate: 0,
-            duration: 0.22,
+            duration: 0.16,
             stagger: 0.035,
             ease: 'power2.out',
-          }, 0.38)
+          }, 0.3)
           .to(secondarySupport, {
             autoAlpha: 1,
             y: 0,
-            duration: 0.18,
+            duration: 0.14,
             ease: 'power2.out',
-          }, 0.48);
+          }, 0.39)
+          .to(secondaryMessage, {
+            autoAlpha: 0,
+            yPercent: -10,
+            duration: 0.16,
+            ease: 'none',
+          }, 0.57)
+          .set(secondaryMessage, { pointerEvents: 'none' }, 0.73)
+          .set(tertiaryMessage, { autoAlpha: 1 }, 0.66)
+          .to(tertiaryLines, {
+            yPercent: 0,
+            rotate: 0,
+            duration: 0.17,
+            stagger: 0.035,
+            ease: 'power2.out',
+          }, 0.66)
+          .to(tertiarySupport, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.14,
+            ease: 'power2.out',
+          }, 0.76);
       }, stage);
 
       ScrollTrigger.refresh();

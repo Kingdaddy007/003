@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import ThresholdEntrance from './threshold-entrance';
 import ThresholdScrollMedia from './threshold-scroll-media';
+import ThresholdSmoothScroll from './threshold-smooth-scroll';
 import styles from './living-threshold.module.css';
 
 export const metadata = {
@@ -49,6 +50,7 @@ function HeroPicture({ className }) {
 export default function LivingThresholdConceptPage() {
   return (
     <main className={styles.page}>
+      <ThresholdSmoothScroll />
       <section
         className={styles.story}
         aria-labelledby="living-threshold-title"
@@ -115,7 +117,31 @@ export default function LivingThresholdConceptPage() {
               className={`${styles.messageSupport} ${styles.secondaryMessageSupport}`}
               data-threshold-secondary-support
             >
-              Full turnkey and worldwide interior design.
+              Every room, material and detail considered together.
+            </p>
+          </article>
+
+          <article
+            className={`${styles.messageBeat} ${styles.tertiaryMessageBeat}`}
+            data-threshold-message="tertiary"
+          >
+            <h2 className={`${styles.messageTitle} ${styles.tertiaryMessageTitle}`}>
+              <span className={styles.titleLine}>
+                <span className={styles.tertiaryTitleLead} data-threshold-tertiary-line>
+                  Realised
+                </span>
+              </span>
+              <span className={`${styles.titleLine} ${styles.tertiaryAccentLine}`}>
+                <span className={styles.tertiaryTitleAccent} data-threshold-tertiary-line>
+                  in full.
+                </span>
+              </span>
+            </h2>
+            <p
+              className={`${styles.messageSupport} ${styles.tertiaryMessageSupport}`}
+              data-threshold-tertiary-support
+            >
+              Full interior design, from concept to completion.
             </p>
           </article>
 

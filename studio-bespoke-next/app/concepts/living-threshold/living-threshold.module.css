@@ -7,7 +7,7 @@
 .story {
   --gutter: clamp(24px, 3.5vw, 56px);
   position: relative;
-  min-height: 260svh;
+  min-height: 340svh;
   background: #171a17;
 }
 
@@ -339,6 +339,46 @@
   text-align: right;
 }
 
+.tertiaryMessageBeat {
+  align-content: center;
+  padding-top: clamp(88px, 13vh, 142px);
+  padding-bottom: clamp(48px, 7vh, 82px);
+}
+
+.tertiaryMessageTitle {
+  grid-column: 1 / 10;
+  align-items: flex-start;
+}
+
+.tertiaryAccentLine {
+  align-self: flex-end;
+}
+
+.tertiaryTitleLead,
+.tertiaryTitleAccent {
+  display: block;
+}
+
+.tertiaryTitleLead {
+  font-size: clamp(68px, 8.5vw, 138px);
+}
+
+.tertiaryTitleAccent {
+  margin-top: clamp(12px, 2vh, 24px);
+  font-size: clamp(80px, 10.5vw, 170px);
+  font-style: italic;
+}
+
+.tertiaryMessageSupport {
+  grid-column: 2 / 6;
+  margin-top: 28px;
+  margin-bottom: 0;
+  text-align: left;
+  text-shadow:
+    0 1px 4px rgba(17, 20, 17, 0.94),
+    0 3px 24px rgba(17, 20, 17, 0.78);
+}
+
 .srOnly {
   position: absolute;
   width: 1px;
@@ -414,7 +454,8 @@
   }
 
   .heroVideo,
-  .secondaryMessageBeat {
+  .secondaryMessageBeat,
+  .tertiaryMessageBeat {
     display: none;
   }
 }
@@ -433,7 +474,8 @@
   }
 
   .heroVideo,
-  .secondaryMessageBeat {
+  .secondaryMessageBeat,
+  .tertiaryMessageBeat {
     display: none;
   }
 
