@@ -1,8 +1,7 @@
 'use client';
 
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
+import { gsap, ScrollTrigger } from '@/lib/motion';
 import styles from './living-threshold.module.css';
 
 export default function ThresholdScrollMedia({ poster, src }) {
@@ -41,14 +40,12 @@ export default function ThresholdScrollMedia({ poster, src }) {
       return undefined;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     let motionContext;
     let scrubFrameRequest;
     let targetVideoTime = 0;
-    const minimumSeekDistance = 1 / 30;
-    const minimumSeekInterpolation = 0.24;
-    const maximumSeekInterpolation = 0.72;
+    const minimumSeekDistance = 1 / 15;
+    const minimumSeekInterpolation = 0.38;
+    const maximumSeekInterpolation = 0.86;
 
     const cancelScrubFrame = () => {
       if (scrubFrameRequest === undefined) {
@@ -80,7 +77,7 @@ export default function ThresholdScrollMedia({ poster, src }) {
         const seekInterpolation = gsap.utils.clamp(
           minimumSeekInterpolation,
           maximumSeekInterpolation,
-          minimumSeekInterpolation + (Math.abs(remainingTime) * 0.28),
+          minimumSeekInterpolation + (Math.abs(remainingTime) * 0.34),
         );
         const nextTime = video.currentTime + (remainingTime * seekInterpolation);
         video.currentTime = Math.max(0, Math.min(nextTime, video.duration));
@@ -190,7 +187,14 @@ export default function ThresholdScrollMedia({ poster, src }) {
             y: 0,
             duration: 0.14,
             ease: 'power2.out',
-          }, 0.76);
+          }, 0.76)
+          .to(tertiaryMessage, {
+            autoAlpha: 0,
+            yPercent: -10,
+            duration: 0.14,
+            ease: 'none',
+          }, 0.88)
+          .set(tertiaryMessage, { pointerEvents: 'none' }, 1.02);
       }, stage);
 
       ScrollTrigger.refresh();
@@ -199,8 +203,6 @@ export default function ThresholdScrollMedia({ poster, src }) {
     const handleVideoError = () => {
       cancelScrubFrame();
       gsap.set(video, { autoAlpha: 0 });
-      motionContext?.revert();
-      motionContext = undefined;
     };
 
     video.addEventListener('loadedmetadata', buildScrollChoreography);
@@ -215,7 +217,6 @@ export default function ThresholdScrollMedia({ poster, src }) {
       revealVideo();
     }
 
-    video.preload = 'auto';
     video.load();
 
     return () => {
@@ -223,6 +224,7 @@ export default function ThresholdScrollMedia({ poster, src }) {
       video.removeEventListener('loadeddata', revealVideo);
       video.removeEventListener('error', handleVideoError);
       cancelScrubFrame();
+      video.pause();
       motionContext?.revert();
     };
   }, []);

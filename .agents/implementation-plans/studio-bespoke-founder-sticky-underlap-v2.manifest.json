@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "artifact_id": "studio-bespoke-founder-sticky-underlap-v2",
+  "artifact_type": "implementation-plan",
+  "status": "approved-for-delegation",
+  "branch": "codex/chatgptibeliveyou",
+  "base_commit": "286aa349f6c38d7010970ea399cee85e6515139f",
+  "supersedes": ".agents/implementation-plans/studio-bespoke-founder-authored-studio-v1.md",
+  "plan": {
+    "path": ".agents/implementation-plans/studio-bespoke-founder-sticky-underlap-v2.md",
+    "bytes": 16548,
+    "sha256": "47f3b07a79f848b911c218f1421418fdc07136a07952802f75ce8d0f9749aae4",
+    "md5": "7a6d3e17321c23613095e5c8adc1157b"
+  },
+  "selected_direction": "css-first-sticky-underlap-paper-panel-overtake",
+  "optional_followup": "dual-speed-hero-media-drift-after-user-review",
+  "created_at": "2026-07-17T19:11:12.2307452+01:00"
+}

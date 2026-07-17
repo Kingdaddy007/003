@@ -4,6 +4,7 @@
   color: #f2eee5;
 }
 
+
 .story {
   --gutter: clamp(24px, 3.5vw, 56px);
   position: relative;

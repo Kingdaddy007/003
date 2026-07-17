@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "artifact_id": "studio-bespoke-founder-aperture-reveal-v3",
+  "artifact_type": "implementation-plan",
+  "status": "approved-for-delegation",
+  "branch": "codex/chatgptibeliveyou",
+  "base_commit": "286aa349f6c38d7010970ea399cee85e6515139f",
+  "supersedes": ".agents/implementation-plans/studio-bespoke-founder-sticky-underlap-v2.md",
+  "plan": {
+    "path": ".agents/implementation-plans/studio-bespoke-founder-aperture-reveal-v3.md",
+    "bytes": 21721,
+    "sha256": "D207269606D283BA8A02E98CB8CB871617D7D716142C933210CF69A72D0950AC",
+    "md5": "5D3E1080AADA1C472B2632795B1FDB12"
+  },
+  "selected_direction": "single-image-portrait-aperture-reveal",
+  "created_at": "2026-07-17T19:30:00.0000000+01:00"
+}

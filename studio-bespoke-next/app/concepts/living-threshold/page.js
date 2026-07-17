@@ -2,6 +2,7 @@ import Link from 'next/link';
 import ThresholdEntrance from './threshold-entrance';
 import ThresholdScrollMedia from './threshold-scroll-media';
 import ThresholdSmoothScroll from './threshold-smooth-scroll';
+import FounderSection from './founder-section';
 import styles from './living-threshold.module.css';
 
 export const metadata = {
@@ -150,6 +151,7 @@ export default function LivingThresholdConceptPage() {
           </div>
         </div>
       </section>
+      <FounderSection />
     </main>
   );
 }

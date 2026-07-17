@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "artifact_id": "studio-bespoke-founder-authored-studio-v1",
+  "artifact_type": "implementation-plan",
+  "status": "approved-for-delegation",
+  "branch": "codex/chatgptibeliveyou",
+  "base_commit": "286aa349f6c38d7010970ea399cee85e6515139f",
+  "plan": {
+    "path": ".agents/implementation-plans/studio-bespoke-founder-authored-studio-v1.md",
+    "bytes": 19672,
+    "sha256": "c9d1c64e36722193db04a212b7a19cea53ef3660e83a71e624f1382be8e03777",
+    "md5": "df414a87644921beecd9e3ba061adbb9"
+  },
+  "source_assets": [
+    {
+      "role": "founder-portrait",
+      "source": "https://studiobespoke.design/wp-content/uploads/2025/12/Britt-33-scaled-e1765790663961.jpg",
+      "local_destination": "studio-bespoke-next/public/images/studio-founder/brittany-guimaraes-founder.jpg",
+      "integrity": "compute-after-download"
+    },
+    {
+      "role": "authentic-signature",
+      "source": "https://studiobespoke.design/wp-content/uploads/2021/01/autograph-01.png",
+      "local_destination": "studio-bespoke-next/public/images/studio-founder/brittany-guimaraes-signature.png",
+      "integrity": "compute-after-download"
+    }
+  ],
+  "created_at": "2026-07-17T17:52:21.3076468+01:00"
+}

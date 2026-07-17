@@ -4,7 +4,7 @@
   "workflow_id": "studio-bespoke-hero-finalization",
   "mode": "implement",
   "status": "in_progress",
-  "current_state": "user-review-and-refinement",
+  "current_state": "founder-exit-portrait-verified",
   "completed_states": [
     "brand-homepage-direction",
     "living-threshold-concept-selection",
@@ -13,7 +13,27 @@
     "guarded-seek-pass",
     "warm-ivory-type-pass",
     "lenis-responsive-seek-pass",
-    "three-copy-beat-pass"
+    "three-copy-beat-pass",
+    "founder-direction-approval",
+    "founder-implementation-plan",
+    "founder-section-delegation-ready",
+    "founder-section-implemented",
+    "founder-section-verified",
+    "founder-transition-refinement",
+    "founder-transition-refinement-verified",
+    "founder-underlap-direction-approved",
+    "founder-underlap-plan",
+    "founder-underlap-delegation-ready",
+    "founder-underlap-implemented",
+    "founder-aperture-reveal-direction-approved",
+    "founder-aperture-reveal-plan",
+    "founder-aperture-reveal-delegation-ready",
+    "founder-aperture-reveal-implemented",
+    "hero-ambient-video-direction-approved",
+    "hero-ambient-video-implemented",
+    "hero-ambient-video-verified",
+    "hero-scroll-scrub-restored",
+    "founder-exit-portrait-verified"
   ],
   "owner": {
     "agent": "root",
@@ -42,6 +62,50 @@
     {
       "kind": "verification",
       "value": "Lenis now initializes on the Living Threshold route and synchronizes with ScrollTrigger. Targeted ESLint, the Next.js production build, and git diff --check passed. Desktop browser verification confirmed forward and reverse copy-state transitions, video time movement from 5.81s to 2.85s to 0.03s, and no new runtime warnings or errors. Perceived smoothness remains subject to user review."
+    },
+    {
+      "kind": "delegation-plan",
+      "value": "The Authored Studio founder-section implementation plan is ready. SHA-256: c9d1c64e36722193db04a212b7a19cea53ef3660e83a71e624f1382be8e03777. MD5: df414a87644921beecd9e3ba061adbb9."
+    },
+    {
+      "kind": "founder-section-implementation",
+      "value": "FounderSection implemented in Next.js under /concepts/living-threshold. Completed verification steps: ESLint passed, npm run build completed successfully, and git diff --check reported no whitespace errors. Asset dimensions and hashes recorded."
+    },
+    {
+      "kind": "founder-section-verification",
+      "value": "FounderSection verification complete. Fixed Codex findings: imported gsap/ScrollTrigger from @/lib/motion, integrated next/image with sizes, and refactored animation trigger to gsap.matchMedia() for clean viewport resize resilience. Portrait: 1707x2320px, SHA256: FBA8B2BB0BB9F398B0DB9A914A409B4E5703DCEFFF58F76E81B44EDAA82673CD, MD5: F3DE10DEEB63F53ABA4F1DC21845F1FA. Signature: 347x124px, SHA256: 8DC1C14CC5D099143D7B644AA845DC000FAEABF14283A23FDEB4CC4A2169EBB2, MD5: 928D1D46B92FA343D68010F49B595C7F. ESLint, Next.js build, and git whitespace checks passed."
+    },
+    {
+      "kind": "founder-sticky-underlap",
+      "value": "Implemented CSS-first sticky underlap (Option A) with -30svh desktop overlap. Removed gradient transitions. Targeted min-height: 70svh on desktop with tightened padding and portrait max-width 320px. Removed '02 / The Studio' label and internal rule. Re-anchored timeline reveal start/end (start: top 88%, end: top 32%, scrub: 0.24) to data-founder-content trigger. ESLint, build, and git checks completed successfully."
+    },
+    {
+      "kind": "founder-transition-refinement",
+      "value": "Codex aligned the founder portrait and drafting-type reveals with their first visible viewport entry, reduced the desktop section from 120svh to 100svh, reduced the portrait from 450x562.5px to 390x487.5px at 1440x900, and added a 108px room-to-paper light gradient. Hero video seeking now stops within 1/15s and uses stronger interpolation, reducing a measured large programmatic seek from more than 700ms of decoder chasing to a ready frame within 200ms. Desktop, live breakpoint resize, mobile, and reduced-motion checks passed with no horizontal overflow. Targeted ESLint, Next.js production build, and git diff --check passed."
+    },
+    {
+      "kind": "founder-underlap-delegation-plan",
+      "value": "The approved Founder Sticky Underlap v2 plan replaces the rejected gradient with a CSS-first opaque paper-panel overtake, targets approximately 70svh on desktop, removes the numbered Studio label and internal rule, and anchors founder animation to visible content entry. SHA-256: 47F3B07A79F848B911C218F1421418FDC07136A07952802F75CE8D0F9749AAE4. MD5: 7A6D3E17321C23613095E5C8ADC1157B. Optional dual-speed hero-media drift is deferred until the CSS-first underlap is reviewed."
+    },
+    {
+      "kind": "founder-aperture-reveal-delegation-plan",
+      "value": "Approved v3 plan replaces three-panel portrait convergence with a single portrait aperture reveal and restrained internal parallax, uses single-origin heading motion plus clause-level body copy, targets a materially shorter 520–550px desktop founder panel, and repairs reduced-motion and unreachable-scroll-end defects. SHA-256: D207269606D283BA8A02E98CB8CB871617D7D716142C933210CF69A72D0950AC. MD5: 5D3E1080AADA1C472B2632795B1FDB12."
+    },
+    {
+      "kind": "founder-aperture-reveal-verification",
+      "value": "Post-audit fix applied: strengthened the face-first single-image aperture from an 86% bottom clip, increased internal portrait drift to yPercent -12 / scale 1.08, moved the scroll window to top 96% → top 60%, and compacted the desktop founder panel to 460–468px with a 240px portrait cap (~300px frame). Reduced-motion overlap remains disabled. Desktop 1440×900 and 1280×800 maximum-scroll checks reached the full aperture and About link; mobile and reduced-motion checks had no horizontal overflow. ESLint, Next.js build, and git diff --check passed."
+    },
+    {
+      "kind": "hero-ambient-video-verification",
+      "value": "Direct implementation replaced scroll-controlled video currentTime seeking with a muted looping MP4 playback lifecycle. GSAP/ScrollTrigger now controls only cue and typography copy beats; Lenis remains the scroll infrastructure. Browser verification recorded video currentTime advancing from 1.20s to 2.50s without scrolling, continued playback while the copy changed to Designed as a whole, and natural copy reversal without reversing the video. Reduced-motion/mobile fallbacks remain static. ESLint, Next.js build, and git diff --check passed."
+    },
+    {
+      "kind": "hero-scroll-scrub-restoration",
+      "value": "The ambient-loop experiment was superseded at user request. Guarded requestAnimationFrame video seeking again maps GSAP/ScrollTrigger progress to video currentTime while the three typography beats remain scroll controlled. The final hero message fades before the founder panel overtakes the hero."
+    },
+    {
+      "kind": "founder-exit-portrait-verification",
+      "value": "Founder portrait finalized as a transparent, native-ratio 285x387px desktop frame with no hidden grey placeholder. The copy timeline completes first; a separate exit-phase ScrollTrigger reserves the bottom-to-top portrait reveal for approximately the final 12% of one viewport of page travel. Browser samples confirmed the portrait remained fully clipped after the About link reached opacity 1, revealed progressively at the page end, and completed at maximum scroll. No horizontal overflow was present. ESLint and the Next.js production build passed."
     }
   ],
   "artifacts": [
@@ -53,7 +117,17 @@
     "studio-bespoke-next/app/concepts/living-threshold/threshold-smooth-scroll.js",
     "studio-bespoke-next/app/concepts/living-threshold/living-threshold.module.css",
     "studio-bespoke-next/public/images/damac-hills-hero-upscaled-v1.png",
-    "studio-bespoke-next/public/images/damac-hills-hero-motion-v1.mp4"
+    "studio-bespoke-next/public/images/damac-hills-hero-motion-v1.mp4",
+    ".agents/implementation-plans/studio-bespoke-founder-authored-studio-v1.md",
+    ".agents/implementation-plans/studio-bespoke-founder-authored-studio-v1.manifest.json",
+    ".agents/implementation-plans/studio-bespoke-founder-sticky-underlap-v2.md",
+    ".agents/implementation-plans/studio-bespoke-founder-sticky-underlap-v2.manifest.json",
+    ".agents/implementation-plans/studio-bespoke-founder-aperture-reveal-v3.md",
+    ".agents/implementation-plans/studio-bespoke-founder-aperture-reveal-v3.manifest.json",
+    "studio-bespoke-next/app/concepts/living-threshold/founder-section.js",
+    "studio-bespoke-next/app/concepts/living-threshold/founder-section.module.css",
+    "studio-bespoke-next/public/images/studio-founder/brittany-guimaraes-founder.jpg",
+    "studio-bespoke-next/public/images/studio-founder/brittany-guimaraes-signature.png"
   ],
   "approvals": [
     {
@@ -67,11 +141,31 @@
     {
       "kind": "implementation",
       "value": "User approved testing the guarded requestAnimationFrame video-seeking technique before converting the video to frames."
+    },
+    {
+      "kind": "direction",
+      "value": "User approved writing the delegated implementation plan for The Authored Studio founder section, including portrait-panel convergence, drafting-alignment typography, and authentic signature reveal."
+    },
+    {
+      "kind": "direction",
+      "value": "User selected a sticky underlap/paper-panel overtake instead of the gradient, requested an approximately 70svh desktop founder chapter, removal of the numbered Studio label, and founder animation timing anchored to visible content entry."
+    },
+    {
+      "kind": "direction",
+      "value": "User approved replacing the three-panel founder portrait with a face-first aperture reveal, quieter single-origin typography, clause-level body-copy reveal, and a materially shorter 520–550px desktop founder panel."
+    },
+    {
+      "kind": "direction",
+      "value": "User approved removing scroll control from the hero video while retaining GSAP/ScrollTrigger control of the cue and three typography copy beats. The supplied MP4 should play normally in a muted loop."
+    },
+    {
+      "kind": "direction",
+      "value": "User superseded the ambient-video experiment by restoring scroll-scrubbed hero video and approved a late bottom-to-top founder portrait reveal that begins only while attempting to leave the final section, after the copy has been read."
     }
   ],
   "blockers": [],
-  "next_action": "Ask the user to review the Lenis-backed scrub response and the three-beat copy sequence in the Living Threshold preview. Refine perceived smoothness, copy wording, timing, or placement one issue at a time. Preserve the third-beat order unless review shows the concept-to-completion resolution does not fit the visual progression. Do not create or revise the reusable video-scroll skill until the hero is explicitly approved.",
+  "next_action": "User should perform the final tactile review of the late founder portrait reveal before committing the completed hero and founder chapter.",
   "created_at": "2026-07-17T15:36:52.9295014Z",
-  "updated_at": "2026-07-17T17:09:01.8528698+01:00",
+  "updated_at": "2026-07-17T21:22:54.9260809+01:00",
   "archived": false
 }
