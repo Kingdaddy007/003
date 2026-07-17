@@ -2,7 +2,7 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { gsap, ScrollTrigger } from '@/lib/motion';
+import { gsap } from '@/lib/motion';
 import styles from './founder-section.module.css';
 
 export default function FounderSection() {
@@ -27,9 +27,8 @@ export default function FounderSection() {
     const portraitMask = section.querySelector('[data-portrait-mask]');
     const basePortrait = section.querySelector('[data-portrait-base]');
 
-    // Signature wrapper and link wrapper
+    // Signature wrapper
     const signatureWrap = section.querySelector('[data-founder-signature-wrap]');
-    const aboutLinkWrap = section.querySelector('[data-about-link-wrap]');
 
     const mm = gsap.matchMedia();
 
@@ -52,7 +51,6 @@ export default function FounderSection() {
 
       if (founderIdentity) gsap.set(founderIdentity, { opacity: 0, y: 10 });
       if (signatureWrap) gsap.set(signatureWrap, { clipPath: 'inset(0% 100% 0% 0%)' });
-      if (aboutLinkWrap) gsap.set(aboutLinkWrap, { opacity: 0, y: 10 });
 
       // 2. Build the reading timeline. The portrait is deliberately excluded:
       // it acts as the section's closing beat only after the copy has resolved.
@@ -82,20 +80,15 @@ export default function FounderSection() {
 
         // 0.84–1.00: Identity and signature resolve
         .to(founderIdentity, { opacity: 1, y: 0, duration: 0.16, ease: 'power2.out' }, 0.84)
-        .to(signatureWrap, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.16, ease: 'none' }, 0.84)
-
-        // 0.94–1.00: About link resolves completely
-        .to(aboutLinkWrap, { opacity: 1, y: 0, duration: 0.12, ease: 'power2.out' }, 0.94);
+        .to(signatureWrap, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.16, ease: 'none' }, 0.84);
 
       // 3. Exit-phase portrait reveal. It begins only after the reading timeline
-      // has completed and finishes when the final section reaches the page end.
+      // has completed and resolves as the following services chapter enters.
       const portraitTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          // Reserve the portrait for roughly the final 12% of one viewport of
-          // page travel. This keeps it hidden while the founder copy is read.
-          start: () => ScrollTrigger.maxScroll(window) - Math.min(120, window.innerHeight * 0.12),
-          end: () => ScrollTrigger.maxScroll(window),
+          start: 'bottom bottom',
+          end: 'bottom 80%',
           scrub: 0.38,
           invalidateOnRefresh: true,
         },
@@ -188,17 +181,6 @@ export default function FounderSection() {
             </div>
           )}
 
-          {/* About link */}
-          <div className={styles.linkWrapper} data-about-link-wrap>
-            <a
-              href="https://studiobespoke.design/about-us/"
-              className={styles.aboutLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              About the studio
-            </a>
-          </div>
         </div>
       </div>
     </section>

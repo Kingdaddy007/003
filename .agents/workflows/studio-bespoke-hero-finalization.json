@@ -4,7 +4,7 @@
   "workflow_id": "studio-bespoke-hero-finalization",
   "mode": "implement",
   "status": "in_progress",
-  "current_state": "founder-exit-portrait-verified",
+  "current_state": "homepage-correction-master-plan-ready",
   "completed_states": [
     "brand-homepage-direction",
     "living-threshold-concept-selection",
@@ -33,7 +33,24 @@
     "hero-ambient-video-implemented",
     "hero-ambient-video-verified",
     "hero-scroll-scrub-restored",
-    "founder-exit-portrait-verified"
+    "founder-exit-portrait-verified",
+    "services-image-prototype-rejected",
+    "services-typography-replacement-verified",
+    "services-typography-replacement-rejected",
+    "services-rescue-plan-ready",
+    "selected-work-directional-parallax-plan-ready",
+    "featured-mira-restoration-plan-ready",
+    "selected-work-directional-parallax-implemented",
+    "services-rescue-v2-implemented",
+    "services-rescue-v2-verified",
+    "selected-work-directional-parallax-verified",
+    "featured-mira-restoration-implemented",
+    "featured-mira-restoration-verified",
+    "lower-homepage-critique-reconciled",
+    "services-and-thresholds-phase-plan-ready",
+    "selected-work-and-mira-phase-plan-ready",
+    "trust-inquiry-footer-phase-plan-ready",
+    "homepage-correction-master-plan-ready"
   ],
   "owner": {
     "agent": "root",
@@ -106,6 +123,42 @@
     {
       "kind": "founder-exit-portrait-verification",
       "value": "Founder portrait finalized as a transparent, native-ratio 285x387px desktop frame with no hidden grey placeholder. The copy timeline completes first; a separate exit-phase ScrollTrigger reserves the bottom-to-top portrait reveal for approximately the final 12% of one viewport of page travel. Browser samples confirmed the portrait remained fully clipped after the About link reached opacity 1, revealed progressively at the page end, and completed at maximum scroll. No horizontal overflow was present. ESLint and the Next.js production build passed."
+    },
+    {
+      "kind": "services-typography-replacement-verification",
+      "value": "The first image-led Services prototype was rejected after review because the center image and side metadata had no communication job. It was replaced with a typography-led Fixed Practice sequence: INTERIOR DESIGN remains anchored while FULL TURNKEY resolves into WORLDWIDE across one short scrubbed chapter. About-the-studio was removed from the founder chapter, along with service indices and scope labels. Browser checks confirmed no service image, both service options at the endpoint, mobile static visibility, no horizontal overflow, and a section-relative founder exit. ESLint and the Next.js production build passed."
+    },
+    {
+      "kind": "direction-correction",
+      "value": "User rejected the typography-led Services desktop result because the service names and fixed practice collide during scroll, the next section leaks into the viewport, and the motion does not create a coherent reading sequence. The existing implementation remains in place temporarily but is not approved."
+    },
+    {
+      "kind": "implementation-plan",
+      "value": "Services Rescue v2 replaces the collision-prone fixed-practice chorus with two readable service states and a restrained image plane. SHA-256: D401F57145E3119080830B00E6AEBEF291DA0C55FF690BD9AD46A32BEFE53C0A. MD5: 9E0C60C2CAA4843C3AD7E480E447D1C7."
+    },
+    {
+      "kind": "implementation-plan",
+      "value": "Selected Work Directional Parallax v1 adapts the infinite-parallax reference into a finite four-project procession with an asymmetric external text rail, deterministic multi-axis transitions, mobile static flow, and an exit-safe handoff to Mira. SHA-256: 8626B2DAE7C5C0E9AF852349CDE05C892CD8FD6F12EBB27F4855ABE165337445. MD5: 0D8A0A185616EABB11E6FC94ECF1C519."
+    },
+    {
+      "kind": "implementation-plan",
+      "value": "Featured Mira Restoration v1 restores the earlier blueprint-to-room proof as a below-fold featured project using targeted historical assets, guarded video seeking, two evidence states, and static mobile/reduced-motion fallbacks. SHA-256: 4E371B82D72B4916BF5CE28E13376D10B0A03C02AEAC01E146AEA824A3F23455. MD5: 86E4E51AC71EE579D4D88585A607E0C5."
+    },
+    {
+      "kind": "selected-work-directional-parallax-implemented",
+      "value": "Selected Work section implemented. Finite four-project procession with directional transitions (bottom->top, right->left, left->right, top->bottom) and counter-drift. Integrated vertical text mask for metadata synchronization and progressive counter rails. Implemented a 100vw x 100svh expanding handoff poster to Featured Mira. Mobile and reduced-motion fallback options stack in static layout. ESLint, Next.js build, and git checks completed successfully."
+    },
+    {
+      "kind": "services-selected-work-featured-mira-verification",
+      "value": "Services Rescue v2 now presents Full Turnkey and Worldwide as two clean sequential states with independent media and a static mobile/reduced-motion fallback. Selected Work now uses four reversible directional project transitions, synchronized external metadata rails, and a full-screen handoff without text leakage or clipped links. Featured Mira is mounted after Selected Work and scrubs a real 6.016s architectural drawing film before crossfading to the completed Mira room and two evidence states. Desktop forward/reverse, 1024px compact, 390px mobile, and reduced-motion browser checks found no horizontal overflow or runtime errors. Full ESLint and Next.js production build passed."
+    },
+    {
+      "kind": "user-review-correction",
+      "value": "User review rejected the current service image concept and left-column chapter heading, identified the blank first Selected Work frame and lack of chapter separation, rejected the non-Mira Zulal zoom behind the depth handoff, requested a sharper multi-image Mira progression with less copy, and requested a complete design roadmap for trust, testimonials, inquiry, and footer. No corrective website implementation is authorized until the staged plan is assigned."
+    },
+    {
+      "kind": "homepage-correction-plan-set",
+      "value": "Three milestone-gated plans and one master Anti-Gravity execution prompt now govern the remaining homepage: Phase 1 Services and thresholds; Phase 2 Selected Work and Featured Mira; Phase 3 Trust, client proof, inquiry, and footer. Each milestone requires user approval before the next begins."
     }
   ],
   "artifacts": [
@@ -126,6 +179,21 @@
     ".agents/implementation-plans/studio-bespoke-founder-aperture-reveal-v3.manifest.json",
     "studio-bespoke-next/app/concepts/living-threshold/founder-section.js",
     "studio-bespoke-next/app/concepts/living-threshold/founder-section.module.css",
+    "studio-bespoke-next/app/concepts/living-threshold/services-section.js",
+    "studio-bespoke-next/app/concepts/living-threshold/services-section.module.css",
+    "studio-bespoke-next/app/concepts/living-threshold/selected-work-section.js",
+    "studio-bespoke-next/app/concepts/living-threshold/selected-work-section.module.css",
+    "studio-bespoke-next/app/concepts/living-threshold/featured-mira-section.js",
+    "studio-bespoke-next/app/concepts/living-threshold/featured-mira-section.module.css",
+    "studio-bespoke-next/public/images/projects/mira/mira-proof.webp",
+    ".agents/implementation-plans/studio-bespoke-phase-1-services-transitions-v1.md",
+    ".agents/implementation-plans/studio-bespoke-phase-2-selected-work-mira-v1.md",
+    ".agents/implementation-plans/studio-bespoke-phase-3-trust-inquiry-footer-v1.md",
+    ".agents/implementation-plans/studio-bespoke-homepage-master-execution-prompt-v1.md",
+    ".agents/implementation-plans/studio-bespoke-services-continuous-line-v1.md",
+    ".agents/implementation-plans/studio-bespoke-services-rescue-v2.md",
+    ".agents/implementation-plans/studio-bespoke-selected-work-directional-parallax-v1.md",
+    ".agents/implementation-plans/studio-bespoke-featured-mira-restoration-v1.md",
     "studio-bespoke-next/public/images/studio-founder/brittany-guimaraes-founder.jpg",
     "studio-bespoke-next/public/images/studio-founder/brittany-guimaraes-signature.png"
   ],
@@ -164,8 +232,8 @@
     }
   ],
   "blockers": [],
-  "next_action": "User should perform the final tactile review of the late founder portrait reveal before committing the completed hero and founder chapter.",
+  "next_action": "Assign Milestone 1A from the master execution prompt: prepare three structural Services concepts without changing the approved opening, hero, or founder. Stop for user selection before implementation.",
   "created_at": "2026-07-17T15:36:52.9295014Z",
-  "updated_at": "2026-07-17T21:22:54.9260809+01:00",
+  "updated_at": "2026-07-18T00:35:00+01:00",
   "archived": false
 }
