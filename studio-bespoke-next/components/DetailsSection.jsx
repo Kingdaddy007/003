@@ -1,6 +1,7 @@
 export default function DetailsSection() {
   return (
-    <section id="details">
+    <section id="details" data-header-theme="mineral-light">
+      <span id="approach" className="section-anchor" tabIndex={-1} aria-label="Approach" />
       <div className="sb-container">
         <span className="eyebrow">Rituals Made Spatial</span>
         <h2 className="section-title">Ease is designed, not improvised.</h2>

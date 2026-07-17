@@ -1,0 +1,20 @@
+{
+  "active_task": "studio-bespoke-hero-finalization",
+  "tasks": [
+    {
+      "task_id": "studio-bespoke-hero-finalization",
+      "record": "studio-bespoke-hero-finalization.json",
+      "status": "in_progress"
+    },
+    {
+      "task_id": "d161bb13-3be6-4067-9092-1fc76be47607",
+      "record": "spatial-project-inception.json",
+      "status": "paused"
+    },
+    {
+      "task_id": "context-hygiene",
+      "record": "context-hygiene.json",
+      "status": "complete"
+    }
+  ]
+}

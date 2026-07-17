@@ -22,3 +22,10 @@
   - Transition flat codebases to Vite dev servers (`npm run dev`) immediately when incorporating rich media like video and custom web fonts to prevent local browser CORS blocks.
 - **Dynamic Preloader Fallbacks:**
   - Implement dynamic script loaders that listen for video source triggers (`canplaythrough` vs `error`) and fall back to SVG masks if resources are not yet generated, guaranteeing the website is never stuck or blank.
+
+## 5. Studio Bespoke Source Hierarchy
+
+- Use `studio-bespoke-inception/brand-evolution-experience-blueprint.md` as the active experience direction for the brand homepage.
+- Use `studio-bespoke-inception/portfolio_gallery.md` as the local asset and project-provenance gate.
+- Treat the older `reference-implementation-plans/` project-led narrative as historical planning material unless the user explicitly re-approves a specific part.
+- Never infer project claims, service claims, image provenance, testimonials, credentials, or contact information beyond those evidence sources.

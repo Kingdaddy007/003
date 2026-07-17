@@ -23,3 +23,12 @@
 - **GSAP Stroke Outlines on Traced SVG Geometries:**
   - *Mistake:* Forcing a JS stroke and dash-array onto vector paths created by Figma's Image Tracer. Image Tracer creates shapes representing lines (polygons), so adding a stroke draws borders on both sides of the line, doubling its thickness and creating fuzzy, blurred edges.
   - *Avoidance:* Preserve native vector path fills without strokes. Use container-level masks or clip-paths for sketching reveals to keep original vector sharpness.
+
+## 4. Scroll-Scrubbed Video Mistakes
+
+- **Continuous direct writes to `video.currentTime`:**
+  - *Mistake:* Tweening `video.currentTime` directly on every GSAP update can queue new seeks while the decoder is still seeking, producing visible stutter, freezes, or delayed reverse playback.
+  - *Avoidance:* Let scroll update a target time, then use a guarded render loop that seeks only while `video.seeking === false`. Treat this as a prototype until human visual review confirms it. If source keyframe spacing still prevents smooth reverse scrubbing, escalate deliberately to an optimized all-intra encode or a preloaded canvas frame sequence.
+- **Declaring motion smooth from numeric state alone:**
+  - *Mistake:* Browser timestamps and error-free logs prove synchronization wiring, not perceived fluidity.
+  - *Avoidance:* Require user-visible forward, reverse, fast-scroll, and stop/settle review before marking a cinematic scrub interaction complete.

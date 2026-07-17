@@ -1,14 +1,13 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { homepageContent } from '@/content/homepage';
+import { gsap } from '@/lib/motion';
 
 const INITIAL_APERTURE_SCALE = 0.72;
 
 export default function ProofPinSection() {
+  const sectionRef = useRef(null);
   const pinRef = useRef(null);
   const apertureRef = useRef(null);
   const imageShellRef = useRef(null);
@@ -18,6 +17,7 @@ export default function ProofPinSection() {
   const secondStepRef = useRef(null);
   const wallsAnnotationRef = useRef(null);
   const islandAnnotationRef = useRef(null);
+  const { miraProof } = homepageContent;
 
   useEffect(() => {
     const pin = pinRef.current;
@@ -35,6 +35,7 @@ export default function ProofPinSection() {
     const media = gsap.matchMedia();
 
     media.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
+      sectionRef.current?.classList.add('is-proof-enhanced');
       const getCoverScale = () => Math.max(
         (window.innerWidth * 1.12) / aperture.offsetWidth,
         (window.innerHeight * 1.12) / aperture.offsetHeight
@@ -99,14 +100,25 @@ export default function ProofPinSection() {
         .to(islandAnnotation, { autoAlpha: 1, scale: 1, duration: 0.1, ease: 'power2.out' }, 0.78)
         .to({}, { duration: 0.12 });
 
-      return () => timeline.revert();
+      return () => {
+        sectionRef.current?.classList.remove('is-proof-enhanced');
+        timeline.revert();
+      };
     });
 
     return () => media.revert();
   }, []);
 
   return (
-    <section id="proof" className="pinned-section" aria-labelledby="proof-title">
+    <section
+      id="work"
+      className="pinned-section"
+      ref={sectionRef}
+      aria-labelledby="proof-title"
+      data-header-theme="proof-dark"
+      tabIndex={-1}
+    >
+      <span id="press" className="section-anchor" tabIndex={-1} aria-label="Press" />
       <div className="pin-trigger" ref={pinRef}>
         <div className="proof-room-aperture" ref={apertureRef}>
           <div className="proof-room-image-shell" ref={imageShellRef}>
@@ -114,7 +126,8 @@ export default function ProofPinSection() {
               className="pin-bg-image"
               ref={imageRef}
               role="img"
-              aria-label="Completed Mira Villa kitchen connected to the surrounding living spaces"
+              aria-label={miraProof.alt}
+              style={{ backgroundImage: `url("${miraProof.image}")` }}
             />
           </div>
         </div>
@@ -139,7 +152,9 @@ export default function ProofPinSection() {
                 The central island supports the client&apos;s baking routine while keeping cooking,
                 conversation, and gathering within the same shared space.
               </p>
-              <p className="proof-tag">Independent confirmation · Marie Claire Maison</p>
+              <p className="proof-tag">
+                Independent confirmation · Marie Claire Maison
+              </p>
             </article>
           </div>
 

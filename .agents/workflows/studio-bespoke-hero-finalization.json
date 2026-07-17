@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "task_id": "studio-bespoke-hero-finalization",
+  "workflow_id": "studio-bespoke-hero-finalization",
+  "mode": "implement",
+  "status": "in_progress",
+  "current_state": "user-review-and-refinement",
+  "completed_states": [
+    "brand-homepage-direction",
+    "living-threshold-concept-selection",
+    "arrival-prototype",
+    "scroll-video-prototype",
+    "guarded-seek-pass",
+    "warm-ivory-type-pass"
+  ],
+  "owner": {
+    "agent": "root",
+    "thread": "current-codex-task",
+    "worktree": null
+  },
+  "workspace": "C:/Users/godsw/ANTIGRAVITY  WORKSPACE/003",
+  "lease": null,
+  "evidence": [
+    {
+      "kind": "branch",
+      "value": "codex/chatgptibeliveyou"
+    },
+    {
+      "kind": "preview",
+      "value": "http://127.0.0.1:3000/concepts/living-threshold"
+    },
+    {
+      "kind": "verification",
+      "value": "Targeted ESLint passed for the living-threshold page and scroll-media component; browser reported video duration 6s, readyState 4, forward and reverse time updates, synchronized copy state changes, and no runtime warnings or errors. Perceived smoothness remains subject to user review."
+    },
+    {
+      "kind": "copy-state",
+      "value": "Two copy beats exist. A third beat is unresolved and absent."
+    }
+  ],
+  "artifacts": [
+    "studio-bespoke-inception/portfolio_gallery.md",
+    "studio-bespoke-inception/brand-evolution-experience-blueprint.md",
+    "studio-bespoke-next/app/concepts/living-threshold/page.js",
+    "studio-bespoke-next/app/concepts/living-threshold/threshold-entrance.js",
+    "studio-bespoke-next/app/concepts/living-threshold/threshold-scroll-media.js",
+    "studio-bespoke-next/app/concepts/living-threshold/living-threshold.module.css",
+    "studio-bespoke-next/public/images/damac-hills-hero-upscaled-v1.png",
+    "studio-bespoke-next/public/images/damac-hills-hero-motion-v1.mp4"
+  ],
+  "approvals": [
+    {
+      "kind": "direction",
+      "value": "Living Threshold selected as the working hero territory."
+    },
+    {
+      "kind": "asset",
+      "value": "Damac Hills open-plan room/pool scene selected for the current hero test."
+    },
+    {
+      "kind": "implementation",
+      "value": "User approved testing the guarded requestAnimationFrame video-seeking technique before converting the video to frames."
+    }
+  ],
+  "blockers": [],
+  "next_action": "In a fresh chat, read this task record plus portfolio_gallery.md and brand-evolution-experience-blueprint.md, confirm branch codex/chatgptibeliveyou, then collect and address the user's minor hero issues one at a time. Verify perceived scrub smoothness and decide whether a third copy beat is justified. Do not create or revise the reusable video-scroll skill until the hero is explicitly approved.",
+  "created_at": "2026-07-17T15:36:52.9295014Z",
+  "updated_at": "2026-07-17T15:36:52.9295014Z",
+  "archived": false
+}
