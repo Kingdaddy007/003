@@ -3,7 +3,9 @@ import ThresholdEntrance from './threshold-entrance';
 import ThresholdScrollMedia from './threshold-scroll-media';
 import ThresholdSmoothScroll from './threshold-smooth-scroll';
 import FounderSection from './founder-section';
+import ServicesIntroduction from './services-introduction';
 import ServicesSection from './services-section';
+import SelectedWorkIntroduction from './selected-work-introduction';
 import SelectedWorkSection from './selected-work-section';
 import FeaturedMiraSection from './featured-mira-section';
 import styles from './living-threshold.module.css';
@@ -155,7 +157,9 @@ export default function LivingThresholdConceptPage() {
         </div>
       </section>
       <FounderSection />
+      <ServicesIntroduction />
       <ServicesSection />
+      <SelectedWorkIntroduction />
       <SelectedWorkSection />
       <FeaturedMiraSection />
     </main>

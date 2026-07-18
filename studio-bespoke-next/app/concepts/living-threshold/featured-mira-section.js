@@ -42,15 +42,18 @@ export default function FeaturedMiraSection() {
       }
 
       const remainingTime = targetVideoTime - video.currentTime;
-      if (Math.abs(remainingTime) <= 1 / 18) return;
+      if (!Number.isFinite(remainingTime) || Math.abs(remainingTime) <= 1 / 18) return;
 
       if (!video.seeking) {
         const interpolation = gsap.utils.clamp(0.36, 0.84, 0.36 + (Math.abs(remainingTime) * 0.32));
-        video.currentTime = gsap.utils.clamp(
+        const nextTime = gsap.utils.clamp(
           0,
           video.duration,
           video.currentTime + (remainingTime * interpolation),
         );
+        if (Number.isFinite(nextTime)) {
+          video.currentTime = nextTime;
+        }
       }
 
       scrubFrameRequest = window.requestAnimationFrame(updateScrubbedVideo);

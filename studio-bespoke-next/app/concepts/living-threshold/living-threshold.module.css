@@ -1,7 +1,12 @@
 .page {
+  --paper: #e8e0d4;
+  --ink: #171a17;
+  --ivory: #f2eee5;
+  --muted-paper-ink: #6d655b;
+
   min-height: 100svh;
-  background: #171a17;
-  color: #f2eee5;
+  background: var(--ink);
+  color: var(--ivory);
 }
 
 
