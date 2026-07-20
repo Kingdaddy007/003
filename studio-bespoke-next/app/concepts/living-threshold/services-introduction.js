@@ -1,7 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/motion';
+import { gsap } from '@/lib/motion';
 import styles from './services-introduction.module.css';
 
 export default function ServicesIntroduction() {
@@ -60,7 +60,7 @@ export default function ServicesIntroduction() {
   return (
     <section className={styles.invitation} ref={containerRef}>
       <div className={styles.content}>
-        <p className={styles.eyebrow}>Services</p>
+        <p className={styles.eyebrow}>Studio Services</p>
         <h2 className={styles.heading} ref={headingRef}>
           <span className={styles.lineMask}><span className={styles.line} data-line>One studio.</span></span>
           <span className={styles.lineMask}><em className={styles.line} data-line>Two ways to work.</em></span>

@@ -39,3 +39,14 @@
 - **Unresolved copy decision:** There is no third copy beat in the current implementation. Decide whether the six-second visual genuinely supports a third beat, establish its communication job and wording, then choreograph it. Do not add it merely to fill time.
 - **Authoritative working references:** `studio-bespoke-inception/portfolio_gallery.md` for approved/local brand assets and project provenance; `studio-bespoke-inception/brand-evolution-experience-blueprint.md` for the current brand-homepage direction. Older project-story plans remain historical context and must not silently override the newer brand evolution direction.
 - **Skill follow-up:** Do not revise or create the reusable video-scroll skill until this hero is approved as smooth and correct. After approval, document the verified guarded-seek pattern, encoding/keyframe requirements, text synchronization, frame-sequence escalation criteria, loading strategy, mobile fallback, and reduced-motion behavior.
+
+## 5. Services-to-Selected Work Handoff — Closed Milestone
+
+**Date:** 2026-07-20
+
+- **Implementation location:** `studio-bespoke-next/app/concepts/living-threshold/`
+- **Closed scope:** Services-to-Selected Work transition and Selected Work presentation are complete for this milestone. Do not reopen them in the next chat unless the user explicitly requests it.
+- **Motion decision:** The Selected Work title arrives within the pinned Services scene as a soft scale/blur depth transition, then hands into the existing curtain reveal and gallery procession.
+- **Reverse-scroll guard:** Selected Work's sticky-stage background is controlled by explicit ScrollTrigger enter/leave-back callbacks so it becomes transparent again when returning to Services. This prevents a higher-z-index layer from covering the service states.
+- **Background guard:** The Services section carries a 10svh ivory continuation under the overlap. This closes the interval where the Services section has ended but Selected Work is still transparent, preventing the page's dark base from appearing.
+- **Verification:** Repeated forward/reverse browser cycles, five sampled positions across the former dark-gap interval, ESLint, `git diff --check`, and the Next.js production build passed.

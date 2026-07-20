@@ -41,74 +41,34 @@ export default function ThresholdScrollMedia({ poster, src }) {
     }
 
     let motionContext;
-    let scrubFrameRequest;
-    let targetVideoTime = 0;
-    const minimumSeekDistance = 1 / 15;
-    const minimumSeekInterpolation = 0.38;
-    const maximumSeekInterpolation = 0.86;
+    let visibilityObserver;
+    let heroIsVisible = true;
 
-    const cancelScrubFrame = () => {
-      if (scrubFrameRequest === undefined) {
+    const playAmbientVideo = () => {
+      if (!heroIsVisible || document.hidden) {
         return;
       }
 
-      window.cancelAnimationFrame(scrubFrameRequest);
-      scrubFrameRequest = undefined;
+      const playback = video.play();
+      playback?.catch(() => {
+        // The poster remains visible when browser autoplay policy blocks playback.
+      });
     };
 
-    const updateScrubbedVideo = () => {
-      scrubFrameRequest = undefined;
-
-      if (
-        !Number.isFinite(video.duration)
-        || video.duration <= 0
-        || !Number.isFinite(video.currentTime)
-      ) {
-        return;
-      }
-
-      const remainingTime = targetVideoTime - video.currentTime;
-
-      if (Math.abs(remainingTime) <= minimumSeekDistance) {
-        return;
-      }
-
-      if (!video.seeking) {
-        const seekInterpolation = gsap.utils.clamp(
-          minimumSeekInterpolation,
-          maximumSeekInterpolation,
-          minimumSeekInterpolation + (Math.abs(remainingTime) * 0.34),
-        );
-        const nextTime = video.currentTime + (remainingTime * seekInterpolation);
-        video.currentTime = Math.max(0, Math.min(nextTime, video.duration));
-      }
-
-      scrubFrameRequest = window.requestAnimationFrame(updateScrubbedVideo);
-    };
-
-    const queueScrubFrame = () => {
-      if (scrubFrameRequest !== undefined) {
-        return;
-      }
-
-      scrubFrameRequest = window.requestAnimationFrame(updateScrubbedVideo);
+    const pauseAmbientVideo = () => {
+      video.pause();
     };
 
     const revealVideo = () => {
       gsap.set(video, { autoAlpha: 1 });
     };
 
-    const buildScrollChoreography = () => {
-      if (!Number.isFinite(video.duration) || video.duration <= 0 || motionContext) {
+    const buildCopyChoreography = () => {
+      if (motionContext) {
         return;
       }
 
-      video.pause();
-      video.currentTime = 0;
-
       motionContext = gsap.context(() => {
-        const scrubProgress = { value: 0 };
-
         gsap.set(secondaryMessage, { autoAlpha: 0 });
         gsap.set(secondaryLines, { yPercent: 112, rotate: 1.25 });
         gsap.set(secondarySupport, { autoAlpha: 0, y: 18 });
@@ -127,19 +87,6 @@ export default function ThresholdScrollMedia({ poster, src }) {
         });
 
         scrollTimeline
-          .to(scrubProgress, {
-            value: 1,
-            duration: 1,
-            ease: 'none',
-            onUpdate: () => {
-              const playableDuration = Number.isFinite(video.duration)
-                ? Math.max(video.duration - 0.08, 0)
-                : 0;
-
-              targetVideoTime = scrubProgress.value * playableDuration;
-              queueScrubFrame();
-            },
-          }, 0)
           .to(cue, {
             autoAlpha: 0,
             y: -8,
@@ -201,29 +148,51 @@ export default function ThresholdScrollMedia({ poster, src }) {
     };
 
     const handleVideoError = () => {
-      cancelScrubFrame();
+      pauseAmbientVideo();
       gsap.set(video, { autoAlpha: 0 });
     };
 
-    video.addEventListener('loadedmetadata', buildScrollChoreography);
-    video.addEventListener('loadeddata', revealVideo);
-    video.addEventListener('error', handleVideoError);
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        pauseAmbientVideo();
+      } else {
+        playAmbientVideo();
+      }
+    };
 
-    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-      buildScrollChoreography();
-    }
+    visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        heroIsVisible = entry.isIntersecting;
+        if (heroIsVisible) {
+          playAmbientVideo();
+        } else {
+          pauseAmbientVideo();
+        }
+      },
+      { threshold: 0.05 },
+    );
+
+    visibilityObserver.observe(story);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    video.addEventListener('loadeddata', revealVideo);
+    video.addEventListener('canplay', playAmbientVideo);
+    video.addEventListener('error', handleVideoError);
 
     if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
       revealVideo();
+      playAmbientVideo();
     }
 
+    buildCopyChoreography();
     video.load();
 
     return () => {
-      video.removeEventListener('loadedmetadata', buildScrollChoreography);
       video.removeEventListener('loadeddata', revealVideo);
+      video.removeEventListener('canplay', playAmbientVideo);
       video.removeEventListener('error', handleVideoError);
-      cancelScrubFrame();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      visibilityObserver?.disconnect();
       video.pause();
       motionContext?.revert();
     };
@@ -233,13 +202,15 @@ export default function ThresholdScrollMedia({ poster, src }) {
     <video
       ref={videoRef}
       className={styles.heroVideo}
+      loop
       muted
       playsInline
       poster={poster}
-      preload="metadata"
+      preload="auto"
       aria-hidden="true"
     >
       <source src={src} type="video/mp4" />
+      Your browser does not support background video playback.
     </video>
   );
 }

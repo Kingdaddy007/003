@@ -1,252 +1,240 @@
 .founderSection {
   --gutter: clamp(24px, 3.5vw, 56px);
   position: relative;
-  background-color: #e8e0d4; /* Warm paper/ivory */
-  color: #171a17; /* Primary ink */
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  
-  /* Mobile/Tablet default defaults */
-  min-height: auto;
-  padding: 48px var(--gutter);
   z-index: 10;
+  display: flex;
+  min-height: auto;
+  padding: 64px var(--gutter);
+  overflow: hidden;
+  color: var(--ink, #171a17);
+  background: var(--paper, #e8e0d4);
+  box-sizing: border-box;
 }
 
 .editorialGrid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: clamp(16px, 2.5vw, 32px);
-  row-gap: 0;
-  align-items: center;
+  grid-template-rows: auto auto 1fr;
+  column-gap: clamp(14px, 2vw, 30px);
   width: 100%;
+  margin: auto 0;
+}
+
+.eyebrow {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  margin: 0 0 clamp(26px, 4vh, 46px);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .heading {
-  grid-column: 1 / 7;
-  grid-row: 1;
+  grid-column: 1 / 10;
+  grid-row: 2;
+  align-self: start;
+  margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(36px, 4.5vw, 64px);
+  font-size: clamp(48px, 6.15vw, 92px);
   font-weight: 300;
-  line-height: 1.1;
-  color: #171a17;
-  margin-bottom: clamp(20px, 3vh, 32px);
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+.heading em {
+  display: block;
+  padding-right: 0.05em;
+  font-weight: 300;
 }
 
 .lineWrapper {
   display: block;
+  padding: 0.08em 0.06em 0.12em 0;
+  margin: -0.08em -0.06em -0.12em 0;
   overflow: hidden;
 }
 
-.line1, .line2, .line3 {
+.lineWrapper > * {
   display: block;
-  will-change: transform, opacity;
+  transform-origin: left center;
+  will-change: transform;
 }
 
-.bodyAndDetails {
-  grid-column: 1 / 7;
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-}
-
-.bodyCopy {
-  font-family: var(--font-sans);
-  font-size: clamp(15px, 1.25vw, 17px);
-  line-height: 1.6;
-  color: #171a17;
-  max-width: 48ch;
-  margin-bottom: 24px;
-}
-
-.bodyClause {
-  display: inline;
-  will-change: opacity, filter;
-}
-
-.founderIdentity {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 24px;
-  will-change: transform, opacity;
-}
-
-.founderName {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 500;
-  color: #171a17;
-}
-
-.founderTitle {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: #6d655b;
-  letter-spacing: 0.05em;
-  margin-top: 4px;
-}
-
-.signatureWrapper {
-  margin-bottom: 32px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  max-width: 160px;
-  overflow: hidden;
-}
-
-.signatureImage {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-  display: block;
-}
-
-/* Portrait Field */
 .portraitField {
-  grid-column: 7 / 13;
-  grid-row: 1 / 3; /* Spans across heading and details rows */
-  margin: 0;
-  display: flex;
-  justify-content: flex-end;
+  grid-column: 9 / 13;
+  grid-row: 1 / 4;
   align-self: center;
+  justify-self: end;
+  width: 100%;
+  max-width: 360px;
+  margin: 0;
 }
 
 .portraitFrame {
   position: relative;
   width: 100%;
-  max-width: 285px;
-  aspect-ratio: 1707 / 2320;
-  background-color: transparent;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
+  background: rgba(109, 101, 91, 0.14);
 }
 
 .portraitMask {
-  width: 100%;
-  height: 100%;
-  position: relative;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   will-change: clip-path;
 }
 
-.basePortrait {
+.portraitImage {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  display: block;
+  object-position: 50% 27%;
+  will-change: transform;
 }
 
-/* Desktop Layout (above 900px width base) */
+.bodyAndDetails {
+  grid-column: 2 / 6;
+  grid-row: 3;
+  align-self: end;
+  margin-top: clamp(54px, 8vh, 88px);
+}
+
+.bodyCopy {
+  max-width: 43ch;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(16px, 1.2vw, 18px);
+  line-height: 1.55;
+  will-change: transform, opacity;
+}
+
+.founderIdentity {
+  grid-column: 6 / 9;
+  grid-row: 3;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(54px, 8vh, 88px);
+  padding-left: clamp(10px, 1.4vw, 22px);
+  border-left: 1px solid rgba(23, 26, 23, 0.28);
+  will-change: transform, opacity;
+}
+
+.signatureWrapper {
+  display: flex;
+  width: min(100%, 150px);
+  height: 44px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.signatureImage {
+  display: block;
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+.founderTitle {
+  margin-top: 10px;
+  color: rgba(23, 26, 23, 0.8);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
 @media (min-width: 901px) {
   .founderSection {
-    min-height: clamp(460px, 52svh, 500px);
-    padding: clamp(22px, 3vh, 28px) var(--gutter);
-    margin-top: 0;
-    border-top: none;
-    box-shadow: none;
+    z-index: 30;
+    min-height: clamp(660px, 82svh, 820px);
+    padding: clamp(56px, 8vh, 86px) var(--gutter);
+    margin-top: -20svh;
+    border-top: 1px solid rgba(23, 26, 23, 0.2);
+    box-shadow:
+      0 -16px 30px rgba(23, 26, 23, 0.035),
+      0 24px 44px rgba(23, 26, 23, 0.08);
   }
+}
 
+@media (min-width: 721px) and (max-width: 1100px) {
   .heading {
-    font-size: clamp(34px, 3.4vw, 48px);
-    line-height: 1;
-    margin-bottom: 12px;
+    grid-column: 1 / 9;
+    font-size: clamp(48px, 6.4vw, 70px);
   }
 
-  .bodyCopy {
-    font-size: clamp(13px, 1vw, 15px);
-    line-height: 1.35;
-    max-width: 52ch;
-    margin-bottom: 12px;
+  .portraitField {
+    grid-column: 9 / 13;
+    max-width: 300px;
+  }
+
+  .bodyAndDetails {
+    grid-column: 1 / 6;
   }
 
   .founderIdentity {
-    margin-bottom: 12px;
-  }
-
-  .founderName {
-    font-size: 16px;
-  }
-
-  .founderTitle {
-    font-size: 10px;
-    margin-top: 2px;
-  }
-
-  .signatureWrapper {
-    height: 36px;
-    max-width: 140px;
-    margin-bottom: 14px;
-  }
-
-  .portraitFrame {
-    max-width: 285px;
+    grid-column: 6 / 9;
   }
 }
 
-/* Desktop Layout (above 900px width with fine pointer and no reduced-motion preference) */
-@media (min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .founderSection {
-    min-height: clamp(460px, 52svh, 500px);
-    padding: clamp(22px, 3vh, 28px) var(--gutter);
-    margin-top: -30svh; /* CSS underlap panel overtake */
-    z-index: 30; /* Elevated stack above hero */
-    border-top: 1px solid rgba(23, 26, 23, 0.24);
-    box-shadow: 0 -12px 24px rgba(23, 26, 23, 0.04);
-  }
-}
-
-/* Tablet Layout (721px–900px width) */
-@media (max-width: 900px) {
-  .founderSection {
-    padding: 60px var(--gutter);
-    min-height: auto;
-    margin-top: 0;
-    border-top: none;
-    box-shadow: none;
-  }
-  
-  .editorialGrid {
-    column-gap: 24px;
-  }
-}
-
-/* Mobile Layout (720px and below) */
 @media (max-width: 720px) {
   .founderSection {
-    padding: 48px var(--gutter);
+    padding: 56px var(--gutter) 72px;
   }
-  
+
   .editorialGrid {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    gap: 32px;
   }
-  
+
+  .eyebrow {
+    margin-bottom: 24px;
+  }
+
   .heading {
-    margin-bottom: 20px;
-    font-size: clamp(32px, 8vw, 44px);
-    grid-row: auto;
-    grid-column: auto;
+    font-size: clamp(42px, 13vw, 68px);
+    line-height: 0.94;
   }
-  
-  .bodyAndDetails {
-    grid-row: auto;
-    grid-column: auto;
-  }
-  
+
   .portraitField {
-    width: 100%;
-    justify-content: center;
-    align-self: auto;
-    grid-row: auto;
-    grid-column: auto;
+    width: min(88%, 430px);
+    max-width: none;
+    margin: 44px 0 0 auto;
   }
-  
+
   .portraitFrame {
-    max-width: 100%;
+    aspect-ratio: 4 / 5;
+  }
+
+  .bodyAndDetails {
+    margin-top: 40px;
+  }
+
+  .bodyCopy {
+    max-width: 38ch;
+    font-size: 16px;
+  }
+
+  .founderIdentity {
+    margin-top: 28px;
+    padding-left: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineWrapper > *,
+  .portraitMask,
+  .portraitImage,
+  .bodyCopy,
+  .founderIdentity {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
   }
 }

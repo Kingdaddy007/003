@@ -1,107 +1,96 @@
 'use client';
 
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { gsap } from '@/lib/motion';
 import styles from './founder-section.module.css';
 
 export default function FounderSection() {
   const sectionRef = useRef(null);
-  const [signatureFailed, setSignatureFailed] = useState(false);
   const [portraitFailed, setPortraitFailed] = useState(false);
+  const [signatureFailed, setSignatureFailed] = useState(false);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
 
-    const line1 = section.querySelector('[data-founder-line="1"]');
-    const line2 = section.querySelector('[data-founder-line="2"]');
-    const line3 = section.querySelector('[data-founder-line="3"]');
-    
-    // Select detail text and clause elements
-    const clause1 = section.querySelector('[data-founder-clause="1"]');
-    const clause2 = section.querySelector('[data-founder-clause="2"]');
-    const founderIdentity = section.querySelector(`.${styles.founderIdentity}`);
-    
-    // Mask and image elements
+    const eyebrow = section.querySelector('[data-founder-eyebrow]');
+    const headingLines = section.querySelectorAll('[data-founder-line]');
+    const bodyCopy = section.querySelector('[data-founder-body]');
+    const founderIdentity = section.querySelector('[data-founder-identity]');
     const portraitMask = section.querySelector('[data-portrait-mask]');
-    const basePortrait = section.querySelector('[data-portrait-base]');
+    const portraitImage = section.querySelector('[data-portrait-image]');
+    const mediaQuery = gsap.matchMedia();
 
-    // Signature wrapper
-    const signatureWrap = section.querySelector('[data-founder-signature-wrap]');
+    mediaQuery.add(
+      '(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
+      () => {
+        gsap.set(eyebrow, { autoAlpha: 0 });
+        gsap.set(headingLines, { yPercent: 112, rotate: 1.2 });
+        gsap.set(bodyCopy, { autoAlpha: 0, y: 18 });
+        gsap.set(founderIdentity, { autoAlpha: 0, y: 12 });
 
-    const mm = gsap.matchMedia();
+        if (portraitMask && portraitImage) {
+          gsap.set(portraitMask, { clipPath: 'inset(100% 0% 0% 0%)' });
+          gsap.set(portraitImage, {
+            yPercent: 9,
+            scale: 1.08,
+            transformOrigin: 'center center',
+          });
+        }
 
-    // Match media query: desktop above 900px, pointer: fine, prefers-reduced-motion: no-preference
-    mm.add('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
-      // 1. Set initial states inside the media query block
-      if (portraitMask) {
-        gsap.set(portraitMask, { clipPath: 'inset(100% 0% 0% 0%)' });
-      }
-      if (basePortrait) {
-        gsap.set(basePortrait, { yPercent: 10, scale: 1.06, transformOrigin: 'center center' });
-      }
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 78%',
+            end: 'top 16%',
+            scrub: 0.36,
+            invalidateOnRefresh: true,
+          },
+        });
 
-      if (line1) gsap.set(line1, { x: -16, y: 18, opacity: 0, filter: 'blur(4px)' });
-      if (line2) gsap.set(line2, { x: -16, y: 18, opacity: 0, filter: 'blur(4px)' });
-      if (line3) gsap.set(line3, { x: -16, y: 18, opacity: 0, filter: 'blur(4px)' });
+        timeline
+          .to(eyebrow, { autoAlpha: 1, duration: 0.12, ease: 'none' }, 0.02)
+          .to(headingLines, {
+            yPercent: 0,
+            rotate: 0,
+            duration: 0.3,
+            stagger: 0.08,
+            ease: 'power3.out',
+          }, 0.08);
 
-      if (clause1) gsap.set(clause1, { opacity: 0, filter: 'blur(3px)' });
-      if (clause2) gsap.set(clause2, { opacity: 0, filter: 'blur(3px)' });
+        if (portraitMask && portraitImage) {
+          timeline
+            .to(portraitMask, {
+              clipPath: 'inset(0% 0% 0% 0%)',
+              duration: 0.58,
+              ease: 'none',
+            }, 0.24)
+            .to(portraitImage, {
+              yPercent: 0,
+              scale: 1,
+              duration: 0.58,
+              ease: 'none',
+            }, 0.24);
+        }
 
-      if (founderIdentity) gsap.set(founderIdentity, { opacity: 0, y: 10 });
-      if (signatureWrap) gsap.set(signatureWrap, { clipPath: 'inset(0% 100% 0% 0%)' });
+        timeline
+          .to(bodyCopy, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.2,
+            ease: 'power2.out',
+          }, 0.58)
+          .to(founderIdentity, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.18,
+            ease: 'power2.out',
+          }, 0.7);
+      },
+    );
 
-      // 2. Build the reading timeline. The portrait is deliberately excluded:
-      // it acts as the section's closing beat only after the copy has resolved.
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 82%',
-          end: 'top 60%',
-          scrub: 0.24,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      tl
-        // 0.28–0.52: "Personal" line exposes
-        .to(line1, { x: 0, y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.24, ease: 'power2.out' }, 0.28)
-
-        // 0.38–0.62: "begins with" line exposes
-        .to(line2, { x: 0, y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.24, ease: 'power2.out' }, 0.38)
-
-        // 0.48–0.72: "listening." line exposes
-        .to(line3, { x: 0, y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.24, ease: 'power2.out' }, 0.48)
-
-        // 0.62–0.96: Clause one and two resolve in reading order
-        .to(clause1, { opacity: 1, filter: 'blur(0px)', duration: 0.24, ease: 'power2.out' }, 0.62)
-        .to(clause2, { opacity: 1, filter: 'blur(0px)', duration: 0.24, ease: 'power2.out' }, 0.72)
-
-        // 0.84–1.00: Identity and signature resolve
-        .to(founderIdentity, { opacity: 1, y: 0, duration: 0.16, ease: 'power2.out' }, 0.84)
-        .to(signatureWrap, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.16, ease: 'none' }, 0.84);
-
-      // 3. Exit-phase portrait reveal. It begins only after the reading timeline
-      // has completed and resolves as the following services chapter enters.
-      const portraitTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'bottom bottom',
-          end: 'bottom 80%',
-          scrub: 0.38,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      portraitTl
-        .to(portraitMask, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'none' }, 0)
-        .to(basePortrait, { yPercent: 0, scale: 1, duration: 1, ease: 'none' }, 0);
-    });
-
-    return () => {
-      mm.revert();
-    };
+    return () => mediaQuery.revert();
   }, []);
 
   return (
@@ -109,35 +98,32 @@ export default function FounderSection() {
       ref={sectionRef}
       className={styles.founderSection}
       aria-labelledby="founder-section-title"
+      id="studio"
     >
       <div className={styles.editorialGrid} data-founder-content>
-        {/* Heading lines as three controllable lines */}
+        <p className={styles.eyebrow} data-founder-eyebrow>The Studio</p>
+
         <h2 id="founder-section-title" className={styles.heading}>
           <span className={styles.lineWrapper}>
-            <span className={styles.line1} data-founder-line="1">Personal</span>
+            <span data-founder-line>Personal begins</span>
           </span>
           <span className={styles.lineWrapper}>
-            <span className={styles.line2} data-founder-line="2">begins with</span>
-          </span>
-          <span className={styles.lineWrapper}>
-            <span className={styles.line3} data-founder-line="3">listening.</span>
+            <em data-founder-line>with listening.</em>
           </span>
         </h2>
 
-        {/* Portrait Field */}
         <figure className={styles.portraitField}>
           <div className={styles.portraitFrame}>
             {!portraitFailed && (
               <div className={styles.portraitMask} data-portrait-mask>
-                {/* Base Portrait (Semantic Image using next/image) */}
                 <Image
                   src="/images/studio-founder/brittany-guimaraes-founder.jpg"
                   alt="Brittany Guimaraes, founder of Studio Bespoke Design"
-                  className={styles.basePortrait}
-                  data-portrait-base
+                  className={styles.portraitImage}
+                  data-portrait-image
                   width={1707}
                   height={2320}
-                  sizes="(max-width: 720px) 100vw, (max-width: 1200px) 50vw, 320px"
+                  sizes="(max-width: 720px) calc(100vw - 48px), (max-width: 1200px) 32vw, 360px"
                   onError={() => setPortraitFailed(true)}
                 />
               </div>
@@ -145,32 +131,17 @@ export default function FounderSection() {
           </div>
         </figure>
 
-        {/* Body Copy & Founder Metadata */}
         <div className={styles.bodyAndDetails}>
-          <p className={styles.bodyCopy}>
-            <span className={styles.bodyClause} data-founder-clause="1">
-              Studio Bespoke is led by Brittany Guimaraes, whose approach begins with
-              understanding how people live
-            </span>{' '}
-            <span className={styles.bodyClause} data-founder-clause="2">
-              — then carries that understanding through every design decision.
-            </span>
+          <p className={styles.bodyCopy} data-founder-body>
+            Studio Bespoke is led by Brittany Guimaraes. Her approach begins by
+            understanding how people live, then carries that understanding through
+            every design decision.
           </p>
+        </div>
 
-          <div className={styles.founderIdentity}>
-            <strong className={styles.founderName}>Brittany Guimaraes</strong>
-            <span className={styles.founderTitle}>
-              Founder / Interior Designer / Dubai
-            </span>
-          </div>
-
-          {/* Decorative Signature */}
+        <div className={styles.founderIdentity} data-founder-identity>
           {!signatureFailed && (
-            <div
-              className={styles.signatureWrapper}
-              data-founder-signature-wrap
-              aria-hidden="true"
-            >
+            <span className={styles.signatureWrapper} aria-hidden="true">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/studio-founder/brittany-guimaraes-signature.png"
@@ -178,9 +149,11 @@ export default function FounderSection() {
                 className={styles.signatureImage}
                 onError={() => setSignatureFailed(true)}
               />
-            </div>
+            </span>
           )}
-
+          <span className={styles.founderTitle}>
+            Founder / Interior Designer / Dubai
+          </span>
         </div>
       </div>
     </section>

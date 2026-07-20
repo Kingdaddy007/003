@@ -67,7 +67,8 @@ export default function ThresholdEntrance({ heroImage, mobileHeroImage }) {
     }
 
     const stage = entranceRef.current.closest('[data-threshold-stage]');
-    const header = stage?.querySelector('[data-threshold-header]');
+    const page = stage?.closest('main');
+    const header = page?.querySelector('[data-threshold-header]');
     const message = stage?.querySelector('[data-threshold-message]');
     const titleLines = stage?.querySelectorAll('[data-threshold-line]');
     const support = stage?.querySelector('[data-threshold-support]');

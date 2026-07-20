@@ -1,11 +1,9 @@
-import Link from 'next/link';
 import ThresholdEntrance from './threshold-entrance';
 import ThresholdScrollMedia from './threshold-scroll-media';
 import ThresholdSmoothScroll from './threshold-smooth-scroll';
+import ThresholdHeader from './threshold-header';
 import FounderSection from './founder-section';
-import ServicesIntroduction from './services-introduction';
 import ServicesSection from './services-section';
-import SelectedWorkIntroduction from './selected-work-introduction';
 import SelectedWorkSection from './selected-work-section';
 import FeaturedMiraSection from './featured-mira-section';
 import styles from './living-threshold.module.css';
@@ -18,31 +16,6 @@ export const metadata = {
 const heroImage = '/images/damac-hills-hero-upscaled-v1.png';
 const mobileHeroImage = heroImage;
 const heroVideo = '/images/damac-hills-hero-motion-v1.mp4';
-
-const navigationItems = [
-  { label: 'Work', href: '/#work' },
-  { label: 'Approach', href: '/#approach' },
-  { label: 'Studio', href: '/#studio' },
-  { label: 'Press', href: '/#press' },
-  { label: 'Enquire', href: '/#inquiry' },
-];
-
-function BrandMark() {
-  return (
-    <Link className={styles.brand} href="/" aria-label="Studio Bespoke Design homepage">
-      {/* This is the mark currently published by Studio Bespoke. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="https://studiobespoke.design/wp-content/uploads/2021/02/Studio-Bspoke_Icon-03.png"
-        alt=""
-      />
-      <span>
-        <strong>Studio Bespoke</strong>
-        <small>Design</small>
-      </span>
-    </Link>
-  );
-}
 
 function HeroPicture({ className }) {
   return (
@@ -57,6 +30,7 @@ export default function LivingThresholdConceptPage() {
   return (
     <main className={styles.page}>
       <ThresholdSmoothScroll />
+      <ThresholdHeader />
       <section
         className={styles.story}
         aria-labelledby="living-threshold-title"
@@ -70,20 +44,6 @@ export default function LivingThresholdConceptPage() {
           </div>
 
           <ThresholdEntrance heroImage={heroImage} mobileHeroImage={mobileHeroImage} />
-
-          <header className={styles.header} data-threshold-header>
-            <BrandMark />
-            <nav className={styles.navigation} aria-label="Concept primary navigation">
-              <ul>
-                {navigationItems.map((item) => (
-                  <li key={item.href}>
-                    <Link href={item.href}>{item.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <Link className={styles.mobileMenu} href="/#work">Menu</Link>
-          </header>
 
           <h1 id="living-threshold-title" className={styles.srOnly}>
             Studio Bespoke Design
@@ -157,9 +117,7 @@ export default function LivingThresholdConceptPage() {
         </div>
       </section>
       <FounderSection />
-      <ServicesIntroduction />
       <ServicesSection />
-      <SelectedWorkIntroduction />
       <SelectedWorkSection />
       <FeaturedMiraSection />
     </main>

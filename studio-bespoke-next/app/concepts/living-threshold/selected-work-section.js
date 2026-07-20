@@ -1,170 +1,353 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { gsap, ScrollTrigger } from '@/lib/motion';
 import styles from './selected-work-section.module.css';
 
 const projects = [
   {
-    name: 'Murooj Al Furjan 2',
+    name: 'Desert Leaf — Al Barari',
     type: 'Residential',
-    thought: 'Softened thresholds bring the ground floor into one calm rhythm.',
-    image: '/images/selected-work/murooj-ground-floor.jpg',
-    alt: 'Open-plan kitchen and dining space in Murooj Al Furjan 2',
-    url: 'https://studiobespoke.design/projects/murooj-al-furjan-2/',
-    entry: 'vertical',
+    thought: 'Quiet tones, strong shadows and room for ritual.',
+    image: '/images/selected-work-v2/desert-leaf.jpg',
+    alt: 'Warm neutral living and dining room at Desert Leaf Al Barari',
+    url: 'https://studiobespoke.design/projects/desert-leaf-al-barari/',
+    lane: 'left',
+    format: 'landscape',
   },
   {
-    name: 'Cornelias Innovation Hub',
+    name: 'Cornelia’s Innovation Hub',
     type: 'Workplace',
-    thought: 'Planting, circulation and collaboration share the same spatial language.',
-    image: '/images/selected-work/cornelias-innovation.jpg',
-    alt: 'Green and terracotta social interior at Cornelias Innovation Hub',
+    thought: 'Colour and planting turn circulation into social space.',
+    image: '/images/selected-work-v2/cornelias-hub.jpg',
+    alt: 'Green and terracotta social interior at Cornelia’s Innovation Hub',
     url: 'https://studiobespoke.design/projects/cornelias-innovation-hub/',
-    entry: 'from-right',
+    lane: 'right',
+    format: 'landscape',
+  },
+  {
+    name: 'Murooj Al Furjan',
+    type: 'Residential',
+    thought: 'Stone, timber and soft curves settle into one calm plane.',
+    image: '/images/selected-work-v2/murooj-al-furjan.jpg',
+    alt: 'Stone island and timber kitchen at Murooj Al Furjan',
+    url: 'https://studiobespoke.design/projects/murooj-al-furjan-2/',
+    lane: 'left',
+    format: 'landscape',
+  },
+  {
+    name: 'Damac Hills Master Bedroom',
+    type: 'Residential',
+    thought: 'Layered timber, linen and travertine make rest feel architectural.',
+    image: '/images/selected-work-v2/damac-master-bedroom.jpg',
+    alt: 'Layered neutral master bedroom with timber wall detailing at Damac Hills',
+    url: 'https://studiobespoke.design/projects/damac-hills-residential/',
+    lane: 'left',
+    format: 'portrait',
+  },
+  {
+    name: 'The Nest Al Barari',
+    type: 'Residential',
+    thought: 'A living tree becomes the quiet axis of the home.',
+    image: '/images/selected-work-v2/nest-al-barari.jpg',
+    alt: 'Minimal living room organized around an existing tree at The Nest Al Barari',
+    url: 'https://studiobespoke.design/projects/the-nest-al-barari/',
+    lane: 'right',
+    format: 'landscape',
+  },
+  {
+    name: 'The Nest Kids Bedroom',
+    type: 'Residential',
+    thought: 'Climbing, sleeping and storage become one room made for discovery.',
+    image: '/images/selected-work-v2/nest-kids-bedroom.jpg',
+    alt: 'Blue children’s bedroom with rope bunks and an integrated climbing wall at The Nest',
+    url: 'https://studiobespoke.design/projects/kids-bedroom-the-nest-al-barari/',
+    lane: 'right',
+    format: 'portrait',
   },
   {
     name: 'The Strand Cafe',
     type: 'Hospitality',
-    thought: 'Material warmth turns an everyday visit into a composed atmosphere.',
-    image: '/images/selected-work/strand-cafe.jpg',
-    alt: 'Layered bar and dining interior at The Strand Cafe',
-    url: 'https://studiobespoke.design/projects/the-strand-cafe/',
-    entry: 'from-left',
+    thought: 'Deep blue tile and warm brass compose the evening atmosphere.',
+    image: '/images/selected-work-v2/strand-cafe.jpg',
+    alt: 'Deep blue tiled bar and warm brass shelving at The Strand Cafe',
+    url: 'https://studiobespoke.design/?p=25743',
+    lane: 'left',
+    format: 'portrait',
   },
   {
-    name: 'Zulal The Lakes 2',
-    type: 'Residential',
-    thought: 'Quiet joinery and tonal restraint make intimate spaces feel complete.',
-    image: '/images/selected-work/zulal-lakes.jpg',
-    alt: 'Restrained residential interior at Zulal The Lakes 2',
-    url: 'https://studiobespoke.design/projects/zulal-the-lakes-2/',
-    entry: 'from-top',
+    name: 'New Earth Cafe',
+    type: 'Hospitality',
+    thought: 'Natural fibres and planted ceilings soften a vivid social room.',
+    image: '/images/selected-work-v2/new-earth-cafe.jpg',
+    alt: 'Plant-filled lounge beneath woven pendant lights at New Earth Cafe',
+    url: 'https://studiobespoke.design/projects/new-earth-cafe/',
+    lane: 'right',
+    format: 'portrait',
+  },
+  {
+    name: 'The Pick',
+    type: 'Hospitality',
+    thought: 'Light, timber and greenery keep the industrial shell human.',
+    image: '/images/selected-work-v2/the-pick.jpg',
+    alt: 'Sunlit timber seating and green upholstery at The Pick',
+    url: 'https://studiobespoke.design/projects/the-pick/',
+    lane: 'left',
+    format: 'portrait',
+  },
+  {
+    name: 'Self Love Beauty Co.',
+    type: 'Retail',
+    thought: 'A botanical envelope turns display into discovery.',
+    image: '/images/selected-work-v2/self-love-beauty.jpg',
+    alt: 'Botanical retail interior with timber displays at Self Love Beauty Co.',
+    url: 'https://studiobespoke.design/projects/self-love-beauty-co/',
+    lane: 'right',
+    format: 'landscape',
   },
 ];
 
+const projectLanes = {
+  left: projects.filter((project) => project.lane === 'left'),
+  right: projects.filter((project) => project.lane === 'right'),
+};
+
+function markImageFailure(event, imagePath) {
+  const frame = event.currentTarget.closest('[data-work-frame]');
+  if (frame) frame.dataset.imageError = 'true';
+  if (process.env.NODE_ENV !== 'production') {
+    console.error(`Selected Work image failed to load: ${imagePath}`);
+  }
+}
+
+function ProjectCard({ project, eager = false }) {
+  return (
+    <article className={`${styles.projectCard} ${styles[project.format]}`} data-work-card>
+      <a className={styles.projectLink} href={project.url} target="_blank" rel="noopener noreferrer">
+        <div className={styles.imageFrame} data-work-frame>
+          <div className={styles.imageInner} data-work-media>
+            <Image
+              key={eager ? 'eager' : 'lazy'}
+              src={project.image}
+              alt={project.alt}
+              fill
+              sizes="(max-width: 900px) 92vw, 34vw"
+              loading={eager ? 'eager' : 'lazy'}
+              className={styles.projectImage}
+              onError={(event) => markImageFailure(event, project.image)}
+            />
+          </div>
+        </div>
+        <div className={styles.projectCaption} data-work-caption>
+          <p className={styles.projectType}>{project.type}</p>
+          <h3 className={styles.projectName}>{project.name}</h3>
+          <p className={styles.projectThought}>{project.thought}</p>
+          <span className={styles.viewProject}>View project</span>
+        </div>
+      </a>
+    </article>
+  );
+}
+
 export default function SelectedWorkSection() {
   const sectionRef = useRef(null);
+  const [preloadGallery, setPreloadGallery] = useState(false);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
 
-    const aperture = section.querySelector('[data-work-aperture]');
-    const panels = [...section.querySelectorAll('[data-project-panel]')];
-    const railGroups = [...section.querySelectorAll('[data-rail-group]')];
-    const counterGroups = [...section.querySelectorAll('[data-counter-group]')];
-    const rails = section.querySelectorAll('[data-work-rail]');
-    const handoff = section.querySelector('[data-depth-handoff]');
+    const enhancedStory = section.querySelector('[data-work-story]');
+    const stickyStage = section.querySelector('[data-work-sticky-stage]');
+    const galleryField = section.querySelector('[data-work-gallery-field]');
+    const leftLane = section.querySelector('[data-work-lane="left"]');
+    const rightLane = section.querySelector('[data-work-lane="right"]');
+    const leftFrames = [...section.querySelectorAll('[data-work-lane="left"] [data-work-frame]')];
+    const rightFrames = [...section.querySelectorAll('[data-work-lane="right"] [data-work-frame]')];
+    const leftMedia = [...section.querySelectorAll('[data-work-lane="left"] [data-work-media]')];
+    const rightMedia = [...section.querySelectorAll('[data-work-lane="right"] [data-work-media]')];
+    const captions = [...section.querySelectorAll('[data-work-story] [data-work-caption]')];
+    const introduction = section.querySelector('[data-work-introduction]');
+    const introductionLines = [...section.querySelectorAll('[data-work-intro-line]')];
+    const introductionSupport = section.querySelector('[data-work-intro-support]');
+    const depthCue = section.querySelector('[data-work-depth-cue]');
     const mediaQuery = gsap.matchMedia();
 
     mediaQuery.add(
       '(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
       () => {
-        const panelParts = panels.map((panel, index) => {
-          const clip = panel.querySelector('[data-project-clip]');
-          const media = panel.querySelector('[data-project-media]');
-          const overlay = panel.querySelector('[data-project-overlay]');
-          const entry = projects[index].entry;
+        if (
+          !enhancedStory
+          || !stickyStage
+          || !galleryField
+          || !leftLane
+          || !rightLane
+          || leftFrames.length !== 5
+          || rightFrames.length !== 5
+          || leftMedia.length !== 5
+          || rightMedia.length !== 5
+          || captions.length !== 10
+          || !introduction
+          || introductionLines.length !== 2
+          || !introductionSupport
+          || !depthCue
+        ) {
+          return undefined;
+        }
 
-          gsap.set(panel, { visibility: index === 0 ? 'visible' : 'hidden', zIndex: 10 + index });
-          gsap.set(overlay, { opacity: 0 });
+        section.dataset.enhanced = 'true';
 
-          if (entry === 'vertical') {
-            gsap.set(clip, { xPercent: 0, yPercent: 100 });
-            gsap.set(media, { xPercent: 0, yPercent: -12 });
-          } else if (entry === 'from-right') {
-            gsap.set(clip, { xPercent: 100, yPercent: 0 });
-            gsap.set(media, { xPercent: -14, yPercent: 0 });
-          } else if (entry === 'from-left') {
-            gsap.set(clip, { xPercent: -100, yPercent: 0 });
-            gsap.set(media, { xPercent: 14, yPercent: 0 });
-          } else {
-            gsap.set(clip, { xPercent: 0, yPercent: -100 });
-            gsap.set(media, { xPercent: 0, yPercent: 14 });
-          }
+        gsap.set(stickyStage, { backgroundColor: 'transparent' });
+        gsap.set(galleryField, { scaleY: 0, transformOrigin: '50% 50%' });
+        gsap.set(introduction, { autoAlpha: 0 });
+        gsap.set(introductionLines, { yPercent: 112, rotation: 1.2 });
+        gsap.set(introductionSupport, { autoAlpha: 0, y: 14 });
+        gsap.set([leftLane, rightLane], { autoAlpha: 0 });
+        gsap.set(leftFrames, { clipPath: 'inset(100% 0% 0% 0%)' });
+        gsap.set(rightFrames, { clipPath: 'inset(0% 0% 100% 0%)' });
+        gsap.set(captions, { autoAlpha: 0, y: 18 });
+        gsap.set(depthCue, { autoAlpha: 0, y: 18 });
 
-          return { panel, clip, media, overlay };
+        const setLeftStart = () => window.innerHeight * 0.58;
+        const setLeftEnd = () => -(leftLane.scrollHeight - (window.innerHeight * 0.48));
+        const setRightStart = () => -(rightLane.scrollHeight - (window.innerHeight * 0.46));
+        const setRightEnd = () => window.innerHeight * 0.56;
+
+        const loadGalleryImages = () => {
+          setPreloadGallery(true);
+        };
+
+        const preloadTrigger = ScrollTrigger.create({
+          trigger: section,
+          start: 'top 180%',
+          once: true,
+          onEnter: loadGalleryImages,
         });
 
-        railGroups.forEach((group, index) => {
-          gsap.set(group, { autoAlpha: index === 0 ? 1 : 0, y: index === 0 ? 0 : 18 });
-        });
-        counterGroups.forEach((group, index) => {
-          gsap.set(group, { autoAlpha: index === 0 ? 1 : 0, y: index === 0 ? 0 : 10 });
-        });
-        gsap.set(handoff, { autoAlpha: 0, y: 16 });
-        gsap.set(aperture, { x: 0, y: 0, scaleX: 1, scaleY: 1, transformOrigin: '50% 50%' });
+        if (section.getBoundingClientRect().top <= window.innerHeight * 1.8) {
+          loadGalleryImages();
+        }
 
-        const timeline = gsap.timeline({
+        const processionTimeline = gsap.timeline({
           scrollTrigger: {
-            trigger: section,
+            trigger: enhancedStory,
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 0.58,
+            scrub: 0.62,
             invalidateOnRefresh: true,
+            onEnter: () => {
+              gsap.set(stickyStage, { backgroundColor: 'var(--ivory)' });
+            },
+            onEnterBack: () => {
+              gsap.set(stickyStage, { backgroundColor: 'var(--ivory)' });
+            },
+            onLeaveBack: () => {
+              gsap.set(stickyStage, { backgroundColor: 'transparent' });
+            },
+            onRefresh: (self) => {
+              gsap.set(stickyStage, {
+                backgroundColor: self.progress > 0 ? 'var(--ivory)' : 'transparent',
+              });
+            },
           },
         });
 
-        const transferRail = (fromIndex, toIndex, start) => {
-          timeline
-            .to(railGroups[fromIndex], { autoAlpha: 0, y: -16, duration: 0.055, ease: 'none' }, start)
-            .to(counterGroups[fromIndex], { autoAlpha: 0, y: -8, duration: 0.045, ease: 'none' }, start)
-            .to(railGroups[toIndex], { autoAlpha: 1, y: 0, duration: 0.075, ease: 'power2.out' }, start + 0.04)
-            .to(counterGroups[toIndex], { autoAlpha: 1, y: 0, duration: 0.065, ease: 'power2.out' }, start + 0.04);
-        };
-
-        const transferPanel = (fromIndex, toIndex, start, outgoingAxis) => {
-          const outgoing = panelParts[fromIndex];
-          const incoming = panelParts[toIndex];
-
-          timeline
-            .set(incoming.panel, { visibility: 'visible' }, start - 0.04)
-            .to(incoming.clip, { xPercent: 0, yPercent: 0, duration: 0.1, ease: 'none' }, start)
-            .to(incoming.media, { xPercent: 0, yPercent: 0, duration: 0.13, ease: 'none' }, start)
-            .to(outgoing.clip, {
-              xPercent: outgoingAxis === 'x-positive' ? 9 : outgoingAxis === 'x-negative' ? -9 : 0,
-              yPercent: outgoingAxis === 'y-positive' ? 9 : outgoingAxis === 'y-negative' ? -9 : 0,
-              duration: 0.1,
-              ease: 'none',
-            }, start)
-            .to(outgoing.overlay, { opacity: 0.42, duration: 0.1, ease: 'none' }, start)
-            .set(outgoing.panel, { visibility: 'hidden' }, start + 0.105);
-
-          transferRail(fromIndex, toIndex, start + 0.015);
-        };
-
-        timeline
-          .to(panelParts[0].clip, { yPercent: 0, duration: 0.1, ease: 'none' }, 0)
-          .to(panelParts[0].media, { yPercent: -3, duration: 0.14, ease: 'none' }, 0)
-          .to(panelParts[0].media, { yPercent: 3, duration: 0.14, ease: 'none' }, 0.12);
-
-        transferPanel(0, 1, 0.27, 'x-negative');
-        timeline.to(panelParts[1].media, { yPercent: 2.5, duration: 0.09, ease: 'none' }, 0.38);
-
-        transferPanel(1, 2, 0.45, 'x-positive');
-        timeline.to(panelParts[2].media, { yPercent: -2.5, duration: 0.1, ease: 'none' }, 0.56);
-
-        transferPanel(2, 3, 0.63, 'y-positive');
-        timeline.to(panelParts[3].media, { xPercent: 3, duration: 0.14, ease: 'none' }, 0.74);
-
-        timeline
-          .to(rails, { autoAlpha: 0, duration: 0.07, ease: 'none' }, 0.86)
-          .to(panelParts[3].overlay, { opacity: 0.62, duration: 0.12, ease: 'none' }, 0.86)
-          .to(aperture, {
-            x: () => (window.innerWidth / 2) - (aperture.offsetLeft + (aperture.offsetWidth / 2)),
-            y: () => (window.innerHeight / 2) - (aperture.offsetTop + (aperture.offsetHeight / 2)),
-            scaleX: () => window.innerWidth / aperture.offsetWidth,
-            scaleY: () => window.innerHeight / aperture.offsetHeight,
-            duration: 0.12,
+        processionTimeline
+          .to(galleryField, {
+            scaleY: 1,
+            duration: 0.075,
+            ease: 'power2.inOut',
+          }, 0.01)
+          .to(introduction, {
+            autoAlpha: 1,
+            duration: 0.035,
             ease: 'none',
-          }, 0.86)
-          .to(handoff, { autoAlpha: 1, y: 0, duration: 0.08, ease: 'power2.out' }, 0.9)
-          .to({}, { duration: 0.06 });
+          }, 0.025)
+          .to(introductionLines, {
+            yPercent: 0,
+            rotation: 0,
+            duration: 0.16,
+            stagger: 0.025,
+            ease: 'power3.out',
+          }, 0.03)
+          .to(introductionSupport, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.09,
+            ease: 'power2.out',
+          }, 0.09)
+          .to([leftLane, rightLane], {
+            autoAlpha: 1,
+            duration: 0.055,
+            ease: 'none',
+          }, 0.15)
+          .to(leftFrames, {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            duration: 0.15,
+            stagger: 0.008,
+            ease: 'power3.inOut',
+          }, 0.15)
+          .to(rightFrames, {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            duration: 0.15,
+            stagger: 0.008,
+            ease: 'power3.inOut',
+          }, 0.15)
+          .to(captions, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.1,
+            stagger: 0.006,
+            ease: 'power2.out',
+          }, 0.2)
+          .fromTo(leftLane, { y: setLeftStart }, {
+            y: setLeftEnd,
+            duration: 0.56,
+            ease: 'none',
+          }, 0.22)
+          .fromTo(rightLane, { y: setRightStart }, {
+            y: setRightEnd,
+            duration: 0.56,
+            ease: 'none',
+          }, 0.22)
+          .fromTo(leftMedia, { yPercent: -7 }, {
+            yPercent: 7,
+            duration: 0.56,
+            ease: 'none',
+          }, 0.22)
+          .fromTo(rightMedia, { yPercent: 7 }, {
+            yPercent: -7,
+            duration: 0.56,
+            ease: 'none',
+          }, 0.22)
+          .to(introduction, {
+            autoAlpha: 0,
+            y: -18,
+            duration: 0.07,
+            ease: 'none',
+          }, 0.78)
+          .to([leftLane, rightLane], {
+            autoAlpha: 0,
+            duration: 0.065,
+            ease: 'none',
+          }, 0.87)
+          .to(depthCue, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.065,
+            ease: 'power2.out',
+          }, 0.9)
+          .to({}, { duration: 0.05 });
 
         ScrollTrigger.refresh();
-        return () => timeline.revert();
+
+        return () => {
+          preloadTrigger.kill();
+          processionTimeline.revert();
+          gsap.set(stickyStage, { clearProps: 'backgroundColor' });
+          delete section.dataset.enhanced;
+        };
       },
     );
 
@@ -175,80 +358,59 @@ export default function SelectedWorkSection() {
     <section
       ref={sectionRef}
       className={styles.selectedWorkSection}
-      aria-labelledby="selected-work-title"
+      aria-label="Selected Work"
       id="work"
     >
-      <div className={styles.stickyStage}>
-        <aside className={styles.leftRail} data-work-rail>
-          <h2 id="selected-work-title" className={styles.eyebrow}>Selected Work</h2>
-          <div className={styles.textMask}>
-            {projects.map((project) => (
-              <article key={project.name} className={styles.railGroup} data-rail-group>
-                <h3 className={styles.projectName}>{project.name}</h3>
-                <p className={styles.projectType}>{project.type}</p>
-                <p className={styles.projectThought}>{project.thought}</p>
-                <a className={styles.projectLink} href={project.url} target="_blank" rel="noopener noreferrer">
-                  View project
-                </a>
-              </article>
-            ))}
+      <div className={styles.enhancedStory} data-work-story>
+        <div className={styles.stickyStage} data-work-sticky-stage>
+          <div className={styles.galleryField} data-work-gallery-field aria-hidden="true" />
+
+          <div className={styles.laneViewport}>
+            <div className={`${styles.projectLane} ${styles.leftLane}`} data-work-lane="left">
+              {projectLanes.left.map((project) => (
+                <ProjectCard key={project.name} project={project} eager={preloadGallery} />
+              ))}
+            </div>
+
+            <div className={`${styles.projectLane} ${styles.rightLane}`} data-work-lane="right">
+              {projectLanes.right.map((project) => (
+                <ProjectCard key={project.name} project={project} eager={preloadGallery} />
+              ))}
+            </div>
           </div>
-        </aside>
 
-        <div className={styles.aperture} data-work-aperture>
-          {projects.map((project) => (
-            <figure key={project.name} className={styles.panel} data-project-panel>
-              <div className={styles.clipWrapper} data-project-clip>
-                <div className={styles.mediaWrapper} data-project-media>
-                  <Image
-                    src={project.image}
-                    alt={project.alt}
-                    fill
-                    sizes="(max-width: 900px) 100vw, 74vw"
-                    priority={project === projects[0]}
-                    className={styles.projectImage}
-                  />
-                  <span className={styles.overlay} data-project-overlay aria-hidden="true" />
-                </div>
-              </div>
-            </figure>
-          ))}
-        </div>
+          <div className={styles.editorialSpine} data-work-introduction>
+            <h2 className={styles.heading}>
+              <span className={styles.lineMask}>
+                <span data-work-intro-line>A point of view,</span>
+              </span>
+              <span className={styles.lineMask}>
+                <em data-work-intro-line>never a formula.</em>
+              </span>
+            </h2>
+            <p className={styles.support} data-work-intro-support>
+              Homes, workplaces and places to gather—each shaped around the life inside.
+            </p>
+          </div>
 
-        <aside className={styles.rightRail} data-work-rail aria-label="Selected project position">
-          {projects.map((project, index) => (
-            <span key={project.name} className={styles.counterGroup} data-counter-group>
-              {index + 1} / {projects.length}
-            </span>
-          ))}
-        </aside>
-
-        <div className={styles.depthHandoff} data-depth-handoff aria-hidden="true">
-          <span>Next / Featured project</span>
-          <strong>One project, in depth.</strong>
+          <div className={styles.depthCue} data-work-depth-cue aria-hidden="true">
+            <span>Next / Featured project</span>
+            <strong>One project, in depth.</strong>
+          </div>
         </div>
       </div>
 
       <div className={styles.staticFallbackList}>
         <header className={styles.staticHeader}>
-          <p className={styles.eyebrow}>Selected Work</p>
-          <h2>Different lives. Different answers.</h2>
+          <h2>A point of view, <em>never a formula.</em></h2>
+          <p>Homes, workplaces and places to gather—each shaped around the life inside.</p>
         </header>
-        {projects.map((project) => (
-          <figure key={project.name} className={styles.staticProjectFigure}>
-            <div className={styles.staticImageFrame}>
-              <Image src={project.image} alt={project.alt} fill sizes="(max-width: 900px) 92vw, 800px" />
-            </div>
-            <figcaption className={styles.staticFigcaption}>
-              <h3 className={styles.staticProjectName}>{project.name}</h3>
-              <p className={styles.staticProjectType}>{project.type}</p>
-              <p className={styles.staticProjectThought}>{project.thought}</p>
-              <a className={styles.staticProjectLink} href={project.url} target="_blank" rel="noopener noreferrer">
-                View project
-              </a>
-            </figcaption>
-          </figure>
-        ))}
+
+        <div className={styles.staticGrid}>
+          {projects.map((project) => (
+            <ProjectCard key={project.name} project={project} />
+          ))}
+        </div>
       </div>
     </section>
   );

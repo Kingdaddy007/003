@@ -18,12 +18,13 @@
 }
 
 .eyebrow {
-  margin: 0 0 24px;
+  margin: 0 0 28px;
   font-family: var(--font-sans);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: clamp(12px, 0.9vw, 14px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted-paper-ink);
+  color: var(--ink);
 }
 
 .heading {
@@ -53,10 +54,10 @@
 }
 
 .support {
-  margin: 32px auto 0;
-  max-width: 42ch;
+  margin: 36px auto 0;
+  max-width: 46ch;
   font-family: var(--font-sans);
-  font-size: clamp(14px, 1.1vw, 16px);
-  line-height: 1.6;
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.55;
   color: var(--ink);
 }
