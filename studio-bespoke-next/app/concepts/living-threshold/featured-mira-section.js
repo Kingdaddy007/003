@@ -139,21 +139,23 @@ export default function FeaturedMiraSection() {
 
           const scrubProgress = { value: 0 };
 
-          // Concept 2 Initial State:
-          // Track is at x: 0. Frame 0 starts full screen (100vw width, 100svh height, 0 inset).
-          gsap.set(galleryTrack, { xPercent: 0, x: 0 });
+          // Concept 2 Initial State (True 100% Full Bleed Handoff):
+          // galleryTrack is positioned at left: 0 so Frame 0 spans 100vw x 100vh with 0 side gaps!
+          gsap.set(galleryTrack, { xPercent: 0, x: 0, left: '0vw' });
           gsap.set(trackFrames[0], {
             width: '100vw',
             height: '100vh',
+            marginTop: '0vh',
             borderRadius: '0px',
             opacity: 1,
           });
 
-          // Neighbor frames start in track flow but dimmed slightly (opacity 0.65)
+          // Neighbor frames start downstream in track flow
           for (let i = 1; i < trackFrames.length; i += 1) {
             gsap.set(trackFrames[i], {
               width: '68vw',
               height: '72vh',
+              marginTop: '14vh',
               opacity: 0.65,
             });
             gsap.set(frameInners[i], { xPercent: 0 });
@@ -173,7 +175,7 @@ export default function FeaturedMiraSection() {
             },
           });
 
-          // 0.00 - 0.28: Video Scrub & Title hold
+          // 0.00 - 0.28: Blueprint Video Scrub (100% Full Bleed)
           if (scrubVideo) {
             storyTimeline.to(scrubProgress, {
               value: 1,
@@ -186,16 +188,24 @@ export default function FeaturedMiraSection() {
             }, 0.00);
           }
 
-          // 0.28 - 0.40: Crossfade video -> completed room anchor /03-k14.jpg (Full screen)
+          // 0.28 - 0.40: Crossfade video -> completed room anchor /03-k14.jpg (Full bleed hold)
           storyTimeline.to(videoLayer, { autoAlpha: 0, duration: 0.12, ease: 'none' }, 0.28);
 
-          // 0.40 - 0.50: Reframe full-screen Frame 0 down into gallery frame size (68vw x 72vh); Title fades out
+          // 0.40 - 0.52: Scroll-triggered Reframing!
+          // Frame 0 reframes down from 100vw x 100vh to 68vw x 72vh, track moves left to 16vw (centering Frame 0),
+          // bringing warm background and neighbour preview Frame 1 glides into right edge. Title fades out.
           storyTimeline
             .to(trackFrames[0], {
               width: '68vw',
               height: '72vh',
+              marginTop: '14vh',
               borderRadius: '4px',
-              duration: 0.1,
+              duration: 0.12,
+              ease: 'power2.inOut',
+            }, 0.40)
+            .to(galleryTrack, {
+              left: '16vw',
+              duration: 0.12,
               ease: 'power2.inOut',
             }, 0.40)
             .to(introduction, {
@@ -205,36 +215,32 @@ export default function FeaturedMiraSection() {
               ease: 'power2.in',
             }, 0.42);
 
-          // 0.50 - 0.88: Map vertical scroll to horizontal track translation (from Frame 0 centered to Frame 5 centered)
-          // Frame width = 68vw + gap 3vw = 71vw per step. Total 5 steps = -355vw.
-          const totalTrackShift = -(5 * 71); // in vw
+          // 0.52 - 0.88: Stepped horizontal track scrub & centered holds across frames 1 to 5
+          // Step 1 to 5: Frame step = 71vw (68vw width + 3vw gap)
+          const totalSteps = 5;
+          const scrubDuration = 0.36;
+          const stepWindow = scrubDuration / totalSteps; // ~0.072 per step
 
-          storyTimeline.to(galleryTrack, {
-            x: `${totalTrackShift}vw`,
-            duration: 0.38,
-            ease: 'none',
-          }, 0.50);
+          for (let i = 1; i <= totalSteps; i += 1) {
+            const stepStart = 0.52 + ((i - 1) * stepWindow);
+            const moveDuration = stepWindow * 0.65; // ~0.047 move duration
+            const targetX = -i * 71; // in vw
 
-          // Animate opacity highlights for active vs neighbour frames along the track scrub
-          trackFrames.forEach((frame, index) => {
-            if (index === 0) {
-              storyTimeline.to(frame, { opacity: 0.65, duration: 0.06, ease: 'none' }, 0.54);
-            } else {
-              const activeStart = 0.50 + ((index - 0.5) * (0.38 / 5));
-              const activePeak = 0.50 + (index * (0.38 / 5));
-              const activeEnd = 0.50 + ((index + 0.5) * (0.38 / 5));
+            // Slide track to center frame i
+            storyTimeline.to(galleryTrack, {
+              x: `${targetX}vw`,
+              duration: moveDuration,
+              ease: 'power2.inOut',
+            }, stepStart);
 
-              storyTimeline
-                .to(frame, { opacity: 1, duration: 0.04, ease: 'none' }, Math.max(activeStart, 0.50))
-                .to(frameInners[index], { xPercent: -6, duration: 0.08, ease: 'none' }, activeStart);
+            // Highlight active frame i, dim outgoing frame i-1
+            storyTimeline
+              .to(trackFrames[i - 1], { opacity: 0.65, duration: moveDuration * 0.8, ease: 'none' }, stepStart)
+              .to(trackFrames[i], { opacity: 1, duration: moveDuration * 0.8, ease: 'none' }, stepStart)
+              .to(frameInners[i], { xPercent: -5, duration: moveDuration, ease: 'power1.out' }, stepStart);
+          }
 
-              if (index < trackFrames.length - 1) {
-                storyTimeline.to(frame, { opacity: 0.65, duration: 0.04, ease: 'none' }, Math.min(activeEnd, 0.88));
-              }
-            }
-          });
-
-          // 0.88 - 0.96: Final frame hold
+          // 0.88 - 0.96: Final frame hold on 18-k04.jpg
           // 0.96 - 1.00: Optional "View the project" link appears
           if (projectAction) {
             storyTimeline.to(projectAction, { autoAlpha: 1, y: 0, duration: 0.04, ease: 'power2.out' }, 0.96);

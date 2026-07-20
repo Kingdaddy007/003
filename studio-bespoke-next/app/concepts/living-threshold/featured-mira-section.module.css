@@ -2,8 +2,8 @@
   position: relative;
   z-index: 50;
   overflow: clip;
-  background: #15130f;
-  color: #f1eadf;
+  background: var(--paper, #e5ded4);
+  color: var(--ink, #171a17);
 }
 
 .story {
@@ -15,7 +15,7 @@
   top: 0;
   height: 100svh;
   overflow: hidden;
-  background: #15130f;
+  background: var(--paper, #e5ded4);
   isolation: isolate;
 }
 
@@ -25,6 +25,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  background: var(--paper, #e5ded4);
 }
 
 .galleryTrack {
@@ -32,21 +33,21 @@
   align-items: center;
   gap: 3vw;
   position: absolute;
-  top: 50%;
-  left: 16vw;
-  transform: translateY(-50%);
-  will-change: transform;
+  top: 0;
+  left: 0;
+  height: 100%;
+  will-change: transform, left;
 }
 
 .trackFrame {
   position: relative;
   flex-shrink: 0;
-  width: 68vw;
-  height: 72vh;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
-  background: #221f1a;
-  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4);
-  will-change: width, height, opacity, transform;
+  background: #d8cebe;
+  box-shadow: 0 16px 50px rgba(23, 26, 23, 0.12);
+  will-change: width, height, opacity, transform, border-radius;
 }
 
 .frameInner {
@@ -69,7 +70,7 @@
   inset: 0;
   z-index: 25;
   overflow: hidden;
-  background: #15130f;
+  background: #d8cebe;
   will-change: opacity, visibility;
 }
 
@@ -79,8 +80,8 @@
   left: clamp(28px, 5vw, 76px);
   z-index: 30;
   width: min(620px, 54vw);
-  color: #f4eee5;
-  text-shadow: 0 2px 26px rgba(17, 15, 12, 0.72);
+  color: #171a17;
+  text-shadow: 0 2px 24px rgba(245, 241, 233, 0.92);
   will-change: transform, opacity, visibility;
 }
 
@@ -102,7 +103,7 @@
   font-size: clamp(22px, 2vw, 30px);
   font-style: italic;
   line-height: 1.1;
-  color: rgba(244, 238, 229, 0.86);
+  color: rgba(23, 26, 23, 0.82);
 }
 
 .projectAction {
@@ -118,10 +119,10 @@
   display: inline-flex;
   align-items: center;
   padding: 14px 28px;
-  border: 1px solid rgba(244, 238, 229, 0.4);
-  background: rgba(21, 19, 15, 0.76);
+  border: 1px solid rgba(23, 26, 23, 0.8);
+  background: rgba(23, 26, 23, 0.92);
   backdrop-filter: blur(12px);
-  color: #f4eee5;
+  color: #f2eee5;
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
@@ -133,8 +134,9 @@
 
 .actionLink:hover,
 .actionLink:focus-visible {
-  border-color: rgba(244, 238, 229, 0.85);
-  background: rgba(21, 19, 15, 0.92);
+  border-color: #171a17;
+  background: #171a17;
+  color: #ffffff;
   transform: translateY(-2px);
 }
 
@@ -142,7 +144,7 @@
   display: grid;
   gap: 48px;
   padding: 88px clamp(20px, 5vw, 72px) 96px;
-  background: #15130f;
+  background: var(--paper, #e5ded4);
 }
 
 .staticFallback header {
@@ -200,7 +202,7 @@
   .story {
     position: relative;
     display: block;
-    min-height: 360svh;
+    min-height: 380svh;
   }
 
   .staticFallback {
