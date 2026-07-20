@@ -52,8 +52,9 @@ export default function FeaturedMiraSection() {
     const stickyStage = section.querySelector('[data-mira-sticky-stage]');
     const videoLayer = section.querySelector('[data-mira-video-layer]');
     const introduction = section.querySelector('[data-mira-introduction]');
-    const windowLayers = [...section.querySelectorAll('[data-window-layer]')];
-    const windowInners = [...section.querySelectorAll('[data-window-inner]')];
+    const galleryTrack = section.querySelector('[data-mira-track]');
+    const trackFrames = [...section.querySelectorAll('[data-track-frame]')];
+    const frameInners = [...section.querySelectorAll('[data-frame-inner]')];
     const projectAction = section.querySelector('[data-mira-action]');
 
     const mediaQuery = gsap.matchMedia();
@@ -112,8 +113,9 @@ export default function FeaturedMiraSection() {
           || !stickyStage
           || !videoLayer
           || !introduction
-          || windowLayers.length !== miraImages.length
-          || windowInners.length !== miraImages.length
+          || !galleryTrack
+          || trackFrames.length !== miraImages.length
+          || frameInners.length !== miraImages.length
         ) {
           return undefined;
         }
@@ -137,15 +139,24 @@ export default function FeaturedMiraSection() {
 
           const scrubProgress = { value: 0 };
 
-          // Initial positions for Concept 1 Architectural Window:
-          // Layer 0 (Anchor 03-k14.jpg): visible at base
-          gsap.set(windowLayers[0], { autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)' });
-          gsap.set(windowInners[0], { yPercent: 0 });
+          // Concept 2 Initial State:
+          // Track is at x: 0. Frame 0 starts full screen (100vw width, 100svh height, 0 inset).
+          gsap.set(galleryTrack, { xPercent: 0, x: 0 });
+          gsap.set(trackFrames[0], {
+            width: '100vw',
+            height: '100vh',
+            borderRadius: '0px',
+            opacity: 1,
+          });
 
-          // Layers 1 to 5: masked off at bottom with clip-path, inner counter-offset
-          for (let i = 1; i < windowLayers.length; i += 1) {
-            gsap.set(windowLayers[i], { clipPath: 'inset(100% 0% 0% 0%)' });
-            gsap.set(windowInners[i], { yPercent: -10 });
+          // Neighbor frames start in track flow but dimmed slightly (opacity 0.65)
+          for (let i = 1; i < trackFrames.length; i += 1) {
+            gsap.set(trackFrames[i], {
+              width: '68vw',
+              height: '72vh',
+              opacity: 0.65,
+            });
+            gsap.set(frameInners[i], { xPercent: 0 });
           }
 
           gsap.set(videoLayer, { autoAlpha: scrubVideo ? 1 : 0 });
@@ -162,7 +173,7 @@ export default function FeaturedMiraSection() {
             },
           });
 
-          // Playhead 0.00 - 0.28: Video Scrub & Title hold
+          // 0.00 - 0.28: Video Scrub & Title hold
           if (scrubVideo) {
             storyTimeline.to(scrubProgress, {
               value: 1,
@@ -175,38 +186,56 @@ export default function FeaturedMiraSection() {
             }, 0.00);
           }
 
-          // Playhead 0.28 - 0.38: Crossfade video -> completed room anchor /03-k14.jpg
-          storyTimeline.to(videoLayer, { autoAlpha: 0, duration: 0.1, ease: 'none' }, 0.28);
+          // 0.28 - 0.40: Crossfade video -> completed room anchor /03-k14.jpg (Full screen)
+          storyTimeline.to(videoLayer, { autoAlpha: 0, duration: 0.12, ease: 'none' }, 0.28);
 
-          // Playhead 0.38 - 0.48: Clear room hold; title fades out
-          storyTimeline.to(introduction, { autoAlpha: 0, y: -20, duration: 0.06, ease: 'power2.in' }, 0.42);
-
-          // Playhead 0.48 - 0.58: Window 1 (Long spatial view 06-k15.jpg)
+          // 0.40 - 0.50: Reframe full-screen Frame 0 down into gallery frame size (68vw x 72vh); Title fades out
           storyTimeline
-            .to(windowLayers[1], { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.1, ease: 'power2.inOut' }, 0.48)
-            .to(windowInners[1], { yPercent: 0, duration: 0.1, ease: 'power2.inOut' }, 0.48);
+            .to(trackFrames[0], {
+              width: '68vw',
+              height: '72vh',
+              borderRadius: '4px',
+              duration: 0.1,
+              ease: 'power2.inOut',
+            }, 0.40)
+            .to(introduction, {
+              autoAlpha: 0,
+              y: -20,
+              duration: 0.08,
+              ease: 'power2.in',
+            }, 0.42);
 
-          // Playhead 0.58 - 0.68: Window 2 (Open-plan view 08-k03.jpg)
-          storyTimeline
-            .to(windowLayers[2], { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.1, ease: 'power2.inOut' }, 0.58)
-            .to(windowInners[2], { yPercent: 0, duration: 0.1, ease: 'power2.inOut' }, 0.58);
+          // 0.50 - 0.88: Map vertical scroll to horizontal track translation (from Frame 0 centered to Frame 5 centered)
+          // Frame width = 68vw + gap 3vw = 71vw per step. Total 5 steps = -355vw.
+          const totalTrackShift = -(5 * 71); // in vw
 
-          // Playhead 0.68 - 0.78: Window 3 (Threshold/stair view 02-k16.jpg)
-          storyTimeline
-            .to(windowLayers[3], { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.1, ease: 'power2.inOut' }, 0.68)
-            .to(windowInners[3], { yPercent: 0, duration: 0.1, ease: 'power2.inOut' }, 0.68);
+          storyTimeline.to(galleryTrack, {
+            x: `${totalTrackShift}vw`,
+            duration: 0.38,
+            ease: 'none',
+          }, 0.50);
 
-          // Playhead 0.78 - 0.88: Window 4 (Working wall view 04-mira-27.jpg)
-          storyTimeline
-            .to(windowLayers[4], { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.1, ease: 'power2.inOut' }, 0.78)
-            .to(windowInners[4], { yPercent: 0, duration: 0.1, ease: 'power2.inOut' }, 0.78);
+          // Animate opacity highlights for active vs neighbour frames along the track scrub
+          trackFrames.forEach((frame, index) => {
+            if (index === 0) {
+              storyTimeline.to(frame, { opacity: 0.65, duration: 0.06, ease: 'none' }, 0.54);
+            } else {
+              const activeStart = 0.50 + ((index - 0.5) * (0.38 / 5));
+              const activePeak = 0.50 + (index * (0.38 / 5));
+              const activeEnd = 0.50 + ((index + 0.5) * (0.38 / 5));
 
-          // Playhead 0.88 - 0.96: Window 5 (Lived material detail 18-k04.jpg)
-          storyTimeline
-            .to(windowLayers[5], { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.08, ease: 'power2.inOut' }, 0.88)
-            .to(windowInners[5], { yPercent: 0, duration: 0.08, ease: 'power2.inOut' }, 0.88);
+              storyTimeline
+                .to(frame, { opacity: 1, duration: 0.04, ease: 'none' }, Math.max(activeStart, 0.50))
+                .to(frameInners[index], { xPercent: -6, duration: 0.08, ease: 'none' }, activeStart);
 
-          // Playhead 0.96 - 1.00: Final photograph hold & optional "View the project" link
+              if (index < trackFrames.length - 1) {
+                storyTimeline.to(frame, { opacity: 0.65, duration: 0.04, ease: 'none' }, Math.min(activeEnd, 0.88));
+              }
+            }
+          });
+
+          // 0.88 - 0.96: Final frame hold
+          // 0.96 - 1.00: Optional "View the project" link appears
           if (projectAction) {
             storyTimeline.to(projectAction, { autoAlpha: 1, y: 0, duration: 0.04, ease: 'power2.out' }, 0.96);
           }
@@ -263,27 +292,28 @@ export default function FeaturedMiraSection() {
     >
       <div className={styles.story} data-mira-story>
         <div className={styles.stickyStage} data-mira-sticky-stage>
-          <div className={styles.windowStage}>
-            {miraImages.map((image, index) => (
-              <div
-                key={image.src}
-                className={styles.windowLayer}
-                data-window-layer={index}
-                style={{ zIndex: 10 + index }}
-              >
-                <div className={styles.windowInner} data-window-inner={index}>
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes="100vw"
-                    className={styles.roomImage}
-                    priority={index === 0}
-                    unoptimized
-                  />
+          <div className={styles.galleryViewport}>
+            <div className={styles.galleryTrack} data-mira-track>
+              {miraImages.map((image, index) => (
+                <div
+                  key={image.src}
+                  className={styles.trackFrame}
+                  data-track-frame={index}
+                >
+                  <div className={styles.frameInner} data-frame-inner={index}>
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="72vw"
+                      className={styles.roomImage}
+                      priority={index === 0}
+                      unoptimized
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
 
             <div className={styles.videoLayer} data-mira-video-layer aria-hidden="true">
               <video ref={videoRef} muted playsInline preload="metadata">

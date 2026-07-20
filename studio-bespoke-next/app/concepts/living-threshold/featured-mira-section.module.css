@@ -19,23 +19,39 @@
   isolation: isolate;
 }
 
-.windowStage {
+.galleryViewport {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: center;
   overflow: hidden;
 }
 
-.windowLayer {
+.galleryTrack {
+  display: flex;
+  align-items: center;
+  gap: 3vw;
   position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: #15130f;
-  will-change: clip-path;
+  top: 50%;
+  left: 16vw;
+  transform: translateY(-50%);
+  will-change: transform;
 }
 
-.windowInner {
+.trackFrame {
+  position: relative;
+  flex-shrink: 0;
+  width: 68vw;
+  height: 72vh;
+  overflow: hidden;
+  background: #221f1a;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4);
+  will-change: width, height, opacity, transform;
+}
+
+.frameInner {
   position: absolute;
-  inset: -10% 0;
+  inset: 0 -8%;
   will-change: transform;
 }
 
