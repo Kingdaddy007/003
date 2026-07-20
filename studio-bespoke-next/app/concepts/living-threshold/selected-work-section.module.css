@@ -189,8 +189,7 @@
   outline-offset: 6px;
 }
 
-.editorialSpine,
-.depthCue {
+.editorialSpine {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -253,31 +252,6 @@
   font-family: var(--font-sans);
   font-size: clamp(13px, 1vw, 15px);
   line-height: 1.55;
-}
-
-.depthCue {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  will-change: transform, opacity;
-}
-
-.depthCue span {
-  color: var(--muted-paper-ink);
-  font-family: var(--font-sans);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.depthCue strong {
-  font-family: var(--font-serif);
-  font-size: clamp(48px, 6vw, 88px);
-  font-weight: 300;
-  letter-spacing: -0.045em;
-  line-height: 0.92;
 }
 
 .staticFallbackList {

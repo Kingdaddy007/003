@@ -171,7 +171,6 @@ export default function SelectedWorkSection() {
     const introduction = section.querySelector('[data-work-introduction]');
     const introductionLines = [...section.querySelectorAll('[data-work-intro-line]')];
     const introductionSupport = section.querySelector('[data-work-intro-support]');
-    const depthCue = section.querySelector('[data-work-depth-cue]');
     const mediaQuery = gsap.matchMedia();
 
     mediaQuery.add(
@@ -191,7 +190,6 @@ export default function SelectedWorkSection() {
           || !introduction
           || introductionLines.length !== 2
           || !introductionSupport
-          || !depthCue
         ) {
           return undefined;
         }
@@ -207,7 +205,6 @@ export default function SelectedWorkSection() {
         gsap.set(leftFrames, { clipPath: 'inset(100% 0% 0% 0%)' });
         gsap.set(rightFrames, { clipPath: 'inset(0% 0% 100% 0%)' });
         gsap.set(captions, { autoAlpha: 0, y: 18 });
-        gsap.set(depthCue, { autoAlpha: 0, y: 18 });
 
         const setLeftStart = () => window.innerHeight * 0.58;
         const setLeftEnd = () => -(leftLane.scrollHeight - (window.innerHeight * 0.48));
@@ -324,21 +321,19 @@ export default function SelectedWorkSection() {
           .to(introduction, {
             autoAlpha: 0,
             y: -18,
-            duration: 0.07,
+            duration: 0.08,
             ease: 'none',
-          }, 0.78)
+          }, 0.72)
           .to([leftLane, rightLane], {
             autoAlpha: 0,
-            duration: 0.065,
+            duration: 0.11,
             ease: 'none',
-          }, 0.87)
-          .to(depthCue, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.065,
-            ease: 'power2.out',
-          }, 0.9)
-          .to({}, { duration: 0.05 });
+          }, 0.88)
+          .to(galleryField, {
+            autoAlpha: 0,
+            duration: 0.11,
+            ease: 'none',
+          }, 0.88);
 
         ScrollTrigger.refresh();
 
@@ -391,11 +386,6 @@ export default function SelectedWorkSection() {
             <p className={styles.support} data-work-intro-support>
               Homes, workplaces and places to gather—each shaped around the life inside.
             </p>
-          </div>
-
-          <div className={styles.depthCue} data-work-depth-cue aria-hidden="true">
-            <span>Next / Featured project</span>
-            <strong>One project, in depth.</strong>
           </div>
         </div>
       </div>
