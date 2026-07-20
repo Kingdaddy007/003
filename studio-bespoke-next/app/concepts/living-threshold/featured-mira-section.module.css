@@ -26,6 +26,64 @@
   align-items: center;
   overflow: hidden;
   background: var(--paper, #e5ded4);
+  transition: background-color 180ms linear;
+}
+
+.galleryViewport::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.3), transparent 38%),
+    radial-gradient(circle at 82% 78%, rgba(76, 55, 38, 0.08), transparent 42%);
+  content: '';
+  pointer-events: none;
+}
+
+.chapterPortal {
+  position: absolute;
+  inset: 0;
+  z-index: 48;
+  display: grid;
+  place-items: center;
+  color: var(--ink, #171a17);
+  background: linear-gradient(180deg, rgba(229, 222, 212, 0.08), rgba(229, 222, 212, 0.28));
+  text-shadow: 0 2px 28px rgba(245, 241, 233, 0.95);
+  pointer-events: none;
+  will-change: opacity, visibility;
+}
+
+.chapterCopy {
+  display: grid;
+  width: min(760px, 76vw);
+  text-align: center;
+  justify-items: center;
+  will-change: transform, opacity, visibility;
+}
+
+.chapterCopy span,
+.staticFallback header small {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.chapterCopy p {
+  margin: 14px 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(72px, 11vw, 176px);
+  font-weight: 300;
+  letter-spacing: -0.065em;
+  line-height: 0.82;
+}
+
+.chapterCopy em {
+  margin-top: 24px;
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 400;
+  line-height: 1;
 }
 
 .galleryTrack {
@@ -34,20 +92,22 @@
   gap: 3vw;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50vw;
   height: 100%;
-  will-change: transform, left;
+  z-index: 1;
+  will-change: transform;
 }
 
 .trackFrame {
   position: relative;
   flex-shrink: 0;
-  width: 100vw;
-  height: 100vh;
+  width: var(--frame-width, 68vw);
+  height: 72svh;
   overflow: hidden;
   background: #d8cebe;
   box-shadow: 0 16px 50px rgba(23, 26, 23, 0.12);
-  will-change: width, height, opacity, transform, border-radius;
+  transform-origin: center center;
+  will-change: transform, opacity;
 }
 
 .frameInner {
@@ -115,6 +175,39 @@
   will-change: opacity, transform, visibility;
 }
 
+.captionRail {
+  position: absolute;
+  bottom: clamp(42px, 6vh, 70px);
+  left: clamp(28px, 5vw, 76px);
+  z-index: 36;
+  width: min(360px, 36vw);
+  min-height: 42px;
+  color: #171a17;
+  will-change: opacity, visibility;
+}
+
+.captionRail::before {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  content: '';
+  background: rgba(23, 26, 23, 0.34);
+}
+
+.captionItem {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity, visibility;
+}
+
+.captionItem p {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
 .actionLink {
   display: inline-flex;
   align-items: center;
@@ -151,6 +244,12 @@
   max-width: 720px;
 }
 
+.staticFallback header small {
+  display: block;
+  margin-bottom: 18px;
+  color: rgba(23, 26, 23, 0.62);
+}
+
 .staticHero {
   position: relative;
   width: 100%;
@@ -184,6 +283,19 @@
   scroll-snap-align: start;
 }
 
+.staticReel figcaption {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 10px 12px;
+  background: rgba(23, 26, 23, 0.82);
+  color: #f2eee5;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
 .staticReel img {
   object-fit: cover;
 }
@@ -197,12 +309,13 @@
 @media (min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .featuredSection[data-enhanced='true'] {
     margin-top: -100svh;
+    background: transparent;
   }
 
   .story {
     position: relative;
     display: block;
-    min-height: 380svh;
+    min-height: 360svh;
   }
 
   .staticFallback {

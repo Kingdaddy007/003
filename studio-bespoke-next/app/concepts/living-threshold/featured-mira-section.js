@@ -6,31 +6,50 @@ import { gsap, ScrollTrigger } from '@/lib/motion';
 import styles from './featured-mira-section.module.css';
 
 const videoSource = '/blueprint_draft.mp4';
+const videoLeadIn = 0.55;
 
 const miraImages = [
   {
     src: '/images/projects/mira/03-k14.jpg',
     alt: 'Completed Mira kitchen island, arch and circulation relationship',
+    caption: 'Kitchen, arch and circulation',
+    frameWidth: 68,
+    fieldColor: '#e5ded4',
   },
   {
-    src: '/images/projects/mira/06-k15.jpg',
-    alt: 'Long spatial view across the Mira kitchen island toward the arched doorway',
+    src: '/images/projects/mira/07-mira-25.jpg',
+    alt: 'Axial view through the Mira kitchen arch toward the garden window',
+    caption: 'Garden axis through the arch',
+    frameWidth: 64,
+    fieldColor: '#ddd3c5',
   },
   {
-    src: '/images/projects/mira/08-k03.jpg',
-    alt: 'Open Mira kitchen with island, tall joinery and arched circulation',
+    src: '/images/projects/mira/05-k11.jpg',
+    alt: 'Arched pantry opening with integrated oak cabinetry and illuminated shelving',
+    caption: 'Integrated pantry joinery',
+    frameWidth: 40,
+    fieldColor: '#e8e0d5',
   },
   {
-    src: '/images/projects/mira/02-k16.jpg',
-    alt: 'Mira stair and fluted-glass doorway in pale timber and plaster tones',
+    src: '/images/projects/mira/15-mira-29.jpg',
+    alt: 'Wide view of the sculptural Mira stone island and oak cabinetry',
+    caption: 'Stone island and oak cabinetry',
+    frameWidth: 68,
+    fieldColor: '#d8ccbd',
   },
   {
-    src: '/images/projects/mira/04-mira-27.jpg',
-    alt: 'Coffee machine and objects arranged against the Mira stone backsplash',
+    src: '/images/projects/mira/11-k06.jpg',
+    alt: 'Illuminated bespoke cookbook display beside the Mira island',
+    caption: 'Bespoke cookbook joinery',
+    frameWidth: 40,
+    fieldColor: '#d3c2ad',
   },
   {
-    src: '/images/projects/mira/18-k04.jpg',
-    alt: 'Bread and flowers arranged at the working edge of the Mira island',
+    src: '/images/projects/mira/01-k09.jpg',
+    alt: 'Stone island, oak stools and flowers showing the Mira material palette in use',
+    caption: 'Stone, oak and marble',
+    frameWidth: 64,
+    fieldColor: '#cdb9a2',
   },
 ];
 
@@ -51,10 +70,15 @@ export default function FeaturedMiraSection() {
     const story = section.querySelector('[data-mira-story]');
     const stickyStage = section.querySelector('[data-mira-sticky-stage]');
     const videoLayer = section.querySelector('[data-mira-video-layer]');
-    const introduction = section.querySelector('[data-mira-introduction]');
+    const chapterPortal = section.querySelector('[data-mira-chapter-portal]');
+    const chapterCopy = section.querySelector('[data-mira-chapter-copy]');
+    const siteHeader = document.querySelector('[data-threshold-header]');
+    const galleryField = section.querySelector('[data-mira-gallery-field]');
     const galleryTrack = section.querySelector('[data-mira-track]');
     const trackFrames = [...section.querySelectorAll('[data-track-frame]')];
     const frameInners = [...section.querySelectorAll('[data-frame-inner]')];
+    const captionRail = section.querySelector('[data-mira-caption-rail]');
+    const captionItems = [...section.querySelectorAll('[data-mira-caption]')];
     const projectAction = section.querySelector('[data-mira-action]');
 
     const mediaQuery = gsap.matchMedia();
@@ -112,10 +136,14 @@ export default function FeaturedMiraSection() {
           !story
           || !stickyStage
           || !videoLayer
-          || !introduction
+          || !chapterPortal
+          || !chapterCopy
+          || !galleryField
           || !galleryTrack
           || trackFrames.length !== miraImages.length
           || frameInners.length !== miraImages.length
+          || !captionRail
+          || captionItems.length !== miraImages.length
         ) {
           return undefined;
         }
@@ -131,38 +159,49 @@ export default function FeaturedMiraSection() {
 
           if (scrubVideo) {
             try {
-              video.currentTime = 0;
+              video.currentTime = Math.min(videoLeadIn, video.duration);
             } catch (error) {
               reportMediaFailure('Mira video could not seek to its opening frame.', error);
             }
           }
 
           const scrubProgress = { value: 0 };
+          const totalSteps = miraImages.length - 1;
+          const galleryStart = 0.52;
+          const galleryEnd = 0.84;
+          const scrubDuration = galleryEnd - galleryStart;
+          const stepWindow = scrubDuration / totalSteps;
+          const centeredTrackX = (index) => -(
+            trackFrames[index].offsetLeft + (trackFrames[index].offsetWidth / 2)
+          );
 
-          // Concept 2 Initial State (True 100% Full Bleed Handoff):
-          // galleryTrack is positioned at left: 0 so Frame 0 spans 100vw x 100vh with 0 side gaps!
-          gsap.set(galleryTrack, { xPercent: 0, x: 0, left: '0vw' });
+          // The first photograph shares the video's full-bleed geometry, then
+          // reframes into the same finite track used by the remaining rooms.
+          gsap.set(galleryField, { backgroundColor: miraImages[0].fieldColor });
+          gsap.set(galleryTrack, { xPercent: 0, x: () => centeredTrackX(0) });
           gsap.set(trackFrames[0], {
-            width: '100vw',
-            height: '100vh',
-            marginTop: '0vh',
+            scaleX: () => window.innerWidth / trackFrames[0].offsetWidth,
+            scaleY: () => window.innerHeight / trackFrames[0].offsetHeight,
             borderRadius: '0px',
             opacity: 1,
           });
 
-          // Neighbor frames start downstream in track flow
           for (let i = 1; i < trackFrames.length; i += 1) {
             gsap.set(trackFrames[i], {
-              width: '68vw',
-              height: '72vh',
-              marginTop: '14vh',
-              opacity: 0.65,
+              scaleX: 1,
+              scaleY: 1,
+              y: 0,
+              opacity: 0,
             });
             gsap.set(frameInners[i], { xPercent: 0 });
           }
 
           gsap.set(videoLayer, { autoAlpha: scrubVideo ? 1 : 0 });
-          gsap.set(introduction, { autoAlpha: 1, y: 0 });
+          gsap.set(chapterPortal, { autoAlpha: 1 });
+          gsap.set(chapterCopy, { autoAlpha: 1, y: 0 });
+          gsap.set(stickyStage, { clipPath: 'inset(0% 0% 0% 0%)' });
+          gsap.set(captionRail, { autoAlpha: 0 });
+          gsap.set(captionItems, { autoAlpha: 0, y: 8 });
           if (projectAction) gsap.set(projectAction, { autoAlpha: 0, y: 16 });
 
           storyTimeline = gsap.timeline({
@@ -172,8 +211,54 @@ export default function FeaturedMiraSection() {
               end: 'bottom bottom',
               scrub: 0.5,
               invalidateOnRefresh: true,
+              onEnter: () => {
+                if (siteHeader) {
+                  gsap.set(siteHeader, { autoAlpha: 0, y: -18, pointerEvents: 'none' });
+                }
+              },
+              onEnterBack: () => {
+                if (siteHeader) {
+                  gsap.set(siteHeader, { autoAlpha: 0, y: -18, pointerEvents: 'none' });
+                }
+              },
+              onLeave: () => {
+                if (siteHeader) {
+                  gsap.set(siteHeader, { autoAlpha: 1, y: 0, pointerEvents: 'auto' });
+                }
+              },
+              onLeaveBack: () => {
+                if (siteHeader) {
+                  gsap.set(siteHeader, { autoAlpha: 1, y: 0, pointerEvents: 'auto' });
+                }
+              },
+              snap: {
+                snapTo: (progress) => {
+                  if (progress < galleryStart || progress > galleryEnd) return progress;
+                  const galleryProgress = (progress - galleryStart) / scrubDuration;
+                  const nearestFrame = Math.round(galleryProgress * totalSteps);
+                  return galleryStart + ((nearestFrame / totalSteps) * scrubDuration);
+                },
+                delay: 0.12,
+                duration: { min: 0.12, max: 0.28 },
+                ease: 'power1.inOut',
+              },
             },
           });
+
+          // 0.00 - 0.40: the blueprint itself is the threshold surface. The
+          // centered project title clears away so the film remains unobstructed.
+          storyTimeline
+            .to(chapterCopy, {
+              autoAlpha: 0,
+              y: -28,
+              duration: 0.08,
+              ease: 'power2.in',
+            }, 0.10)
+            .to(chapterPortal, {
+              autoAlpha: 0,
+              duration: 0.035,
+              ease: 'none',
+            }, 0.18);
 
           // 0.00 - 0.28: Blueprint Video Scrub (100% Full Bleed)
           if (scrubVideo) {
@@ -182,7 +267,9 @@ export default function FeaturedMiraSection() {
               duration: 0.28,
               ease: 'none',
               onUpdate: () => {
-                targetVideoTime = scrubProgress.value * Math.max(video.duration - 0.08, 0);
+                targetVideoTime = videoLeadIn + (
+                  scrubProgress.value * Math.max(video.duration - videoLeadIn - 0.08, 0)
+                );
                 queueScrubFrame();
               },
             }, 0.00);
@@ -191,60 +278,110 @@ export default function FeaturedMiraSection() {
           // 0.28 - 0.40: Crossfade video -> completed room anchor /03-k14.jpg (Full bleed hold)
           storyTimeline.to(videoLayer, { autoAlpha: 0, duration: 0.12, ease: 'none' }, 0.28);
 
-          // 0.40 - 0.52: Scroll-triggered Reframing!
-          // Frame 0 reframes down from 100vw x 100vh to 68vw x 72vh, track moves left to 16vw (centering Frame 0),
-          // bringing warm background and neighbour preview Frame 1 glides into right edge. Title fades out.
+          // 0.40 - 0.52: the completed room becomes a finite gallery frame.
+          // Only transforms animate here, avoiding scroll-driven layout recalculation.
           storyTimeline
             .to(trackFrames[0], {
-              width: '68vw',
-              height: '72vh',
-              marginTop: '14vh',
+              scaleX: 1,
+              scaleY: 1,
+              y: 0,
               borderRadius: '4px',
               duration: 0.12,
               ease: 'power2.inOut',
             }, 0.40)
             .to(galleryTrack, {
-              left: '16vw',
+              x: '0vw',
               duration: 0.12,
               ease: 'power2.inOut',
             }, 0.40)
-            .to(introduction, {
-              autoAlpha: 0,
-              y: -20,
-              duration: 0.08,
-              ease: 'power2.in',
-            }, 0.42);
+            .to(trackFrames.slice(1), {
+              opacity: 0.82,
+              duration: 0.07,
+              ease: 'none',
+            }, 0.45)
+            .to(captionRail, {
+              autoAlpha: 1,
+              duration: 0.05,
+              ease: 'none',
+            }, 0.47)
+            .to(captionItems[0], {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.05,
+              ease: 'power2.out',
+            }, 0.47);
 
-          // 0.52 - 0.88: Stepped horizontal track scrub & centered holds across frames 1 to 5
-          // Step 1 to 5: Frame step = 71vw (68vw width + 3vw gap)
-          const totalSteps = 5;
-          const scrubDuration = 0.36;
-          const stepWindow = scrubDuration / totalSteps; // ~0.072 per step
-
+          // 0.52 - 0.84: one continuous procession. If scrolling stops,
+          // ScrollTrigger gently settles the nearest room into the centre.
           for (let i = 1; i <= totalSteps; i += 1) {
-            const stepStart = 0.52 + ((i - 1) * stepWindow);
-            const moveDuration = stepWindow * 0.65; // ~0.047 move duration
-            const targetX = -i * 71; // in vw
+            const stepStart = galleryStart + ((i - 1) * stepWindow);
+            const moveDuration = stepWindow;
 
             // Slide track to center frame i
             storyTimeline.to(galleryTrack, {
-              x: `${targetX}vw`,
+              x: () => centeredTrackX(i),
               duration: moveDuration,
-              ease: 'power2.inOut',
+              ease: 'none',
             }, stepStart);
 
-            // Highlight active frame i, dim outgoing frame i-1
             storyTimeline
-              .to(trackFrames[i - 1], { opacity: 0.65, duration: moveDuration * 0.8, ease: 'none' }, stepStart)
+              .to(trackFrames[i - 1], { opacity: 0.82, duration: moveDuration * 0.8, ease: 'none' }, stepStart)
               .to(trackFrames[i], { opacity: 1, duration: moveDuration * 0.8, ease: 'none' }, stepStart)
-              .to(frameInners[i], { xPercent: -5, duration: moveDuration, ease: 'power1.out' }, stepStart);
+              .to(frameInners[i], { xPercent: 4, duration: moveDuration, ease: 'power1.out' }, stepStart)
+              .to(captionItems[i - 1], {
+                autoAlpha: 0,
+                y: -6,
+                duration: moveDuration * 0.42,
+                ease: 'power1.in',
+              }, stepStart)
+              .to(captionItems[i], {
+                autoAlpha: 1,
+                y: 0,
+                duration: moveDuration * 0.52,
+                ease: 'power2.out',
+              }, stepStart + (moveDuration * 0.34))
+              .to(galleryField, {
+                backgroundColor: miraImages[i].fieldColor,
+                duration: moveDuration,
+                ease: 'none',
+              }, stepStart);
           }
 
-          // 0.88 - 0.96: Final frame hold on 18-k04.jpg
-          // 0.96 - 1.00: Optional "View the project" link appears
+          // 0.84 - 0.91: the final room holds before the exit threshold begins.
           if (projectAction) {
-            storyTimeline.to(projectAction, { autoAlpha: 1, y: 0, duration: 0.04, ease: 'power2.out' }, 0.96);
+            storyTimeline.to(projectAction, { autoAlpha: 1, y: 0, duration: 0.035, ease: 'power2.out' }, 0.845);
           }
+
+          // 0.91 - 1.00: reverse threshold. The room and its interface lift away
+          // together, revealing the quieter working-relationship field beneath.
+          storyTimeline
+            .to(trackFrames.slice(0, -1), {
+              opacity: 0,
+              duration: 0.035,
+              ease: 'none',
+            }, 0.91)
+            .to(captionRail, {
+              autoAlpha: 0,
+              duration: 0.035,
+              ease: 'power1.in',
+            }, 0.91)
+            .to(projectAction, {
+              autoAlpha: 0,
+              y: -10,
+              duration: 0.035,
+              ease: 'power1.in',
+            }, 0.91)
+            .to(trackFrames[trackFrames.length - 1], {
+              yPercent: -5,
+              scale: 1.025,
+              duration: 0.09,
+              ease: 'power2.in',
+            }, 0.91)
+            .to(stickyStage, {
+              clipPath: 'inset(0% 0% 100% 0%)',
+              duration: 0.09,
+              ease: 'power2.inOut',
+            }, 0.91);
 
           section.dataset.media = scrubVideo ? 'enhanced' : 'fallback';
           ScrollTrigger.refresh();
@@ -298,20 +435,29 @@ export default function FeaturedMiraSection() {
     >
       <div className={styles.story} data-mira-story>
         <div className={styles.stickyStage} data-mira-sticky-stage>
-          <div className={styles.galleryViewport}>
+          <div className={styles.galleryViewport} data-mira-gallery-field>
+            <div className={styles.chapterPortal} data-mira-chapter-portal>
+              <div className={styles.chapterCopy} data-mira-chapter-copy>
+                <span>Inside the work</span>
+                <p>Mira Villa</p>
+                <em>A home made open.</em>
+              </div>
+            </div>
+
             <div className={styles.galleryTrack} data-mira-track>
               {miraImages.map((image, index) => (
                 <div
                   key={image.src}
                   className={styles.trackFrame}
                   data-track-frame={index}
+                  style={{ '--frame-width': `${image.frameWidth}vw` }}
                 >
                   <div className={styles.frameInner} data-frame-inner={index}>
                     <Image
                       src={image.src}
                       alt={image.alt}
                       fill
-                      sizes="72vw"
+                      sizes={`${image.frameWidth}vw`}
                       className={styles.roomImage}
                       priority={index === 0}
                       unoptimized
@@ -322,15 +468,18 @@ export default function FeaturedMiraSection() {
             </div>
 
             <div className={styles.videoLayer} data-mira-video-layer aria-hidden="true">
-              <video ref={videoRef} muted playsInline preload="metadata">
+              <video ref={videoRef} muted playsInline preload="auto">
                 <source src={videoSource} type="video/mp4" />
               </video>
             </div>
 
-            <header className={styles.introduction} data-mira-introduction>
-              <h2>Mira Villa</h2>
-              <span>A home made open.</span>
-            </header>
+            <div className={styles.captionRail} data-mira-caption-rail aria-hidden="true">
+              {miraImages.map((image, index) => (
+                <div key={image.caption} className={styles.captionItem} data-mira-caption={index}>
+                  <p>{image.caption}</p>
+                </div>
+              ))}
+            </div>
 
             <div className={styles.projectAction} data-mira-action>
               <a
@@ -348,6 +497,7 @@ export default function FeaturedMiraSection() {
 
       <div className={styles.staticFallback}>
         <header>
+          <small>Inside the work</small>
           <h2>Mira Villa</h2>
           <span>A home made open.</span>
         </header>
@@ -366,6 +516,7 @@ export default function FeaturedMiraSection() {
           {miraImages.slice(1).map((image) => (
             <figure key={image.src}>
               <Image src={image.src} alt={image.alt} fill sizes="82vw" />
+              <figcaption>{image.caption}</figcaption>
             </figure>
           ))}
         </div>

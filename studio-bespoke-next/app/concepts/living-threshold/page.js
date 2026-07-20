@@ -6,11 +6,14 @@ import FounderSection from './founder-section';
 import ServicesSection from './services-section';
 import SelectedWorkSection from './selected-work-section';
 import FeaturedMiraSection from './featured-mira-section';
+import ApproachTrustSection from './approach-trust-section';
+import InquirySection from './inquiry-section';
+import SiteFooter from './site-footer';
 import styles from './living-threshold.module.css';
 
 export const metadata = {
   title: 'The Living Threshold | Studio Bespoke Design',
-  description: 'A scroll-led, full-screen hero storyboard for Studio Bespoke Design.',
+  description: 'Founder-led interior design for homes, workplaces and hospitality spaces in Dubai.',
 };
 
 const heroImage = '/images/damac-hills-hero-upscaled-v1.png';
@@ -120,6 +123,9 @@ export default function LivingThresholdConceptPage() {
       <ServicesSection />
       <SelectedWorkSection />
       <FeaturedMiraSection />
+      <ApproachTrustSection />
+      <InquirySection />
+      <SiteFooter />
     </main>
   );
 }
