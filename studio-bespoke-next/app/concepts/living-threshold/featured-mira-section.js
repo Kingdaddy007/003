@@ -52,9 +52,8 @@ export default function FeaturedMiraSection() {
     const stickyStage = section.querySelector('[data-mira-sticky-stage]');
     const videoLayer = section.querySelector('[data-mira-video-layer]');
     const introduction = section.querySelector('[data-mira-introduction]');
-    const galleryTrack = section.querySelector('[data-mira-track]');
-    const trackFrames = [...section.querySelectorAll('[data-track-frame]')];
-    const frameInners = [...section.querySelectorAll('[data-frame-inner]')];
+    const plateLayers = [...section.querySelectorAll('[data-plate-layer]')];
+    const plateInners = [...section.querySelectorAll('[data-plate-inner]')];
     const projectAction = section.querySelector('[data-mira-action]');
 
     const mediaQuery = gsap.matchMedia();
@@ -113,9 +112,8 @@ export default function FeaturedMiraSection() {
           || !stickyStage
           || !videoLayer
           || !introduction
-          || !galleryTrack
-          || trackFrames.length !== miraImages.length
-          || frameInners.length !== miraImages.length
+          || plateLayers.length !== miraImages.length
+          || plateInners.length !== miraImages.length
         ) {
           return undefined;
         }
@@ -139,26 +137,15 @@ export default function FeaturedMiraSection() {
 
           const scrubProgress = { value: 0 };
 
-          // Concept 2 Initial State (True 100% Full Bleed Handoff):
-          // galleryTrack is positioned at left: 0 so Frame 0 spans 100vw x 100vh with 0 side gaps!
-          gsap.set(galleryTrack, { xPercent: 0, x: 0, left: '0vw' });
-          gsap.set(trackFrames[0], {
-            width: '100vw',
-            height: '100vh',
-            marginTop: '0vh',
-            borderRadius: '0px',
-            opacity: 1,
-          });
+          // Initial state for Concept 3 Presentation Plates:
+          // Plate 0 (03-k14.jpg anchor) starts at yPercent: 0 (100% full bleed).
+          gsap.set(plateLayers[0], { yPercent: 0, scale: 1, autoAlpha: 1 });
+          gsap.set(plateInners[0], { yPercent: 0 });
 
-          // Neighbor frames start downstream in track flow
-          for (let i = 1; i < trackFrames.length; i += 1) {
-            gsap.set(trackFrames[i], {
-              width: '68vw',
-              height: '72vh',
-              marginTop: '14vh',
-              opacity: 0.65,
-            });
-            gsap.set(frameInners[i], { xPercent: 0 });
+          // Plates 1 to 5 start positioned below viewport at yPercent: 100
+          for (let i = 1; i < plateLayers.length; i += 1) {
+            gsap.set(plateLayers[i], { yPercent: 100, scale: 1, autoAlpha: 1 });
+            gsap.set(plateInners[i], { yPercent: -8 });
           }
 
           gsap.set(videoLayer, { autoAlpha: scrubVideo ? 1 : 0 });
@@ -188,60 +175,43 @@ export default function FeaturedMiraSection() {
             }, 0.00);
           }
 
-          // 0.28 - 0.40: Crossfade video -> completed room anchor /03-k14.jpg (Full bleed hold)
+          // 0.28 - 0.40: Crossfade video -> Plate 1 (Full bleed completed room hold)
           storyTimeline.to(videoLayer, { autoAlpha: 0, duration: 0.12, ease: 'none' }, 0.28);
+          storyTimeline.to(introduction, { autoAlpha: 0, y: -20, duration: 0.06, ease: 'power2.in' }, 0.38);
 
-          // 0.40 - 0.52: Scroll-triggered Reframing!
-          // Frame 0 reframes down from 100vw x 100vh to 68vw x 72vh, track moves left to 16vw (centering Frame 0),
-          // bringing warm background and neighbour preview Frame 1 glides into right edge. Title fades out.
-          storyTimeline
-            .to(trackFrames[0], {
-              width: '68vw',
-              height: '72vh',
-              marginTop: '14vh',
-              borderRadius: '4px',
-              duration: 0.12,
-              ease: 'power2.inOut',
-            }, 0.40)
-            .to(galleryTrack, {
-              left: '16vw',
-              duration: 0.12,
-              ease: 'power2.inOut',
-            }, 0.40)
-            .to(introduction, {
-              autoAlpha: 0,
-              y: -20,
-              duration: 0.08,
-              ease: 'power2.in',
-            }, 0.42);
+          // 0.40 - 0.88: Presentation Plate Stacking Sequence (Plates 1 to 5 rise & cover)
+          // Each step: Incoming Plate i rises (yPercent: 100 -> 0), Outgoing Plate i-1 scales down slightly (0.97) and shifts (yPercent: -4)
+          const totalPlates = plateLayers.length - 1; // 5 steps
+          const stepWindow = 0.48 / totalPlates; // ~0.096 per plate
 
-          // 0.52 - 0.88: Stepped horizontal track scrub & centered holds across frames 1 to 5
-          // Step 1 to 5: Frame step = 71vw (68vw width + 3vw gap)
-          const totalSteps = 5;
-          const scrubDuration = 0.36;
-          const stepWindow = scrubDuration / totalSteps; // ~0.072 per step
+          for (let i = 1; i <= totalPlates; i += 1) {
+            const stepStart = 0.40 + ((i - 1) * stepWindow);
+            const moveDuration = stepWindow * 0.8;
 
-          for (let i = 1; i <= totalSteps; i += 1) {
-            const stepStart = 0.52 + ((i - 1) * stepWindow);
-            const moveDuration = stepWindow * 0.65; // ~0.047 move duration
-            const targetX = -i * 71; // in vw
-
-            // Slide track to center frame i
-            storyTimeline.to(galleryTrack, {
-              x: `${targetX}vw`,
-              duration: moveDuration,
-              ease: 'power2.inOut',
-            }, stepStart);
-
-            // Highlight active frame i, dim outgoing frame i-1
+            // Incoming plate rises to cover
             storyTimeline
-              .to(trackFrames[i - 1], { opacity: 0.65, duration: moveDuration * 0.8, ease: 'none' }, stepStart)
-              .to(trackFrames[i], { opacity: 1, duration: moveDuration * 0.8, ease: 'none' }, stepStart)
-              .to(frameInners[i], { xPercent: -5, duration: moveDuration, ease: 'power1.out' }, stepStart);
+              .to(plateLayers[i], {
+                yPercent: 0,
+                duration: moveDuration,
+                ease: 'power2.out',
+              }, stepStart)
+              .to(plateInners[i], {
+                yPercent: 0,
+                duration: moveDuration,
+                ease: 'power2.out',
+              }, stepStart);
+
+            // Outgoing plate shifts & scales slightly behind incoming plate
+            storyTimeline.to(plateLayers[i - 1], {
+              yPercent: -4,
+              scale: 0.97,
+              duration: moveDuration,
+              ease: 'power2.out',
+            }, stepStart);
           }
 
-          // 0.88 - 0.96: Final frame hold on 18-k04.jpg
-          // 0.96 - 1.00: Optional "View the project" link appears
+          // 0.88 - 0.96: Plate 6 hold
+          // 0.96 - 1.00: Optional "VIEW THE PROJECT" link appears
           if (projectAction) {
             storyTimeline.to(projectAction, { autoAlpha: 1, y: 0, duration: 0.04, ease: 'power2.out' }, 0.96);
           }
@@ -298,28 +268,27 @@ export default function FeaturedMiraSection() {
     >
       <div className={styles.story} data-mira-story>
         <div className={styles.stickyStage} data-mira-sticky-stage>
-          <div className={styles.galleryViewport}>
-            <div className={styles.galleryTrack} data-mira-track>
-              {miraImages.map((image, index) => (
-                <div
-                  key={image.src}
-                  className={styles.trackFrame}
-                  data-track-frame={index}
-                >
-                  <div className={styles.frameInner} data-frame-inner={index}>
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      sizes="72vw"
-                      className={styles.roomImage}
-                      priority={index === 0}
-                      unoptimized
-                    />
-                  </div>
+          <div className={styles.plateStage}>
+            {miraImages.map((image, index) => (
+              <div
+                key={image.src}
+                className={styles.plateLayer}
+                data-plate-layer={index}
+                style={{ zIndex: 10 + index }}
+              >
+                <div className={styles.plateInner} data-plate-inner={index}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="100vw"
+                    className={styles.roomImage}
+                    priority={index === 0}
+                    unoptimized
+                  />
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
 
             <div className={styles.videoLayer} data-mira-video-layer aria-hidden="true">
               <video ref={videoRef} muted playsInline preload="metadata">
