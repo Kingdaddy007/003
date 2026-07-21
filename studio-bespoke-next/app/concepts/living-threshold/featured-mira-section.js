@@ -8,46 +8,46 @@ import styles from './featured-mira-section.module.css';
 const videoSource = '/blueprint_draft.mp4';
 const videoLeadIn = 0.55;
 
-const miraImages = [
+const galleryImages = [
   {
-    src: '/images/projects/mira/03-k14.jpg',
-    alt: 'Completed Mira kitchen island, arch and circulation relationship',
-    caption: 'Kitchen, arch and circulation',
+    src: 'https://studiobespoke.design/wp-content/uploads/2023/03/8.jpg',
+    alt: 'New Earth Cafe wide interior view',
+    caption: 'New Earth Cafe',
     frameWidth: 68,
     fieldColor: '#e5ded4',
   },
   {
-    src: '/images/projects/mira/07-mira-25.jpg',
-    alt: 'Axial view through the Mira kitchen arch toward the garden window',
-    caption: 'Garden axis through the arch',
+    src: 'https://studiobespoke.design/wp-content/uploads/2021/11/kids-room-1-5-scaled.jpg',
+    alt: 'Dubai Hills Apartment kids room interior',
+    caption: 'Dubai Hills Apartment',
     frameWidth: 64,
     fieldColor: '#ddd3c5',
   },
   {
-    src: '/images/projects/mira/05-k11.jpg',
-    alt: 'Arched pantry opening with integrated oak cabinetry and illuminated shelving',
-    caption: 'Integrated pantry joinery',
+    src: 'https://studiobespoke.design/wp-content/uploads/2022/04/Farmhouse-2.jpg',
+    alt: 'Modern Farmhouse architectural details',
+    caption: 'Modern Farmhouse',
     frameWidth: 40,
     fieldColor: '#e8e0d5',
   },
   {
-    src: '/images/projects/mira/15-mira-29.jpg',
-    alt: 'Wide view of the sculptural Mira stone island and oak cabinetry',
-    caption: 'Stone island and oak cabinetry',
+    src: 'https://studiobespoke.design/wp-content/uploads/2023/05/1R9A7502-scaled.jpg',
+    alt: 'The Strand Cafe interior seating area',
+    caption: 'The Strand Cafe',
     frameWidth: 68,
     fieldColor: '#d8ccbd',
   },
   {
-    src: '/images/projects/mira/11-k06.jpg',
-    alt: 'Illuminated bespoke cookbook display beside the Mira island',
-    caption: 'Bespoke cookbook joinery',
+    src: 'https://studiobespoke.design/wp-content/uploads/2024/08/Rockwood_Entrance-scaled.jpg',
+    alt: 'Damac Hills Residential entrance and hallway',
+    caption: 'Damac Hills Residential',
     frameWidth: 40,
     fieldColor: '#d3c2ad',
   },
   {
-    src: '/images/projects/mira/01-k09.jpg',
-    alt: 'Stone island, oak stools and flowers showing the Mira material palette in use',
-    caption: 'Stone, oak and marble',
+    src: 'https://studiobespoke.design/wp-content/uploads/2026/01/Cornelias_03.jpg',
+    alt: 'Cornelias Innovation Hub modern workspace',
+    caption: 'Cornelias Innovation Hub',
     frameWidth: 64,
     fieldColor: '#cdb9a2',
   },
@@ -85,6 +85,7 @@ export default function FeaturedMiraSection() {
     let scrubFrameRequest;
     let targetVideoTime = 0;
     let storyTimeline;
+    let exitTimeline;
     let timelineBuilt = false;
 
     const cancelScrubFrame = () => {
@@ -140,10 +141,10 @@ export default function FeaturedMiraSection() {
           || !chapterCopy
           || !galleryField
           || !galleryTrack
-          || trackFrames.length !== miraImages.length
-          || frameInners.length !== miraImages.length
+          || trackFrames.length !== galleryImages.length
+          || frameInners.length !== galleryImages.length
           || !captionRail
-          || captionItems.length !== miraImages.length
+          || captionItems.length !== galleryImages.length
         ) {
           return undefined;
         }
@@ -166,7 +167,7 @@ export default function FeaturedMiraSection() {
           }
 
           const scrubProgress = { value: 0 };
-          const totalSteps = miraImages.length - 1;
+          const totalSteps = galleryImages.length - 1;
           const galleryStart = 0.52;
           const galleryEnd = 0.84;
           const scrubDuration = galleryEnd - galleryStart;
@@ -175,7 +176,7 @@ export default function FeaturedMiraSection() {
             trackFrames[index].offsetLeft + (trackFrames[index].offsetWidth / 2)
           );
 
-          gsap.set(galleryField, { backgroundColor: miraImages[0].fieldColor });
+          gsap.set(galleryField, { backgroundColor: galleryImages[0].fieldColor });
           gsap.set(galleryTrack, { xPercent: 0, x: () => centeredTrackX(0) });
           gsap.set(trackFrames[0], {
             scaleX: () => window.innerWidth / trackFrames[0].offsetWidth,
@@ -205,7 +206,7 @@ export default function FeaturedMiraSection() {
             scrollTrigger: {
               trigger: story,
               start: 'top top',
-              end: 'bottom bottom',
+              end: () => `+=${galleryImages.length * window.innerWidth * 0.6}`,
               scrub: 0.5,
               invalidateOnRefresh: true,
               onEnter: () => {
@@ -334,7 +335,7 @@ export default function FeaturedMiraSection() {
                 ease: 'power2.out',
               }, stepStart + (moveDuration * 0.34))
               .to(galleryField, {
-                backgroundColor: miraImages[i].fieldColor,
+                backgroundColor: galleryImages[i].fieldColor,
                 duration: moveDuration,
                 ease: 'none',
               }, stepStart);
@@ -344,6 +345,21 @@ export default function FeaturedMiraSection() {
           if (projectAction) {
             storyTimeline.to(projectAction, { autoAlpha: 1, y: 0, duration: 0.04, ease: 'power2.out' }, 0.845);
           }
+
+          exitTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: story,
+              start: () => `top+=${window.innerHeight * 1.8} top`,
+              end: 'bottom bottom',
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          exitTimeline.to(stickyStage, {
+            yPercent: -20,
+            ease: 'none',
+          });
 
           section.dataset.media = scrubVideo ? 'enhanced' : 'fallback';
           ScrollTrigger.refresh();
@@ -376,7 +392,9 @@ export default function FeaturedMiraSection() {
           cancelScrubFrame();
           video.pause();
           storyTimeline?.revert();
+          exitTimeline?.revert();
           storyTimeline = undefined;
+          exitTimeline = undefined;
           timelineBuilt = false;
           delete section.dataset.enhanced;
           delete section.dataset.videoReady;
@@ -407,7 +425,7 @@ export default function FeaturedMiraSection() {
             </div>
 
             <div className={styles.galleryTrack} data-mira-track>
-              {miraImages.map((image, index) => (
+              {galleryImages.map((image, index) => (
                 <div
                   key={image.src}
                   className={styles.trackFrame}
@@ -436,7 +454,7 @@ export default function FeaturedMiraSection() {
             </div>
 
             <div className={styles.captionRail} data-mira-caption-rail aria-hidden="true">
-              {miraImages.map((image, index) => (
+              {galleryImages.map((image, index) => (
                 <div key={image.caption} className={styles.captionItem} data-mira-caption={index}>
                   <p>{image.caption}</p>
                 </div>
@@ -466,8 +484,8 @@ export default function FeaturedMiraSection() {
 
         <div className={styles.staticHero}>
           <Image
-            src={miraImages[0].src}
-            alt={miraImages[0].alt}
+            src={galleryImages[0].src}
+            alt={galleryImages[0].alt}
             fill
             sizes="100vw"
             unoptimized
@@ -475,7 +493,7 @@ export default function FeaturedMiraSection() {
         </div>
 
         <div className={styles.staticReel} aria-label="Mira Villa image gallery">
-          {miraImages.slice(1).map((image) => (
+          {galleryImages.slice(1).map((image) => (
             <figure key={image.src}>
               <Image src={image.src} alt={image.alt} fill sizes="82vw" />
               <figcaption>{image.caption}</figcaption>

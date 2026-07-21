@@ -28,28 +28,29 @@ export default function SiteFooter() {
         const image = footer.querySelector('[data-footer-image]');
         const inquiryField = footer.previousElementSibling?.querySelector('[data-inquiry-field]');
 
-        gsap.set(panel, { clipPath: 'inset(0% 49.5% 0% 49.5%)' });
+        gsap.set(panel, { yPercent: -45 }); // Starts tucked under the previous section
         gsap.set(information, { autoAlpha: 0, y: 32 });
-        gsap.set(image, { scale: 1.09 });
+        gsap.set(image, { scale: 1.09, yPercent: 12 });
 
         const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: footer,
-            start: 'top 94%',
-            end: 'top 18%',
-            scrub: 0.48,
+            start: 'top bottom', // Start exactly when footer enters viewport
+            end: 'bottom bottom',
+            scrub: true,
           },
         });
 
         timeline
           .to(panel, {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            duration: 0.68,
-            ease: 'power2.inOut',
+            yPercent: 0,
+            duration: 1,
+            ease: 'none',
           }, 0)
           .to(image, {
             scale: 1.035,
-            duration: 0.8,
+            yPercent: 0,
+            duration: 1,
             ease: 'none',
           }, 0)
           .to(information, {
@@ -57,7 +58,7 @@ export default function SiteFooter() {
             y: 0,
             duration: 0.32,
             ease: 'power2.out',
-          }, 0.48);
+          }, 0.5);
 
         if (inquiryField) {
           timeline.to(inquiryField, {
@@ -99,14 +100,16 @@ export default function SiteFooter() {
         </div>
 
         <figure className={styles.groundingImage}>
-          <Image
-            src="/images/footer/modern-farmhouse-threshold.jpg"
-            alt="A framed view through the Modern Farmhouse interior by Studio Bespoke"
-            fill
-            sizes="100vw"
+          <video
+            src="/videos/footer-ambient-v2.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ width: '100%', height: '100%', position: 'absolute', inset: 0, objectFit: 'cover', objectPosition: 'top' }}
             data-footer-image
           />
-          <figcaption>Modern Farmhouse · Dubai</figcaption>
+          <figcaption>Cinematic Sunlit Wall · Studio Bespoke</figcaption>
         </figure>
 
         <div className={styles.baseLine}>

@@ -1,6 +1,6 @@
 .section {
   position: relative;
-  z-index: 40;
+  z-index: 60;
   overflow: clip;
   background: var(--paper, #e8e0d4);
   color: var(--ink, #171a17);
@@ -84,14 +84,14 @@
 
 .practice {
   position: relative;
-  padding-top: clamp(82px, 11vh, 116px);
-  padding-bottom: clamp(96px, 13vh, 138px);
+  padding-top: clamp(48px, 8vh, 72px);
+  padding-bottom: clamp(64px, 10vh, 86px);
   background: var(--paper, #e8e0d4);
 }
 
 .workingLine {
   position: absolute;
-  top: clamp(82px, 11vh, 116px);
+  top: clamp(48px, 8vh, 72px);
   right: clamp(24px, 5vw, 76px);
   left: clamp(24px, 5vw, 76px);
   height: 1px;
@@ -106,7 +106,7 @@
 
 .commitment {
   position: relative;
-  padding-top: clamp(44px, 6vh, 64px);
+  padding-top: clamp(32px, 4vh, 48px);
 }
 
 .commitment:nth-child(1) {
@@ -152,7 +152,7 @@
 .evidence {
   width: min(760px, 62vw);
   padding-top: 28px;
-  margin: clamp(74px, 10vh, 104px) 0 0 auto;
+  margin: clamp(48px, 6vh, 64px) 0 0 auto;
   border-top: 1px solid rgba(23, 26, 23, 0.28);
   color: rgba(23, 26, 23, 0.68);
   font-size: clamp(15px, 1.08vw, 17px);
@@ -167,9 +167,8 @@
   position: relative;
   padding-top: clamp(72px, 10vh, 110px);
   padding-bottom: clamp(84px, 11vh, 128px);
-  background: var(--ink, #171a17);
-  color: var(--ivory, #f2eee5);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  background: var(--paper, #e8e0d4);
+  color: var(--ink, #171a17);
 }
 
 .voicesGrid {
@@ -181,7 +180,7 @@
 
 /* Left Column Spine */
 .voicesSpine {
-  grid-column: 1 / 5;
+  grid-column: 1 / 4;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -196,21 +195,22 @@
 
 .voicesEyebrow {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
   margin-bottom: 22px;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #cbbba6;
+  color: #8c7254;
 }
 
-.voicesEyebrow::before {
+.voicesEyebrow::after {
   width: 24px;
   height: 1px;
   content: '';
-  background: #cbbba6;
+  background: #8c7254;
 }
 
 .voicesTitle {
@@ -220,7 +220,7 @@
   font-weight: 300;
   letter-spacing: -0.055em;
   line-height: 0.86;
-  color: var(--ivory, #f2eee5);
+  color: var(--ink, #171a17);
 }
 
 .voicesDesc {
@@ -228,7 +228,7 @@
   margin: 0;
   font-size: clamp(15px, 1.15vw, 18px);
   line-height: 1.55;
-  color: rgba(242, 238, 229, 0.72);
+  color: rgba(23, 26, 23, 0.85);
 }
 
 .voicesNav {
@@ -247,10 +247,10 @@
   display: grid;
   width: 48px;
   height: 48px;
-  border: 1px solid rgba(242, 238, 229, 0.32);
+  border: 1px solid rgba(23, 26, 23, 0.15);
   border-radius: 50%;
   background: transparent;
-  color: var(--ivory, #f2eee5);
+  color: var(--ink, #171a17);
   font: inherit;
   font-size: 16px;
   cursor: pointer;
@@ -258,12 +258,24 @@
   place-items: center;
 }
 
+.navBtn:last-child {
+  background: #a88a68;
+  border-color: #a88a68;
+  color: #fff;
+}
+
 .navBtn:hover,
 .navBtn:focus-visible {
-  border-color: #d8c4a9;
-  background: #d8c4a9;
-  color: #171a17;
+  border-color: #a88a68;
+  color: #a88a68;
   transform: translateY(-2px);
+}
+
+.navBtn:last-child:hover,
+.navBtn:last-child:focus-visible {
+  background: #8c7254;
+  border-color: #8c7254;
+  color: #fff;
 }
 
 .dots {
@@ -291,21 +303,20 @@
 
 /* Right Column: Warm Mineral Paper Pill Container */
 .pillStage {
-  grid-column: 5 / 13;
+  grid-column: 4 / 13;
   position: relative;
 }
 
 .pillCard {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr min(360px, 40%);
-  gap: clamp(24px, 3vw, 44px);
-  padding: clamp(36px, 4vw, 56px);
-  border: 1px solid rgba(242, 238, 229, 0.55);
-  border-radius: clamp(36px, 5vw, 68px);
-  background: var(--paper, #f2eee5);
+  height: clamp(480px, 55vh, 580px);
+  grid-template-columns: 1fr 40%;
+  border: 1px solid #d8c4a9;
+  border-radius: 500px;
+  background: var(--ivory, #fbfaf8);
   color: var(--ink, #171a17);
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
 
@@ -313,24 +324,19 @@
 .quoteContent {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-right: 12px;
+  justify-content: center;
+  padding: clamp(30px, 4vw, 50px);
+  padding-left: clamp(40px, 5vw, 80px);
 }
 
 .quoteBadge {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 24px;
-  border-radius: 50%;
-  background: rgba(23, 26, 23, 0.06);
+  margin-bottom: 12px;
   color: #a88a68;
   font-family: var(--font-serif);
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1;
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 0.6;
 }
 
 .quoteText {
@@ -349,12 +355,22 @@
   flex-direction: column;
   gap: 4px;
   padding-top: 20px;
-  border-top: 1px solid rgba(23, 26, 23, 0.18);
+  position: relative;
+}
+
+.authorMeta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 1px;
+  background: #d8c4a9;
 }
 
 .authorName {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #171a17;
 }
@@ -364,7 +380,7 @@
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #6d655b;
+  color: #a88a68;
 }
 
 /* Right side of Pill Card: Architectural Arch Photo Cutout */
@@ -372,11 +388,8 @@
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: clamp(280px, 34vh, 380px);
   overflow: hidden;
-  border-radius: 200px 200px 18px 18px;
   background: #d8cebe;
-  box-shadow: 0 14px 35px rgba(23, 26, 23, 0.18);
 }
 
 .archImage {
@@ -388,22 +401,6 @@
 
 .pillCard:hover .archImage {
   transform: scale(1.04);
-}
-
-/* Smooth Crossfade Animations */
-.fadeEnter {
-  animation: voiceFadeIn 480ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes voiceFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @media (max-width: 900px) {
@@ -424,14 +421,16 @@
 
   .pillCard {
     grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 32px 24px;
     border-radius: 36px;
+  }
+
+  .quoteContent {
+    padding: 32px 24px;
   }
 
   .archFrame {
     min-height: 260px;
-    border-radius: 140px 140px 14px 14px;
+    border-radius: 0 0 36px 36px;
   }
 }
 
@@ -442,8 +441,7 @@
   .workingLine,
   .commitmentCopy,
   .marker,
-  .evidence,
-  .fadeEnter {
+  .evidence {
     opacity: 1;
     visibility: visible;
     clip-path: none;
@@ -451,3 +449,10 @@
     transform: none;
   }
 }
+
+@media (min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .section {
+    margin-top: -100svh;
+  }
+}
+

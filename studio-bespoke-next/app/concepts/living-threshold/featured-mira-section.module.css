@@ -315,7 +315,7 @@
   .story {
     position: relative;
     display: block;
-    min-height: 280svh;
+    min-height: 380svh;
   }
 
   .staticFallback {

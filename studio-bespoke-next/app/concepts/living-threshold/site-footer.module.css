@@ -1,6 +1,6 @@
 .footer {
   position: relative;
-  z-index: 20;
+  z-index: 10;
   overflow: clip;
   background: var(--paper, #e8e0d4);
 }
@@ -92,7 +92,7 @@
   height: clamp(260px, 38svh, 440px);
   margin: 0;
   overflow: hidden;
-  background: #bcb1a2;
+  background: var(--ink, #171a17);
 }
 
 .groundingImage::after {
@@ -103,7 +103,8 @@
   pointer-events: none;
 }
 
-.groundingImage img {
+.groundingImage img,
+.groundingImage video {
   object-fit: cover;
   object-position: center 50%;
   transform: scale(1.035);
