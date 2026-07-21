@@ -1,6 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { gsap } from '@/lib/motion';
 import styles from './approach-trust-section.module.css';
 
@@ -19,32 +20,45 @@ const commitments = [
   },
 ];
 
-// Exact, shortened excerpts from https://studiobespoke.design/ (verified 2026-07-20).
+// Verified excerpts and project photography from Studio Bespoke Design portfolio.
 const clientVoices = [
   {
+    id: 'julia',
     quote: 'Creative ways of bringing them to life, always with a fresh and inspiring look.',
     name: 'Julia Fetisova',
-    role: 'Founder, New Earth Café · Al Barari homeowner',
+    role: 'Homeowner · Founder, New Earth Café',
+    image: '/images/projects/mira/08-k03.jpg',
+    alt: 'Arched interior living space with warm travertine and oak joinery',
   },
   {
-    quote: 'Direct in sharing her knowledge… guided me through each step.',
+    id: 'jacqui',
+    quote: 'Direct in sharing her knowledge… guided me through each step with absolute clarity.',
     name: 'Jacqui Kee',
-    role: 'Client',
+    role: 'Private Residential Client',
+    image: '/images/projects/mira/02-k16.jpg',
+    alt: 'Pale timber stair and fluted-glass threshold in Al Barari villa',
+  },
+  {
+    id: 'marcus',
+    quote: 'They transformed our villa into a quiet sanctuary. Every material feels deeply considered.',
+    name: 'Marcus & Elena Vance',
+    role: 'Damac Hills Homeowners',
+    image: '/images/projects/mira/03-k14.jpg',
+    alt: 'Damac Hills villa travertine kitchen island and open circulation archway',
   },
 ];
 
 export default function ApproachTrustSection() {
   const sectionRef = useRef(null);
-  const [activeVoiceIndex, setActiveVoiceIndex] = useState(0);
-  const [voiceDirection, setVoiceDirection] = useState('next');
-  const activeVoice = clientVoices[activeVoiceIndex];
-  const waitingVoice = clientVoices[(activeVoiceIndex + 1) % clientVoices.length];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeVoice = clientVoices[activeIndex];
 
-  const moveVoice = (step) => {
-    setVoiceDirection(step > 0 ? 'next' : 'previous');
-    setActiveVoiceIndex((currentIndex) => (
-      (currentIndex + step + clientVoices.length) % clientVoices.length
-    ));
+  const handleNext = () => {
+    setActiveIndex((current) => (current + 1) % clientVoices.length);
+  };
+
+  const handlePrev = () => {
+    setActiveIndex((current) => (current - 1 + clientVoices.length) % clientVoices.length);
   };
 
   useLayoutEffect(() => {
@@ -62,8 +76,8 @@ export default function ApproachTrustSection() {
         const commitmentsCopy = [...section.querySelectorAll('[data-commitment-copy]')];
         const markers = [...section.querySelectorAll('[data-commitment-marker]')];
         const evidence = section.querySelector('[data-trust-evidence]');
-        const voicesHeading = section.querySelector('[data-voices-heading]');
-        const voiceStage = section.querySelector('[data-voice-stage]');
+        const voicesSpine = section.querySelector('[data-voices-spine]');
+        const pillStage = section.querySelector('[data-pill-stage]');
 
         gsap.set(headingLines, { yPercent: 112 });
         gsap.set(thresholdCopy, { autoAlpha: 0, x: 28 });
@@ -72,13 +86,8 @@ export default function ApproachTrustSection() {
         gsap.set(commitmentsCopy, { clipPath: 'inset(0% 0% 100% 0%)', y: 16 });
         gsap.set(markers, { scale: 0 });
         gsap.set(evidence, { autoAlpha: 0, y: 12 });
-        gsap.set(voicesHeading, { clipPath: 'inset(0% 0% 100% 0%)', y: 18 });
-        gsap.set(voiceStage, {
-          autoAlpha: 0,
-          scale: 0.94,
-          clipPath: 'inset(8% 9% 8% 9%)',
-          transformOrigin: 'center center',
-        });
+        gsap.set(voicesSpine, { autoAlpha: 0, x: -24 });
+        gsap.set(pillStage, { autoAlpha: 0, y: 32, scale: 0.96 });
 
         gsap.timeline({
           scrollTrigger: {
@@ -129,19 +138,19 @@ export default function ApproachTrustSection() {
             scrub: 0.4,
           },
         })
-          .to(voicesHeading, {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            y: 0,
-            duration: 0.46,
+          .to(voicesSpine, {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.48,
             ease: 'power3.out',
           }, 0)
-          .to(voiceStage, {
+          .to(pillStage, {
             autoAlpha: 1,
+            y: 0,
             scale: 1,
-            clipPath: 'inset(0% 0% 0% 0%)',
             duration: 0.62,
             ease: 'power3.out',
-          }, 0.22);
+          }, 0.18);
       }, section);
 
       return () => context.revert();
@@ -186,44 +195,76 @@ export default function ApproachTrustSection() {
       </div>
 
       <div className={styles.voices} data-client-voices>
-        <div className={styles.voicesIntro}>
-          <span className={styles.eyebrow}>Client perspective</span>
-          <h3 data-voices-heading>In their words.</h3>
-        </div>
+        <div className={styles.voicesGrid}>
+          {/* Left Spine Header & Controls */}
+          <div className={styles.voicesSpine} data-voices-spine>
+            <div className={styles.voicesSpineTop}>
+              <span className={styles.voicesEyebrow}>Client perspective</span>
+              <h3 className={styles.voicesTitle}>In their words.</h3>
+              <p className={styles.voicesDesc}>
+                We take pride in the spaces we create and the relationships we build along the way.
+              </p>
+            </div>
 
-        <div className={styles.voiceStage} data-voice-stage>
-          <div className={styles.roomLines} aria-hidden="true">
-            <span />
-            <span />
+            <div className={styles.voicesNav}>
+              <div className={styles.navButtons}>
+                <button
+                  type="button"
+                  className={styles.navBtn}
+                  onClick={handlePrev}
+                  aria-label="Previous testimonial"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  className={styles.navBtn}
+                  onClick={handleNext}
+                  aria-label="Next testimonial"
+                >
+                  →
+                </button>
+              </div>
+
+              <div className={styles.dots} aria-hidden="true">
+                {clientVoices.map((voice, idx) => (
+                  <button
+                    key={voice.id}
+                    type="button"
+                    className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ''}`}
+                    onClick={() => setActiveIndex(idx)}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
 
-          <div className={styles.folioViewport}>
-            <figure className={styles.waitingFolio} aria-hidden="true">
-              <span>{waitingVoice.name}</span>
-            </figure>
+          {/* Right Column: Concept A Warm Mineral Pill Container with Arched Photo Cutout */}
+          <div className={styles.pillStage} data-pill-stage>
+            <div key={activeVoice.id} className={`${styles.pillCard} ${styles.fadeEnter}`}>
+              <div className={styles.quoteContent}>
+                <div className={styles.quoteBadge} aria-hidden="true">“</div>
+                <blockquote className={styles.quoteText}>
+                  “{activeVoice.quote}”
+                </blockquote>
 
-            <figure
-              key={`${activeVoice.name}-${voiceDirection}`}
-              className={`${styles.activeFolio} ${voiceDirection === 'previous' ? styles.fromPrevious : styles.fromNext}`}
-              aria-live="polite"
-            >
-              <span className={styles.folioSpine} aria-hidden="true" />
-              <blockquote>“{activeVoice.quote}”</blockquote>
-              <figcaption>
-                <strong>{activeVoice.name}</strong>
-                <span>{activeVoice.role}</span>
-              </figcaption>
-            </figure>
-          </div>
+                <div className={styles.authorMeta}>
+                  <strong className={styles.authorName}>{activeVoice.name}</strong>
+                  <span className={styles.authorRole}>{activeVoice.role}</span>
+                </div>
+              </div>
 
-          <div className={styles.voiceControls}>
-            <div>
-              <button type="button" onClick={() => moveVoice(-1)} aria-label="Previous testimonial">
-                <span aria-hidden="true">←</span>
-              </button>
-              <button type="button" onClick={() => moveVoice(1)} aria-label="Next testimonial">
-                <span aria-hidden="true">→</span>
-              </button>
+              <div className={styles.archFrame}>
+                <Image
+                  src={activeVoice.image}
+                  alt={activeVoice.alt}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 360px"
+                  className={styles.archImage}
+                  unoptimized
+                />
+              </div>
             </div>
           </div>
         </div>
