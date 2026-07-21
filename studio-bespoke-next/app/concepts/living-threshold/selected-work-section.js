@@ -251,89 +251,24 @@ export default function SelectedWorkSection() {
         });
 
         processionTimeline
-          .to(galleryField, {
-            scaleY: 1,
-            duration: 0.075,
-            ease: 'power2.inOut',
-          }, 0.01)
-          .to(introduction, {
-            autoAlpha: 1,
-            duration: 0.035,
+          .to(galleryField, { scaleY: 1, duration: 0.04, ease: 'power2.inOut' }, 0.005)
+          .to(introduction, { autoAlpha: 1, duration: 0.02, ease: 'none' }, 0.01)
+          .to(introductionLines, { yPercent: 0, rotation: 0, duration: 0.09, stagger: 0.015, ease: 'power3.out' }, 0.015)
+          .to(introductionSupport, { autoAlpha: 1, y: 0, duration: 0.05, ease: 'power2.out' }, 0.05)
+          .to([leftLane, rightLane], { autoAlpha: 1, duration: 0.04, ease: 'none' }, 0.08)
+          .to(leftFrames, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.08, stagger: 0.005, ease: 'power3.inOut' }, 0.08)
+          .to(rightFrames, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.08, stagger: 0.005, ease: 'power3.inOut' }, 0.08)
+          .to(captions, { autoAlpha: 1, y: 0, duration: 0.06, stagger: 0.005, ease: 'power2.out' }, 0.11)
+          .fromTo(leftLane, { y: setLeftStart }, { y: setLeftEnd, duration: 0.52, ease: 'none' }, 0.12)
+          .fromTo(rightLane, { y: setRightStart }, { y: setRightEnd, duration: 0.52, ease: 'none' }, 0.12)
+          .fromTo(leftMedia, { yPercent: -7 }, { yPercent: 7, duration: 0.52, ease: 'none' }, 0.12)
+          .fromTo(rightMedia, { yPercent: 7 }, { yPercent: -7, duration: 0.52, ease: 'none' }, 0.12)
+          .to(introduction, { autoAlpha: 0, y: -18, duration: 0.05, ease: 'none' }, 0.5)
+          .to(stickyStage, {
+            yPercent: -25,
+            duration: 0.36,
             ease: 'none',
-          }, 0.025)
-          .to(introductionLines, {
-            yPercent: 0,
-            rotation: 0,
-            duration: 0.16,
-            stagger: 0.025,
-            ease: 'power3.out',
-          }, 0.03)
-          .to(introductionSupport, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.09,
-            ease: 'power2.out',
-          }, 0.09)
-          .to([leftLane, rightLane], {
-            autoAlpha: 1,
-            duration: 0.055,
-            ease: 'none',
-          }, 0.15)
-          .to(leftFrames, {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            duration: 0.15,
-            stagger: 0.008,
-            ease: 'power3.inOut',
-          }, 0.15)
-          .to(rightFrames, {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            duration: 0.15,
-            stagger: 0.008,
-            ease: 'power3.inOut',
-          }, 0.15)
-          .to(captions, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.1,
-            stagger: 0.006,
-            ease: 'power2.out',
-          }, 0.2)
-          .fromTo(leftLane, { y: setLeftStart }, {
-            y: setLeftEnd,
-            duration: 0.56,
-            ease: 'none',
-          }, 0.22)
-          .fromTo(rightLane, { y: setRightStart }, {
-            y: setRightEnd,
-            duration: 0.56,
-            ease: 'none',
-          }, 0.22)
-          .fromTo(leftMedia, { yPercent: -7 }, {
-            yPercent: 7,
-            duration: 0.56,
-            ease: 'none',
-          }, 0.22)
-          .fromTo(rightMedia, { yPercent: 7 }, {
-            yPercent: -7,
-            duration: 0.56,
-            ease: 'none',
-          }, 0.22)
-          .to(introduction, {
-            autoAlpha: 0,
-            y: -18,
-            duration: 0.08,
-            ease: 'none',
-          }, 0.72)
-          .to([leftLane, rightLane], {
-            autoAlpha: 0,
-            duration: 0.11,
-            ease: 'none',
-          }, 0.88)
-          .to(galleryField, {
-            autoAlpha: 0,
-            duration: 0.11,
-            ease: 'none',
-          }, 0.88);
+          }, 0.64);
 
         ScrollTrigger.refresh();
 

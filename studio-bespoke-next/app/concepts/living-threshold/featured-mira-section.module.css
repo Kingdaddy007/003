@@ -308,7 +308,7 @@
 
 @media (min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .featuredSection[data-enhanced='true'] {
-    margin-top: 0;
+    margin-top: -100svh;
     background: var(--paper, #e5ded4);
   }
 
