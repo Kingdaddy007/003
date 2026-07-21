@@ -1,0 +1,86 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--paper, #e5ded4);
+  color: var(--ink, #171a17);
+  font-family: var(--font-sans);
+}
+
+.card {
+  max-width: 480px;
+  width: 100%;
+  padding: 40px 32px;
+  border: 1px solid rgba(23, 26, 23, 0.28);
+  background: rgba(242, 238, 229, 0.85);
+  backdrop-filter: blur(16px);
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(23, 26, 23, 0.12);
+}
+
+.logo {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink, #171a17);
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(23, 26, 23, 0.65);
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 7vw, 44px);
+  font-weight: 300;
+  margin: 0 0 16px;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(23, 26, 23, 0.82);
+  margin: 0 0 16px;
+}
+
+.subtext {
+  font-size: 12px !important;
+  color: rgba(23, 26, 23, 0.6) !important;
+  margin-bottom: 28px !important;
+}
+
+.copyBtn {
+  display: inline-block;
+  width: 100%;
+  padding: 14px 20px;
+  border: 1px solid var(--ink, #171a17);
+  background: var(--ink, #171a17);
+  color: #f2eee5;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.copyBtn:hover {
+  background: transparent;
+  color: var(--ink, #171a17);
+}

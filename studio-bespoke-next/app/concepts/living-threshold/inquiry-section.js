@@ -18,32 +18,41 @@ export default function InquirySection() {
 
     mediaQuery.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
       const context = gsap.context(() => {
+        const field = section.querySelector('[data-inquiry-field]');
         const headingLines = [...section.querySelectorAll('[data-inquiry-heading-line]')];
         const form = section.querySelector('[data-inquiry-form]');
 
+        // Curtain Uncover Parallax: Start slightly offset upward inside container
+        gsap.set(field, { yPercent: -12, autoAlpha: 0.85 });
         gsap.set(headingLines, { yPercent: 108 });
-        gsap.set(form, { autoAlpha: 0, y: 24 });
+        gsap.set(form, { autoAlpha: 0, y: 32 });
 
         gsap.timeline({
           scrollTrigger: {
             trigger: section,
-            start: 'top 92%',
-            end: 'top 34%',
-            scrub: 0.45,
+            start: 'top 96%',
+            end: 'top 20%',
+            scrub: 0.5,
           },
         })
+          .to(field, {
+            yPercent: 0,
+            autoAlpha: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+          }, 0)
           .to(headingLines, {
             yPercent: 0,
             duration: 0.52,
             stagger: 0.06,
             ease: 'power3.out',
-          }, 0)
+          }, 0.1)
           .to(form, {
             autoAlpha: 1,
             y: 0,
             duration: 0.48,
             ease: 'power2.out',
-          }, 0.18);
+          }, 0.22);
       }, section);
 
       return () => context.revert();
@@ -75,7 +84,6 @@ export default function InquirySection() {
               encouraged; urgent completion timelines may not be the right fit.
             </p>
           </div>
-
         </div>
 
         <form className={styles.form} data-inquiry-form onSubmit={handlePrototypeSubmit}>

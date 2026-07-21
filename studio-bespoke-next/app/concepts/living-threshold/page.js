@@ -9,6 +9,7 @@ import FeaturedMiraSection from './featured-mira-section';
 import ApproachTrustSection from './approach-trust-section';
 import InquirySection from './inquiry-section';
 import SiteFooter from './site-footer';
+import MobileBlockerModal from './mobile-blocker-modal';
 import styles from './living-threshold.module.css';
 
 export const metadata = {
@@ -32,6 +33,7 @@ function HeroPicture({ className }) {
 export default function LivingThresholdConceptPage() {
   return (
     <main className={styles.page}>
+      <MobileBlockerModal />
       <ThresholdSmoothScroll />
       <ThresholdHeader />
       <section
