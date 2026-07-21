@@ -229,7 +229,7 @@ export default function FeaturedMiraSection() {
             scrollTrigger: {
               trigger: story,
               start: 'top top',
-              end: () => `+=${miraImages.length * window.innerWidth * 0.6}`,
+              end: 'bottom bottom',
               scrub: 0.5,
               invalidateOnRefresh: true,
               onEnter: () => {

@@ -32,8 +32,15 @@ export default function useLenis() {
       const target = getHashTarget();
       if (!target) return;
 
-      target.scrollIntoView({ block: 'start' });
+      if (lenis) {
+        lenis.scrollTo(target, { immediate: false, duration: 1.2 });
+      } else {
+        target.scrollIntoView({ block: 'start' });
+      }
       target.focus({ preventScroll: true });
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
     };
 
     const stopLenis = () => {
