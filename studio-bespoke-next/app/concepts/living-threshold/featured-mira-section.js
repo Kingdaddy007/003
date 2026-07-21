@@ -309,7 +309,7 @@ export default function FeaturedMiraSection() {
               ease: 'power2.inOut',
             }, 0.40)
             .to(galleryTrack, {
-              x: '0vw',
+              x: () => centeredTrackX(0),
               duration: 0.12,
               ease: 'power2.inOut',
             }, 0.40)
@@ -412,7 +412,7 @@ export default function FeaturedMiraSection() {
           if (!timelineBuilt) {
             buildTimeline({ scrubVideo: false });
           }
-        }, 500);
+        }, 3500);
 
         return () => {
           window.clearTimeout(fallbackTimer);
