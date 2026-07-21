@@ -175,8 +175,6 @@ export default function FeaturedMiraSection() {
             trackFrames[index].offsetLeft + (trackFrames[index].offsetWidth / 2)
           );
 
-          // The first photograph shares the video's full-bleed geometry, then
-          // reframes into the same finite track used by the remaining rooms.
           gsap.set(galleryField, { backgroundColor: miraImages[0].fieldColor });
           gsap.set(galleryTrack, { xPercent: 0, x: () => centeredTrackX(0) });
           gsap.set(trackFrames[0], {
@@ -199,7 +197,6 @@ export default function FeaturedMiraSection() {
           gsap.set(videoLayer, { autoAlpha: scrubVideo ? 1 : 0 });
           gsap.set(chapterPortal, { autoAlpha: 1 });
           gsap.set(chapterCopy, { autoAlpha: 1, y: 0 });
-          gsap.set(stickyStage, { clipPath: 'inset(0% 0% 0% 0%)' });
           gsap.set(captionRail, { autoAlpha: 0 });
           gsap.set(captionItems, { autoAlpha: 0, y: 8 });
           if (projectAction) gsap.set(projectAction, { autoAlpha: 0, y: 16 });
@@ -245,8 +242,7 @@ export default function FeaturedMiraSection() {
             },
           });
 
-          // 0.00 - 0.40: the blueprint itself is the threshold surface. The
-          // centered project title clears away so the film remains unobstructed.
+          // 0.00 - 0.40: blueprint threshold
           storyTimeline
             .to(chapterCopy, {
               autoAlpha: 0,
@@ -260,7 +256,7 @@ export default function FeaturedMiraSection() {
               ease: 'none',
             }, 0.18);
 
-          // 0.00 - 0.28: Blueprint Video Scrub (100% Full Bleed)
+          // 0.00 - 0.28: Blueprint Video Scrub
           if (scrubVideo) {
             storyTimeline.to(scrubProgress, {
               value: 1,
@@ -275,11 +271,10 @@ export default function FeaturedMiraSection() {
             }, 0.00);
           }
 
-          // 0.28 - 0.40: Crossfade video -> completed room anchor /03-k14.jpg (Full bleed hold)
+          // 0.28 - 0.40: Crossfade video -> completed room anchor /03-k14.jpg
           storyTimeline.to(videoLayer, { autoAlpha: 0, duration: 0.12, ease: 'none' }, 0.28);
 
-          // 0.40 - 0.52: the completed room becomes a finite gallery frame.
-          // Only transforms animate here, avoiding scroll-driven layout recalculation.
+          // 0.40 - 0.52: reframe room down into finite gallery track
           storyTimeline
             .to(trackFrames[0], {
               scaleX: 1,
@@ -311,13 +306,11 @@ export default function FeaturedMiraSection() {
               ease: 'power2.out',
             }, 0.47);
 
-          // 0.52 - 0.84: one continuous procession. If scrolling stops,
-          // ScrollTrigger gently settles the nearest room into the centre.
+          // 0.52 - 0.84: photo track procession
           for (let i = 1; i <= totalSteps; i += 1) {
             const stepStart = galleryStart + ((i - 1) * stepWindow);
             const moveDuration = stepWindow;
 
-            // Slide track to center frame i
             storyTimeline.to(galleryTrack, {
               x: () => centeredTrackX(i),
               duration: moveDuration,
@@ -347,41 +340,10 @@ export default function FeaturedMiraSection() {
               }, stepStart);
           }
 
-          // 0.84 - 0.91: the final room holds before the exit threshold begins.
+          // 0.84 - 1.00: final room holds. Action button remains ready.
           if (projectAction) {
-            storyTimeline.to(projectAction, { autoAlpha: 1, y: 0, duration: 0.035, ease: 'power2.out' }, 0.845);
+            storyTimeline.to(projectAction, { autoAlpha: 1, y: 0, duration: 0.04, ease: 'power2.out' }, 0.845);
           }
-
-          // 0.91 - 1.00: reverse threshold. The room and its interface lift away
-          // together, revealing the quieter working-relationship field beneath.
-          storyTimeline
-            .to(trackFrames.slice(0, -1), {
-              opacity: 0,
-              duration: 0.035,
-              ease: 'none',
-            }, 0.91)
-            .to(captionRail, {
-              autoAlpha: 0,
-              duration: 0.035,
-              ease: 'power1.in',
-            }, 0.91)
-            .to(projectAction, {
-              autoAlpha: 0,
-              y: -10,
-              duration: 0.035,
-              ease: 'power1.in',
-            }, 0.91)
-            .to(trackFrames[trackFrames.length - 1], {
-              yPercent: -5,
-              scale: 1.025,
-              duration: 0.09,
-              ease: 'power2.in',
-            }, 0.91)
-            .to(stickyStage, {
-              clipPath: 'inset(0% 0% 100% 0%)',
-              duration: 0.09,
-              ease: 'power2.inOut',
-            }, 0.91);
 
           section.dataset.media = scrubVideo ? 'enhanced' : 'fallback';
           ScrollTrigger.refresh();

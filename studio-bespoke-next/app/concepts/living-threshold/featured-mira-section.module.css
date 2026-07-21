@@ -308,14 +308,14 @@
 
 @media (min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .featuredSection[data-enhanced='true'] {
-    margin-top: -100svh;
-    background: transparent;
+    margin-top: 0;
+    background: var(--paper, #e5ded4);
   }
 
   .story {
     position: relative;
     display: block;
-    min-height: 360svh;
+    min-height: 280svh;
   }
 
   .staticFallback {
